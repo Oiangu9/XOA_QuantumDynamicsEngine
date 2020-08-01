@@ -1,0 +1,219 @@
+// 1D CN ABcs Sqre pot randomly generated 5 Bohmian trajectories
+1
+double sigma=1.0/sqrt(2); double mu=0.0; double k=0.0; return pow(1.0/(2*PI*sigma*sigma),0.25)*exp(J*k*x-0.25*pow((x-mu)/sigma,2));
+x*x*0.5
+200 -10.0 10.0
+1000
+0.01
+0.5
+1.0
+L
+1
+R
+5
+
+ondo 1.0*3.95*pow(cos(6.088362*x),2.0)+0.0*7057.63*pow(cos(7.28907*x),2.0)
+
+// 1D CN Bichromic Crystal potential AL
+
+1
+double sigma=7.0; double mu=0.0; double k=0.0; return pow(1.0/(2*PI*sigma*sigma),0.25)*exp(J*k*x-0.25*pow((x-mu)/sigma,2));
+double s1=0.0, s2=s1/3.0; return s2*pow(cos(4.0*(sqrt(5)-1)*x),2.0)+ s1*pow(cos(8.0*x),2.0);
+6000 -36.0 36.0
+5000
+0.005
+1.0
+16.29940949
+G
+75
+N
+AL1D_Incomensurate/s2=0 s1=0 sigma=7.0
+
+//Bicromic hurbil
+1
+double sigma=5.0; double mu=0.0; double k=0.0; return pow(1.0/(2*PI*sigma*sigma),0.25)*exp(J*k*x-0.25*pow((x-mu)/sigma,2));
+3.0*pow(cos(6.088362*x),2.0)+0.0*7057.63*pow(cos(7.28907*x),2.0)
+6000 -50.0 50.0
+7000
+0.005
+1.0
+16.29940949
+G
+20
+N
+
+// 1D speckle potential
+
+1.5
+double sigma=5.0; double mu=0.0; double k=0.0; return pow(1.0/(2*PI*sigma*sigma),0.25)*exp(J*k*x-0.25*pow((x-mu)/sigma,2));
+return speckle.evaluate(x);
+2000 -34.0 34.0
+7000
+0.005
+1.0
+16.29940949
+G
+20
+Ndouble VR=3.0, grainSigma=5.0; class SplineFunction { public: SplineFunction(Eigen::VectorXd const &x_vec, Eigen::VectorXd const &y_vec) : x_min(x_vec.minCoeff()), x_max(x_vec.maxCoeff()), spline_(Eigen::SplineFitting<Eigen::Spline<double, 1>>::Interpolate( y_vec.transpose(), std::min<int>(x_vec.rows() - 1, 3), scaled_values(x_vec))) { } double operator()(double x) const { return spline_(scaled_value(x))(0); } private: double scaled_value(double x) const { return (x - x_min) / (x_max - x_min); } Eigen::RowVectorXd scaled_values(Eigen::VectorXd const &x_vec) const { return x_vec.unaryExpr([this](double x) { return scaled_value(x); }).transpose(); } double x_min; double x_max; Eigen::Spline<double, 1> spline_; }; class SpecklePotential { public: SpecklePotential(double VR, double grainSigma, double xmax, double xmin) : VR(VR), grainSigma(grainSigma), xmax(xmax), xmin(xmin) { double Vmin=-VR, Vmax=4*VR; int nV=3000; double dV=(Vmax-Vmin)/nV; VectorXd possibleV(nV+1), probabDensity(nV+1); double auxV; for(int i=0; i<=nV; ++i){ auxV = Vmin + i*dV; possibleV(i) = auxV; probabDensity(i) = speckleProbabDensity( auxV, VR); } double* probabClist = probabDensity.data(); std::default_random_engine randomGenerator; std::discrete_distribution<int> distribution (probabClist,probabClist+nV); int nGrainIntervals = (int) (xmax-xmin)/grainSigma; VectorXd posGrain(nGrainIntervals + 1), potentialGrain(nGrainIntervals +1); for(int i=0; i<=nGrainIntervals; ++i){ posGrain(i) = xmin + i*grainSigma; potentialGrain(i) = possibleV(distribution(randomGenerator)); } splinePtr = new SplineFunction(posGrain, potentialGrain); } double evaluate(double x) { return (*splinePtr)(x); } private: double VR, grainSigma, xmax, xmin; SplineFunction* splinePtr; double speckleProbabDensity(double V, double VR){ if(V/VR + 1 >=0){ return (1/(EULER*VR))*std::exp(-V/VR);} else{ return 0.0; } } }; SpecklePotential speckle(VR, grainSigma, xmax, xmin); 
+ 
+Speckle Potential VR=3.0 grainSigma=10 WFsigma=5.0 
+
+//1D CN ABcs Sqre pot custom chosen 7 Bohmian trajectories
+
+1
+double sigma=1.0; double mu=0.0; double k=0.0; return pow(1.0/(2*PI*sigma*sigma),0.25)*exp(J*k*x-0.25*pow((x-mu)/sigma,2));
+x*x
+200 -10.0 10.0
+1000
+0.01
+0.5
+1.0
+L
+1
+C
+7
+3 3.5 4 6 -3 2 7
+
+// 1D CN time dependant sqre potential
+
+2
+double sigma=1.0; double mu=0.0; double k=0.0; return pow(1.0/(2*PI*sigma*sigma),0.25)*exp(J*k*x-0.25*pow((x-mu)/sigma,2));
+x*x*t
+200 -10.0 10.0
+3000
+0.01
+0.5
+1.0
+L
+1
+N
+
+// 2D CN sqre pot gaussian
+//correct gaussian is this one:
+double sigmax=1.5, sigmay=1.0, mux=0.0, muy=0.0, kx=0.0, ky=0.0; return pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x1-0.25*pow((x1-mux)/sigmax,2)) * pow(1.0/(2*PI*sigmay*sigmay),0.25)*exp(J*ky*x2-0.25*pow((x2-muy)/sigmay,2));
+
+3
+1.0/(2*PI)*std::exp(J*(4.5)*x1-(x1+3.0)*(x1+3.0)/(2.0))*std::exp(J*(0.0)*x2-(x2-0.0)*(x2-0.0)/(2.0))
+double sigma0=0.5, sigma1=0.6, sigma2=sigma1, mu1=1.5, mu2=-mu1, E0=1/(sigma1*sqrt(2*PI)), V0=40.0; return  V0/(sqrt(2.0*PI)*sigma0)*exp(-0.5*pow(x1/sigma0,2))*(E0-1/(sqrt(2.0*PI))*(exp(-0.5*pow((x2-mu1)/sigma1,2))/sigma1 + exp(-0.5*pow((x2-mu2)/sigma2,2))/sigma2));
+300 350
+-6.5 25.0 -12.0 12.0
+350
+0.01
+1.0 1.0
+1.0
+1
+G
+1
+N
+DoubleSlit_CN2D_SmoothInverseGaussian/V0=40.0 sigma0=0.6 sigma1=0.5
+
+
+//2D CN double slit experiment
+3
+1.0/(2*PI)*std::exp(J*(4.5)*x1-(x1+3.0)*(x1+3.0)/(2.0))*std::exp(J*(0.0)*x2-(x2-0.0)*(x2-0.0)/(2.0))
+if((x2>0.3 && x2<1.2)||(x2<-0.3 && x2>-1.2)||x1==0){return 0.0;}else{return 1.0/(x1*x1*x1*x1*100);}
+100 100
+-7.0 7.0 -7.0 7.0
+250
+0.01
+1.0 1.0
+1.0
+1
+G
+1
+R
+10
+
+//2D CN double slit Gaussian potentials
+3
+1.0/(2*PI)*std::exp(J*(4.5)*x1-(x1+3.0)*(x1+3.0)/(2.0))*std::exp(J*(0.0)*x2-(x2-0.0)*(x2-0.0)/(2.0))
+double sigma0=0.6, sigma1=2.0, sigma2=sigma1, sigma3=0.5, mu1=4.0, mu2=-mu1, centralHdiv=4.0, V0=45.0; return  V0/(2.0*PI*sigma3)*exp(-0.5*pow(x1/sigma3,2))*(exp(-0.5*pow(x2/sigma0,2))/(sigma0*centralHdiv) + exp(-0.5*pow((x2-mu1)/sigma1,2))/sigma1 + exp(-0.5*pow((x2-mu2)/sigma2,2))/sigma2);
+300 350
+-6.5 25.0 -12.0 12.0
+350
+0.01
+1.0 1.0
+1.0
+1
+G
+1
+N
+
+//2D CN double slit Gaussian INVERTED
+
+
+
+//2D harmonic potential XO 0 order
+
+5
+2
+1.0/(2*PI)*std::exp(J*0.0*q[0]-(q[0]-2.0)*(q[0]-2.0)/(2.0))*std::exp(J*0.0*q[1]-(q[1]-2.0)*(q[1]-2.0)/(2.0))
+q[0]*q[0]+q[1]*q[1]
+1.0, 1.0
+200, 200
+-6.0, -6.0 
+6.0, 6.0
+1000
+0.01
+15
+1.0
+1
+G
+
+
+//2D XO siro Double Slit
+
+5
+2
+1.0/(2*PI)*std::exp(J*(4.5)*q[0]-(q[0]+3.0)*(q[0]+3.0)/(2.0))*std::exp(J*(0.0)*q[1]-(q[1]-0.0)*(q[1]-0.0)/(2.0))
+if((q[1]>0.3 && q[1]<1.2)||(q[1]<-0.3 && q[1]>-1.2) || q[0]==0.0){return 0.0;}else{return 1.0/(q[0]*q[0]*q[0]*q[0]*100);}
+1.0, 1.0
+300, 300
+-6.0, -6.0 
+6.0, 6.0
+2500
+0.001
+100
+1.0
+1
+G
+
+
+//2D double slit full animation XO
+
+8
+2
+1.0/(2*PI)*std::exp(J*(4.5)*q[0]-(q[0]+3.0)*(q[0]+3.0)/(2.0))*std::exp(J*(0.0)*q[1]-(q[1]-0.0)*(q[1]-0.0)/(2.0))
+if((q[1]>0.3 && q[1]<1.2)||(q[1]<-0.3 && q[1]>-1.2) || q[0]==0.0){return 0.0;}else{return 1.0/(q[0]*q[0]*q[0]*q[0]*100);}
+1.0, 1.0
+300, 300
+-6.0, -6.0 
+6.0, 6.0
+1000
+0.001
+20
+1.0
+0.013
+10
+G
+
+//2D double slit XO full animation smooth potential
+
+
+8
+2
+1.0/(2*PI)*std::exp(J*(5.25)*q[0]-(q[0]+3.0)*(q[0]+3.0)/(2.0))*std::exp(J*(0.0)*q[1]-(q[1]-0.0)*(q[1]-0.0)/(2.0))
+double sigma0=0.5, sigma1=0.6, sigma2=sigma1, mu1=1.5, mu2=-mu1, E0=1/(sigma1*sqrt(2*PI)), V0=40.0; return  V0/(sqrt(2.0*PI)*sigma0)*exp(-0.5*pow(q[0]/sigma0,2))*(E0-1/(sqrt(2.0*PI))*(exp(-0.5*pow((q[1]-mu1)/sigma1,2))/sigma1 + exp(-0.5*pow((q[1]-mu2)/sigma2,2))/sigma2));
+1.0, 1.0
+200, 300
+-6.0, -6.0 
+6.0, 6.0
+1000
+0.001
+20
+1.0
+0.013
+10
+G
+DoubleSlit_XO2D_SmoothInverseGaussian/V0=40.0 sigma0=0.5 sigma1=0.6 sigma2=sigma1 mu1=1.5 mu2=-mu1 k=5.25
+
