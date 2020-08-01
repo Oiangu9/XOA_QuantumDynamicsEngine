@@ -1,7 +1,9 @@
 *.gif
 
-EXE?
+/EXE?
 
-DATA?
+/DATA?
 
 *.zip
+
+.directory
