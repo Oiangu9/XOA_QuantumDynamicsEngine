@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Option1</class>
+ <widget class="QMainWindow" name="Option1">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1109</width>
+    <height>872</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>941</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1) Cranck Nicolson 1D with Absorbing Boundary Conditions (ABCs) TIME INDEPENDENT POTENTIALS
+
+Choose the desired parameters and click Simulate when done :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>100</y>
+      <width>951</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&gt; Introduce in C++ syntax the initial WaveFunction as a function of space x (note that J is the complex i unit):</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="psiIni">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>130</y>
+      <width>891</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>std::pow(1.0/(2*PI),0.5)*std::exp(J*1.0*x-(x-3.0)*(x-3.0)/(2.0))</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>140</y>
+      <width>80</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>psi(x) =</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>190</y>
+      <width>831</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&gt; Introduce in C++ syntax the Potential Energy field as a function of x :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>230</y>
+      <width>80</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>V(x) =</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="potential">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>220</y>
+      <width>831</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>x*x</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>280</y>
+      <width>611</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&gt; Define the Spatial Grid :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>330</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SpaceDivisions =</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>330</y>
+      <width>80</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>xmin =</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>330</y>
+      <width>80</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>xmax =</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="nx">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>330</y>
+      <width>113</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>200</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="xmin">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>330</y>
+      <width>113</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>-10.0</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="xmax">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>330</y>
+      <width>113</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>10.0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>390</y>
+      <width>701</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&gt; Define the Time Grid :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="tIt">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>430</y>
+      <width>113</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>100</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>430</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Time Iterations :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>430</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Time increment :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="dt">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>430</y>
+      <width>113</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0.01</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBoxTrajs">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>480</y>
+      <width>911</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>&gt; Choose if Bohmian Trajectories should be obtained :</string>
+    </property>
+    <widget class="QRadioButton" name="N">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>40</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>No</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="R">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>70</y>
+       <width>451</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Randomly chosen ones according to the initial WF</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="C">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>110</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Custom initial positions</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="numTrajs">
+     <property name="geometry">
+      <rect>
+       <x>680</x>
+       <y>150</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>7</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>160</y>
+       <width>651</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&gt; If Random or Custom, introduce the Number of trajectories to compute :</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="customTrajs">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>230</y>
+       <width>741</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>3 3.5 4 6 -3 2 7</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_14">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>190</y>
+       <width>751</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&gt; If Custom, introduce them as one, space, another, space, another... :</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="runSimulationAndPlot">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>810</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Run Simulation and Plot</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="runSimulationAndGif">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>810</y>
+      <width>311</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Run Simulation and generate GIF</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="abortSimulation">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>810</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Abort Running Simulation</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>XOA_SchrodingerSimulator</class>
+ <widget class="QMainWindow" name="XOA_SchrodingerSimulator">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1218</width>
+    <height>652</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>XOA_SchrodingerSimulator</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>1171</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string> Welcome to the time dependent Schrodinger Equation solver by Xabier Oyanguren Asua
+ ----------------------------------------------------------------------------------
+
+ You can run a new simulation or import an already run simulation to plot it or generate a GIF animation file of it.
+
+ We dispose of several different algorithms for simulating the time evolution of the Wave Function numerically, choose the desired one :
+
+ 1) Cranck Nicolson 1D with Absorbing Boundary Conditions (ABCs) TIME INDEPENDENT POTENTIALS
+ 2) Cranck Nicolson 1D with ABCs TIME DEPENDENT POTENTIALS
+ 3) Cranck Nicolson 2D TIME INDEPENDENT POTENTIALS
+ 4) Cranck Nicolson 2D TIME DEPENDENT POTENTIALS
+ 5) Xavier Oriols' (XO) algorithm nD ZERO order Taylor approximation with ABCs and Time Dependent Potentials - NO MULTIPROCESSING
+ 6) XO algorithm nD ZERO order Taylor approximation with ABCs and Time Dependent Potentials - Using MULTIPROCESSING
+ 7) ANIMATED XO algorithm 2D ZERO order Taylor with ABCs and Time Dependent Potentials - DONT Get Tensor Product
+ 8) ANIMATED XO algorithm 2D ZERO order Taylor with ABCs and Time Dependent Potentials - Get Tensor Product</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>480</y>
+      <width>471</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Select a Simulation Option Number from the above list :</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="simulationSelection">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>490</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="goSimulation">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>570</y>
+      <width>161</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>GO!</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
