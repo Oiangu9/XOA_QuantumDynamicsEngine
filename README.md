@@ -21,6 +21,6 @@ The script basically executes the following three steps:
 ## General To Do-s:
 -------------------
 
-- The Linux Graphical User Interface is not finished still.
+- The Linux Graphical User Interface is still work in progress.
 
-- Nothing has been done in Windows for now.
+- Nothing has been implemented for Windows yet.
