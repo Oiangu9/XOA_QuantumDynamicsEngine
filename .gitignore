@@ -6,6 +6,10 @@ DATA*
 
 CODE_simulator*
 
+CODE_CN2D_simulator*
+
 *.zip
 
 .directory
+
+tmp

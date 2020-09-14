@@ -34,7 +34,7 @@ void XOA_SchrodingerSimulator::goSimulationPressed()
 {
     if(ui->simulationSelection->currentText().toInt()==1){
         delete option1Window;
-        option1Window = new Option1();
+        option1Window = new Option1(this);
         option1Window->show();
     }
 }
