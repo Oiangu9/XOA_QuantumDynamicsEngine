@@ -15,13 +15,13 @@ using namespace std;
 const double PI = 3.141592653589793238463; const double EULER=2.718281828459045;
 
 //defining the particle parameters
-double m1=1.0, m2=1.0, hbar=1.0;
+double m1=1.0, m2=3.5, hbar=1.0;
 //define the SPACE GRID
-double x1min=-10.0, x1max=10.0, x2min=-10.0, x2max=10.0;
+double x1min=-25.0, x1max=25.0, x2min=-22.0, x2max=22.0;
 
 //We define the initial WF
 cdouble psi0(double x, double y){
- double sigmax=2.0, sigmay=2.0, mux=0.0, muy=0.0, kx=0.3, ky=0.0; return pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2))*sqrt(2/(x2max-x2min))*sin(PI*(y-x2min)/(x2max-x2min));;
+ double sigmax=2.0, sigmay=6, mux=-8.0, muy=0.0, kx=0.1, ky=0; return pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2))* pow(1.0/(2*PI*sigmay*sigmay),0.25)*exp(J*ky*y-0.25*pow((y-muy)/sigmay,2));;
 }
 //We define the Potential energy field TIME INDEPENDENT
 double V(double x, double y){
