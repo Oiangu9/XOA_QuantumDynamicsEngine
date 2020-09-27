@@ -18,6 +18,7 @@ sudo apt-get install g++
 # Install gnuplot
 
 apt-get install gnuplot
+apt-get install gnuplot-x11
 
 # Make a temporary installation directory
 
