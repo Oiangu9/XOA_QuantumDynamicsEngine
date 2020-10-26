@@ -53,7 +53,7 @@ echo " Introduce the minimum and maximum of considered x in the grid as : xmin x
 read trash trash
 read x1min x1max
 echo " Introduce the minimum and maximum of considered y in the grid as : ymin ymax"
-read trash trash/
+read trash trash
 read x2min x2max
 echo "Introduce the number of time iterations to consider"
 read trash
@@ -67,6 +67,10 @@ read mass1 mass2
 echo " Introduce the value of hbar"
 read trash
 read hbar
+echo " Introduce whether to use or not (1 or 0) the following Correlation Potentials"
+echo " Kinetic Advective G J"
+read trash trash trash trash
+read Kin Adv G J
 echo "Input the xBound to consider the transmitance"
 read trash
 read xBound
@@ -161,7 +165,8 @@ do
     yjmax=0
     b_y=0
 
-    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 1
+
+    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 $Kin $Adv $G $J 1
 
     g++ -Wall -O CODE_simulator_XO_KinAdv.cpp -o EXE_simulator_XO_KinAdv
     echo " Done!"

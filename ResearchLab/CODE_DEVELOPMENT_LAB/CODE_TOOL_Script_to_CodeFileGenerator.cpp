@@ -41,8 +41,14 @@ int main(int argNum, char **argVec){
     s.str("");
     readFile >> c;
 
-    writtenFile << "#include <iostream>\n#include <fstream>\n#include <string>\n#include <sstream>\n\nusing namespace std;\n\nint main(int argNum, char **argVec){\nif (argNum<"<<maxArgNum+1<<"){\n\tcout << \"Error while reading the arguments. Too few arguments introduced? \\n\";\n\treturn -1;\n}\nint option=1;\nsscanf(argVec["<<maxArgNum+1<<"], \"%d\", &option);\nofstream writtenFile;\n";
+    /*writtenFile << "#include <iostream>\n#include <fstream>\n#include <string>\n#include <sstream>\n\nusing namespace std;\n\nint main(int argNum, char **argVec){\nif (argNum<"<<maxArgNum+1<<"){\n\tcout << \"Error while reading the arguments. Too few arguments introduced? \\n\";\n\treturn -1;\n}\nint option=1;\nsscanf(argVec["<<maxArgNum+1<<"], \"%d\", &option);\nofstream writtenFile;\n";
 
+     In order to allow multioption and multi argnum in a sam codefile genrator, we have to sacrifice
+    this strict argnum check, still we will check that at least two arguments are introduced
+    namely, an argument s.t. the codeFileGenerator makes sense and the option number
+    */
+
+    writtenFile << "#include <iostream>\n#include <fstream>\n#include <string>\n#include <sstream>\n\nusing namespace std;\n\nint main(int argNum, char **argVec){\nif (argNum<2){\n\tcout << \"Error while reading the arguments. Too few arguments introduced? \\n\";\n\treturn -1;\n}\nint option=1;\nsscanf(argVec[argNum-1], \"%d\", &option);\nofstream writtenFile;\n";
 
 
     writtenFile << "\nif(option==";

@@ -6,12 +6,12 @@
 using namespace std;
 
 int main(int argNum, char **argVec){
-if (argNum<15){
+if (argNum<2){
 	cout << "Error while reading the arguments. Too few arguments introduced? \n";
 	return -1;
 }
 int option=1;
-sscanf(argVec[15], "%d", &option);
+sscanf(argVec[argNum-1], "%d", &option);
 ofstream writtenFile;
 
 if(option==1){
