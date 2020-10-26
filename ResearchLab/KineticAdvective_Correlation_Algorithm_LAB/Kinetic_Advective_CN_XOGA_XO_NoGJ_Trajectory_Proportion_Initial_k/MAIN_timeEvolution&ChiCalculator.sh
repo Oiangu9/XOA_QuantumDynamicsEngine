@@ -111,7 +111,7 @@ fi
 for k0 in $ks
 do
 
-    psiIni="double sigmax=2.0, mux=-8.0, kx=${k0}, a=10; if(abs(y)>a){return 0;} else{return pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2))*sqrt(2/(2*a))*sin(PI*(y+a)/(2*a));}
+    psiIni="double sigmax=2.0, sigmay=6.0, mux=-8.0, muy=0.0, kx=${k0}, ky=0; return pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2))* pow(1.0/(2*PI*sigmay*sigmay),0.25)*exp(J*ky*y-0.25*pow((y-muy)/sigmay,2));
     "
 
     expLabel="CN_k0_${k0}_${label}"
@@ -120,7 +120,7 @@ do
     echo "-------CRANCK NICOLSON CHOSEN!-------- "
     echo "(2) Executing calculations for the time evolution...."
     echo " Generating code and compiling..."
-    
+    :'
     ./EXE_CN2D_codeFileGenerator_2D_CN "$psiIni" "$potential" $nx1CN $nx2CN $x1min $x1max $x2min $x2max $dt $numIt $mass1 $mass2 $hbar $option $outputEvery
     g++ -Wall -O CODE_CN2D_simulator_2D_CN_tINDEP.cpp -o EXE_CN2D_simulator_2D_CN_tINDEP
     echo " Done!"
@@ -131,14 +131,14 @@ do
     CALCULATION_TIME=$SECONDS
     echo " Done! " $(($CALCULATION_TIME - $START_TIME)) " seconds required!"
     echo ""
-    
+    '
     echo "(3) COMPILING AND EXECUTING the ad-hoc CHI CALCULATOR"
     
     START_TIME=$SECONDS
     
     tIts=$(echo "$numIt / $outputEvery" | bc)
     dt_berri=$(echo "$dt * $outputEvery" | bc)
-
+    :'
     path=$(pwd)/DATA_rawSimulationData_2D_CN.txt
     ./EXE_CN2D_GeneratorChiCalculator "$path" "$functionEigenstates" $jmax $nx1CN $nx2CN $x1min $x1max $x2min $x2max $tIts $xBound $numTrajs $k0 $hbar $mass1 $mass2 $dt_berri
 
@@ -155,14 +155,14 @@ do
     echo "(4) GENERATING PLOT..."
 
     START_TIME=$SECONDS
-    
+    '
     if [[ $gif == *"G"* ]]; then
         currentDateTime=`date +"%m-%d-%Y_%H:%M:%S"`
         echo " Generating GIF..." 
 
         gnuplot -e "set terminal gif size 1800,900 animate delay 1; set output './OUTPUT_IMAGES/$expLabel CN2D $currentDateTime jmax($jmax).gif'; t=0; tmax=$tIts; while(t<tmax){ set multiplot; set origin 0.0, 0.0; set size 0.33, 0.5; clear; set key title; set xrange [$x1min:$x1max]; set yrange [0:0.3]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=2:($jmax/2+2)] 'DATA_chiInfo.txt' index t using 1:i title sprintf('|Chi^{%d}(x)|',i-2) w l;
-        set origin 0, 0.5; set size 0.33, 0.5; clear; set key title; set xrange [$x1min:$x1max]; set yrange [0:0.12]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=($jmax/2+2):($jmax+1)] 'DATA_chiInfo.txt' index t using 1:i title sprintf('|Chi^{%d}(x)|',i-2) w l;
-        set origin 0.33, 0; set size 0.33, 0.5; clear; set xrange [-1:($jmax+1)]; set yrange [0:1.1]; set xtics 1; set xlabel 'jmax'; set ylabel 'integrate(\sum_{j=0}^{j=jmax}(|\chi^j(x)|^2))dx'; plot 'DATA_sumChiInfo.txt' index t using 1:2 with linespoint lw 3 pt 3 notitle, 'DATA_sumChiInfo.txt' index t using 1:2:(sprintf('%f', \$2)) with labels center offset -3.4,-.5 rotate by -45 notitle;
+        set origin 0, 0.5; set size 0.33, 0.5; clear; set key title; set xrange [$x1min:$x1max]; set yrange [0:0.3]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=($jmax/2+2):($jmax+2)] 'DATA_chiInfo.txt' index t using 1:i title sprintf('|Chi^{%d}(x)|',i-2) w l;
+        set origin 0.33, 0; set size 0.33, 0.5; clear; set xrange [-1:($jmax+2)]; set yrange [0:1.1]; set xtics 1; set xlabel 'jmax'; set ylabel 'integrate(\sum_{j=0}^{j=jmax}(|\chi^j(x)|^2))dx'; plot 'DATA_sumChiInfo.txt' index t using 1:2 with linespoint lw 3 pt 3 notitle, 'DATA_sumChiInfo.txt' index t using 1:2:(sprintf('%f', \$2)) with labels center offset -3.4,-.5 rotate by -45 notitle;
         set origin 0.33, 0.5; set size 0.33, 0.5; clear; set key title '|WF(x,y)|^2'; set xtics auto; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position q1'; set ylabel 'Position q2'; unset hidden3d; set pm3d at bs; set palette rgbformulae 33,13,10; set colorbox; unset surface; splot 'DATA_plotWFInfo.txt' index t title columnheader(1); unset key; unset colorbox; set origin 0.66, 0.5; set size 0.33, 0.5; clear; set palette rgbformulae 33,13,10; set pm3d map; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position q1'; set ylabel 'Position q2';splot 'DATA_plotWFInfo.txt' index t title columnheader(1); unset pm3d; unset view; unset colorbox; set origin 0.66, 0.0; set size 0.33, 0.5; clear; set key title 'Bohmian Trajectories'; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position q1'; set ylabel 'Position q2'; plot 'DATA_CN_Trajs_k=$k0.txt' index t w points lt 5 pt 7 ps 1 lc rgb 'black'; t=t+1; unset multiplot;}"
         
         echo "Done!"
@@ -170,8 +170,8 @@ do
     else
 
         gnuplot -e "set terminal wxt size 1850,970; t=0; tmax=$numIt; while(t<tmax){ set multiplot; set origin 0.0, 0.0; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.3]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=2:($jmax/2+2)] 'DATA_chiInfo.txt' index t using 1:i title sprintf('|Chi^{%d}(x)|',i-2) w l;
-        set origin 0, 0.5; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.12]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=($jmax/2+2):($jmax+1)] 'DATA_chiInfo.txt' index t using 1:i title sprintf('|Chi^{%d}(x)|',i-2) w l;
-        set origin 0.49, 0; set size 0.5, 0.5; clear; set xrange [-1:($jmax+1)]; set yrange [0:1.1]; set xtics 1; set xlabel 'jmax'; set ylabel 'integrate(\sum_{j=0}^{j=jmax}(|\chi^j(x)|^2))dx'; plot 'DATA_sumChiInfo.txt' index t using 1:2 with linespoint lw 3 pt 3 notitle, 'DATA_sumChiInfo.txt' index t using 1:2:(sprintf('%f', \$2)) with labels center offset -3.4,-.5 rotate by -45 notitle;
+        set origin 0, 0.5; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.3]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=($jmax/2+2):($jmax+2)] 'DATA_chiInfo.txt' index t using 1:i title sprintf('|Chi^{%d}(x)|',i-2) w l;
+        set origin 0.49, 0; set size 0.5, 0.5; clear; set xrange [-1:($jmax+2)]; set yrange [0:1.1]; set xtics 1; set xlabel 'jmax'; set ylabel 'integrate(\sum_{j=0}^{j=jmax}(|\chi^j(x)|^2))dx'; plot 'DATA_sumChiInfo.txt' index t using 1:2 with linespoint lw 3 pt 3 notitle, 'DATA_sumChiInfo.txt' index t using 1:2:(sprintf('%f', \$2)) with labels center offset -3.4,-.5 rotate by -45 notitle;
         set origin 0.5, 0.5; set size 0.5, 0.5; clear; set key title '|WF(x,y)|^2'; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position q1'; set ylabel 'Position q2'; unset hidden3d; set pm3d at bs; set palette rgbformulae 33,13,10; unset surface; splot 'DATA_plotWFInfo.txt' index t title columnheader(1); t=t+$speed; unset multiplot;}"
         
     fi    
@@ -212,12 +212,12 @@ do
         currentDateTime=`date +"%m-%d-%Y_%H:%M:%S"`
         echo " Generating GIF..." 
 
-        gnuplot -e "set terminal gif size 1800,900 animate delay 1; set output './OUTPUT_IMAGES/$expLabel XOKA $currentDateTime jmax($jmax).gif'; t=0; countTrajs=0; tmax=2*$numIt*$numTrajs/$outputEvery; dx1=($x1max-($x1min))/$nx1; dx2=($x2max-($x2min))/$nx2; array posx1[$nx1+1]; array posx2[$nx2+1]; do for [i=1:($nx1+1)] { posx1[i] = $x1min + i*dx1 }; do for [i=1:($nx2+1)] { posx2[i] = $x2min + i*dx2 }; while(t<tmax){ set multiplot; set origin 0.0, 0.0; set size 0.33, 0.5; clear; set key title; set xrange [$x1min:$x1max]; set yrange [0:0.3]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=1:($jmax/2)] 'DATA_chiInfo.txt' index t/2 using (posx1[\$0+1]):i title sprintf('|Chi^{%d}(x)|',i-1) w l;
-        set origin 0, 0.5; set size 0.33, 0.5; clear; set key title; set xrange [$x1min:$x1max]; set yrange [0:0.12]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=($jmax/2+2):($jmax)] 'DATA_chiInfo.txt' index t/2 using (posx1[\$0+1]):i title sprintf('|Chi^{%d}(x)|',i-1) w l;
-        set origin 0.33, 0; set size 0.33, 0.5; clear; set xrange [-1:($jmax+1)]; set yrange [0:1.1]; set xtics 1; set xlabel 'jmax'; set ylabel 'integrate(\sum_{j=0}^{j=jmax}(|\chi^j(x)|^2))dx'; plot 'DATA_sumChiInfo.txt' index t/2 using 1:2 with linespoint lw 3 pt 3 notitle, 'DATA_sumChiInfo.txt' index t/2 using 1:2:(sprintf('%f', \$2)) with labels center offset -3.4,-.5 rotate by -45 notitle;
-        set origin 0.33, 0.5; set size 0.33, 0.5; clear;set xtics auto; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position x'; set ylabel 'Position y'; if ((t-(2*$numIt*countTrajs)) >= 2*$numIt){ countTrajs=countTrajs+1; }; set pm3d map; set palette rgbformulae 33,13,10; set colorbox; splot 'DATA_potentialToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index 1 title 'Potential Energy Map', 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' title 'Resultant Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'black', 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' every ::1::(t/2+2) title 'Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'red'; unset colorbox;
-        set origin 0.66, 0; set size 0.33, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.12]; set key title 'x Conditional Wave Function Probability Density'; set xlabel 'Position x'; set ylabel 'Probab Density';plot 'DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index t using (posx1[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' every ::(t/2)::(t/2+2) using 1:3 title 'x component of the Trajectory' w points lt 5 pt 6 ps 1 lc rgb 'red';
-        set origin 0.66, 0.5; set size 0.33, 0.5; clear; set xrange [$x2min:$x2max]; set yrange [0:0.12];set key title 'y Conditional Wave Function Probability Density';  set xlabel 'Position y'; set ylabel 'Probab Density'; plot 'DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index (t+1) using (posx2[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' every ::(t/2)::(t/2+2) using 2:3 title 'y component of the Trajectory' w points lt 5 pt 6 ps 2 lc rgb 'red';
+        gnuplot -e "set terminal gif size 1800,900 animate delay 1; set output './OUTPUT_IMAGES/$expLabel XOKA $currentDateTime jmax($jmax).gif'; t=0; countTrajs=0; tmax=2*$numIt*$numTrajs/$outputEvery; dx1=($x1max-($x1min))/$nx1; dx2=($x2max-($x2min))/$nx2; array posx1[$nx1+1]; array posx2[$nx2+1]; do for [i=1:($nx1+1)] { posx1[i] = $x1min + i*dx1 }; do for [i=1:($nx2+1)] { posx2[i] = $x2min + i*dx2 }; while(t<tmax){ set multiplot; set origin 0.0, 0.0; set size 0.33, 0.5; clear; set key title; set xrange [$x1min:$x1max]; set yrange [0:0.3]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=1:($jmax/2+2)] 'DATA_chiInfo.txt' index t/2 using (posx1[\$0+1]):i title sprintf('|Chi^{%d}(x)|',i-1) w l;
+        set origin 0, 0.5; set size 0.33, 0.5; clear; set key title; set xrange [$x1min:$x1max]; set yrange [0:0.3]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=($jmax/2+1):($jmax)] 'DATA_chiInfo.txt' index t/2 using (posx1[\$0+1]):i title sprintf('|Chi^{%d}(x)|',i-1) w l;
+        set origin 0.33, 0; set size 0.33, 0.5; clear; set xrange [-1:($jmax+2)]; set yrange [0:1.1]; set xtics 1; set xlabel 'jmax'; set ylabel 'integrate(\sum_{j=0}^{j=jmax}(|\chi^j(x)|^2))dx'; plot 'DATA_sumChiInfo.txt' index t/2 using 1:2 with linespoint lw 3 pt 3 notitle, 'DATA_sumChiInfo.txt' index t/2 using 1:2:(sprintf('%f', \$2)) with labels center offset -3.4,-.5 rotate by -45 notitle;
+        set origin 0.33, 0.5; set size 0.33, 0.5; clear; set xtics auto; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position x'; set ylabel 'Position y'; if ((t-(2*$numIt*countTrajs)) >= 2*$numIt){ countTrajs=countTrajs+1; }; set pm3d map; set palette rgbformulae 33,13,10; set colorbox; splot 'DATA_potentialToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index 1 title 'Potential Energy Map', 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' title 'Resultant Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'black', 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' every ::1::(t/2+2) title 'Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'red'; unset colorbox;
+        set origin 0.66, 0; set size 0.33, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.04]; set key title 'x Conditional Wave Function Probability Density'; set xlabel 'Position x'; set ylabel 'Probab Density';plot 'DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index t using (posx1[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' every ::(t/2)::(t/2+2) using 1:3 title 'x component of the Trajectory' w points lt 5 pt 6 ps 1 lc rgb 'red';
+        set origin 0.66, 0.5; set size 0.33, 0.5; clear; set xrange [$x2min:$x2max]; set yrange [0:0.04];set key title 'y Conditional Wave Function Probability Density';  set xlabel 'Position y'; set ylabel 'Probab Density'; plot 'DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index (t+1) using (posx2[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' every ::(t/2)::(t/2+2) using 2:3 title 'y component of the Trajectory' w points lt 5 pt 6 ps 2 lc rgb 'red';
         t=t+20; unset multiplot;}"
         #Ikusi ia index en el potential si realmente hace falta, a mi me da que nop
         #plotie nx ta nyren balixoak klar
@@ -226,8 +226,8 @@ do
     else
 
         gnuplot -e "set terminal wxt size 1850,970; t=0; tmax=$numIt; while(t<tmax){ set multiplot; set origin 0.0, 0.0; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.3]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=2:($jmax/2+2)] 'DATA_chiInfo.txt' index t using 1:i title sprintf('|Chi^{%d}(x)|',i-2) w l;
-        set origin 0, 0.5; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.12]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=($jmax/2+2):($jmax+1)] 'DATA_chiInfo.txt' index t using 1:i title sprintf('|Chi^{%d}(x)|',i-2) w l;
-        set origin 0.49, 0; set size 0.5, 0.5; clear; set xrange [-1:($jmax+1)]; set yrange [0:1.1]; set xtics 1; set xlabel 'jmax'; set ylabel 'integrate(\sum_{j=0}^{j=jmax}(|\chi^j(x)|^2))dx'; plot 'DATA_sumChiInfo.txt' index t using 1:2 with linespoint lw 3 pt 3 notitle, 'DATA_sumChiInfo.txt' index t using 1:2:(sprintf('%f', \$2)) with labels center offset -3.4,-.5 rotate by -45 notitle;
+        set origin 0, 0.5; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.3]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=($jmax/2+2):($jmax+2)] 'DATA_chiInfo.txt' index t using 1:i title sprintf('|Chi^{%d}(x)|',i-2) w l;
+        set origin 0.49, 0; set size 0.5, 0.5; clear; set xrange [-1:($jmax+2)]; set yrange [0:1.1]; set xtics 1; set xlabel 'jmax'; set ylabel 'integrate(\sum_{j=0}^{j=jmax}(|\chi^j(x)|^2))dx'; plot 'DATA_sumChiInfo.txt' index t using 1:2 with linespoint lw 3 pt 3 notitle, 'DATA_sumChiInfo.txt' index t using 1:2:(sprintf('%f', \$2)) with labels center offset -3.4,-.5 rotate by -45 notitle;
         set origin 0.5, 0.5; set size 0.5, 0.5; clear; set key title '|WF(x,y)|^2'; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position q1'; set ylabel 'Position q2'; unset hidden3d; set pm3d at bs; set palette rgbformulae 33,13,10; unset surface; splot 'DATA_plotWFInfo.txt' index t title columnheader(1); t=t+$speed; unset multiplot;}"
         
     fi    
@@ -268,8 +268,8 @@ do
         echo " Generating Animation GIF..."  
                 
         gnuplot -e "set terminal gif size 1800,900 animate delay 1; set output './OUTPUT_IMAGES/$expLabel XO_NoGJ_$currentDateTime x,yDivs($nx1,$nx2) x,ymin($x1min,$x2min) x,ymax($x1max,$x2max) nTrjs($numTrajs) dt($dt) tIt($numIt) mx,y($mass1,$mass2) outEvry($outputEvery).gif'; t=0; countTrajs=0; tmax=2*$numIt*$numTrajs/$outputEvery; dx1=($x1max-($x1min))/$nx1; dx2=($x2max-($x2min))/$nx2; array posx1[$nx1+1]; array posx2[$nx2+1]; do for [i=1:($nx1+1)] { posx1[i] = $x1min + i*dx1 }; do for [i=1:($nx2+1)] { posx2[i] = $x2min + i*dx2 }; while(t<tmax){  set multiplot; 
-        set origin 0.0, 0.0; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.12]; set key title 'x Conditional Wave Function Probability Density'; set xlabel 'Position x'; set ylabel 'Probab Density';plot 'DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index t using (posx1[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_NoGJ_BornHuang_tINDEP_k=$k0.txt' every ::(t/2)::(t/2+2) using 1:3 title 'x component of the Trajectory' w points lt 5 pt 6 ps 2 lc rgb 'red';
-        set origin 0.5, 0.5; set size 0.5, 0.5; clear; set xrange [$x2min:$x2max]; set yrange [0:0.12];set key title 'y Conditional Wave Function Probability Density';  set xlabel 'Position y'; set ylabel 'Probab Density'; plot 'DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index (t+1) using (posx2[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_NoGJ_BornHuang_tINDEP_k=$k0.txt' every ::(t/2)::(t/2+2) using 2:3 title 'y component of the Trajectory' w points lt 5 pt 6 ps 2 lc rgb 'red'; set origin 0.0, 0.5; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position x'; set ylabel 'Position y'; if ((t-(2*$numIt*countTrajs)) >= 2*$numIt){ countTrajs=countTrajs+1; }; set pm3d map; set palette rgbformulae 33,13,10; splot 'DATA_potentialToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index 1 title 'Potential Energy Map', 'DATA_trajectoriesToPlot_2D_XO_CN_NoGJ_BornHuang_tINDEP_k=$k0.txt' title 'Resultant Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'black', 'DATA_trajectoriesToPlot_2D_XO_CN_NoGJ_BornHuang_tINDEP_k=$k0.txt' every ::1::(t/2+2) title 'Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'red';
+        set origin 0.0, 0.0; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [0:0.04]; set key title 'x Conditional Wave Function Probability Density'; set xlabel 'Position x'; set ylabel 'Probab Density';plot 'DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index t using (posx1[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_NoGJ_BornHuang_tINDEP_k=$k0.txt' every ::(t/2)::(t/2+2) using 1:3 title 'x component of the Trajectory' w points lt 5 pt 6 ps 2 lc rgb 'red';
+        set origin 0.5, 0.5; set size 0.5, 0.5; clear; set xrange [$x2min:$x2max]; set yrange [0:0.04];set key title 'y Conditional Wave Function Probability Density';  set xlabel 'Position y'; set ylabel 'Probab Density'; plot 'DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index (t+1) using (posx2[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_NoGJ_BornHuang_tINDEP_k=$k0.txt' every ::(t/2)::(t/2+2) using 2:3 title 'y component of the Trajectory' w points lt 5 pt 6 ps 2 lc rgb 'red'; set origin 0.0, 0.5; set size 0.5, 0.5; clear; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position x'; set ylabel 'Position y'; if ((t-(2*$numIt*countTrajs)) >= 2*$numIt){ countTrajs=countTrajs+1; }; set pm3d map; set palette rgbformulae 33,13,10; splot 'DATA_potentialToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index 1 title 'Potential Energy Map', 'DATA_trajectoriesToPlot_2D_XO_CN_NoGJ_BornHuang_tINDEP_k=$k0.txt' title 'Resultant Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'black', 'DATA_trajectoriesToPlot_2D_XO_CN_NoGJ_BornHuang_tINDEP_k=$k0.txt' every ::1::(t/2+2) title 'Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'red';
         t=t+20; unset multiplot; }"
         
     else
