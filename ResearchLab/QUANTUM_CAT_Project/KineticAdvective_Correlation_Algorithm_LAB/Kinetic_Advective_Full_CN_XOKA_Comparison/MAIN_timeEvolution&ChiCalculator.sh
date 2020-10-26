@@ -239,7 +239,7 @@ do
     diffxxEigenstatesForSectionsIny="return 0;"
     yjmax=0
     b_y=0
-    :'
+    
     ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 0
 
     g++ -Wall -O CODE_simulator_XO_NoGJ.cpp -o EXE_simulator_XO_NoGJ
@@ -251,7 +251,7 @@ do
     CALCULATION_TIME=$SECONDS
     echo " Done! " $(($CALCULATION_TIME - $START_TIME)) " seconds required!"
     echo ""
-    '
+    
     echo "(3) PLOTTING"
     if [[ $gif == *"G"* ]]; then
         currentDateTime=`date +"%m-%d-%Y_%H:%M:%S"`

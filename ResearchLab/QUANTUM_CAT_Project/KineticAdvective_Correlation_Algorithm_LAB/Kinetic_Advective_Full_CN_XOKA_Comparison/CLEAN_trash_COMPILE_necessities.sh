@@ -17,6 +17,7 @@ rm DATA_sumChiInfo_CN.txt
 
 rm CODE_CN2D_ChiCalculator.cpp
 rm CODE_simulator_*
+rm CODE_Simulator_*
 
 rm EXE_*
 
