@@ -1,4 +1,49 @@
 ks_to_use------------------------
+0.1
+numk-----------------------------
+1
+potential------------------------
+double A=100, w=2.5, d=7.0, mu=0;if((y<=d) & (y>=-d)){ return 0.0;}else { if(x<=0){ return A*exp(-0.5*(x-mu)*(x-mu)/(w*w/16));} else {return A;}}
+EigenstatesSectionsInx-----------
+double d=7.0, L, o;if(x<0){ L=ymax-ymin; o=ymin;} else{ if(abs(y)>d){return 0.0;} L=2.0*d; o=-d; } return sqrt(2.0/L)*sin(j*PI*(y-o)/L);
+DiffyEigenstatesSectionsInx------No_hace_falta_para_CN2
+double d=7.0, L, o;if(x<0){ L=ymax-ymin; o=ymin;} else{ if(abs(y)>d){return 0.0;} L=2.0*d; o=-d; } return sqrt(2.0/L)*(j*PI/L)*cos(j*PI*(y-o)/L);
+DiffyyEigenstatesSectionsInx-----No_hace_falta_para_CN2
+double d=7.0, L, o;if(x<0){ L=ymax-ymin; o=ymin;} else{ if(abs(y)>d){return 0.0;} L=2.0*d; o=-d; } return sqrt(2.0/L)*(-j*j*PI*PI/(L*L))*sin(j*PI*(y-o)/L);
+jmax-----------------------------
+1
+chiSumTolerance------------------No_hace_falta_para_CN2
+0.95
+numTrajs-------------------------
+2
+nx ny_CN----------------------------CN
+140 140
+nx ny_X0----------------------------XO
+200 200
+xmin xmax------------------------
+-25.0 16.0
+ymin ymax------------------------
+-22.0 22.0
+numIt----------------------------
+2000
+dt-------------------------------
+0.004
+massx massy----------------------
+1.0 0.07
+hbar-----------------------------
+1.0
+Kin Adv G J----------------------
+1.0 0.0 0.0 1.0
+xBound---------------------------
+0.0
+outputDataEvery------------------
+30
+gif------------------------------
+G
+ExpLabel-------------------------
+test
+
+ks_to_use------------------------
 0.1 0.2 0.4 0.6
 numk-----------------------------
 4

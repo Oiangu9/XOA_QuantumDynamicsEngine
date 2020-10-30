@@ -190,14 +190,8 @@ sumChiInfo<<j<<" "<<sumaChisHasta(j)<<endl;
 }
 sumChiInfo<<endl<<endl;
 
-for(int ix=0; ix<=nx1; ++ix){
-chiInfo << x1min+ix*dx1 << " ";
-for(int j=0; j<=jmax; ++j){
-chiInfo << abs(Chijx_container(ix, j)) << " "; //each column will have the chi values for the x given in the first column
-}
-chiInfo<<endl;
-}
-chiInfo<<endl<<endl;
+chiInfo << abs(Chijx_container) <<endl <<endl <<endl;
+
 //OUTPUT WF information for plots-------------
 
 wfPlot <<"Norm="<< normWF << endl;

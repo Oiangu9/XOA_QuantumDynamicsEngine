@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd SOURCE_FILES
 rm DATA_chiInfo_CN_w_KA_trajs.txt
 rm DATA_chiInfo_XO.txt
 rm DATA_chiInfo_CN.txt
@@ -14,10 +15,16 @@ rm DATA_probDensity_WF_CN.txt
 rm DATA_sumChiInfo_CN_with_KA_traj.txt
 rm DATA_sumChiInfo_XO.txt
 rm DATA_sumChiInfo_CN.txt
+rm DATA_rawSimulationData_2D_CN.txt
+rm DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt
+rm rm DATA_probabilityToPlot_2D_XO_KinAdv_BornHuang_tINDEP.txt
+rm DATA_potentialToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt
+rm DATA_trajectoriesToPlot*
 
 rm CODE_CN2D_ChiCalculator.cpp
 rm CODE_simulator_*
 rm CODE_Simulator_*
+rm *.png
 
 rm EXE_*
 
