@@ -82,7 +82,7 @@ string line;
 for(int trajIdx=0; trajIdx<trajNum; trajIdx++){
 
   // Extract the whole trajectory
-  for(int tIt=0; tIt<timeIts; tIt++){
+  for(int tIt=0; tIt<=timeIts; tIt++){
     getline( DATA_traj_XO_File, line);
     istringstream iss(line);
     iss >> x_aux >> y_aux;
@@ -95,7 +95,7 @@ for(int trajIdx=0; trajIdx<trajNum; trajIdx++){
   getline( DATA_wf_CN_File, line); // First line has simulation parameters
 
   // For each computed time iteration do
-  for(int tIt=0; tIt<timeIts; tIt++){
+  for(int tIt=0; tIt<=timeIts; tIt++){
       // Extract the full complex WF for this iteration
       getline( DATA_wf_CN_File, line); // the iteration number is written here
       for(int xIt=0; xIt<gridPoints; xIt++){

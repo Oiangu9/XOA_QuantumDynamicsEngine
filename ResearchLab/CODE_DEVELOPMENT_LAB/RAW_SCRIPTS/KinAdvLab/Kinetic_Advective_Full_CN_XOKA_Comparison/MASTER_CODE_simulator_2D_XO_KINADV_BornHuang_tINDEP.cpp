@@ -93,9 +93,9 @@ double* initialPosx = (double*) malloc(numTrajs*sizeof(double));
 double* initialPosy = (double*) malloc(numTrajs*sizeof(double));
 // the initial state of the full wavefunction is generated in order to obtain its modulus squared in each point
 for(int i=0; i<=xDivs; ++i){
-for(int j=0; j<=yDivs; ++j){
-initialFullPsi(i*(yDivs+1) + j) = initialFullWF(xgrid(i), ygrid(j));
-}
+  for(int j=0; j<=yDivs; ++j){
+    initialFullPsi(i*(yDivs+1) + j) = initialFullWF(xgrid(i), ygrid(j));
+  }
 }
 // the probability associated with each space point is generated
 probabDensity =100*abs2(initialFullPsi);
@@ -105,9 +105,9 @@ std::default_random_engine generator;
 std::discrete_distribution<int> distribution (probabClist,probabClist+gridPointsFullWF-1);
 // and the initial positions chosen according to the associated probabilities
 for(int i=0; i<numTrajs; i++){
-aux=distribution(generator); //returns the winner index of the prob vector -> we must revert the indexing to 2d indexes
-initialPosx[i] = xmin + ((int) aux/(yDivs+1))*dx;
-initialPosy[i] = ymin + (aux%(yDivs+1))*dy;
+  aux=distribution(generator); //returns the winner index of the prob vector -> we must revert the indexing to 2d indexes
+  initialPosx[i] = xmin + ((int) aux/(yDivs+1))*dx;
+  initialPosy[i] = ymin + (aux%(yDivs+1))*dy;
 }
 // begin the time iterations for each evolved trajectory - UL, UR must be renamed in every iteration - as if it was a time dependant potential algorithm for a 1D particle
 //we declare and prepare the propagator matrices for the Cranck Nicolson (CN) evolution
@@ -120,9 +120,9 @@ U2y.reserve(VectorXi::Constant(yDivs+1,3));
 cdouble ax=J*dt*hbar/(4.0*mx*dx*dx);
 cdouble ay=J*dt*hbar/(4.0*my*dy*dy);
 for(int i=1;i<xDivs;i++){
-U1x.insert(i,i)= 1.0*J; //just initialise to some random variable
-U1x.insert(i,i+1)= -ax;
-U1x.insert(i,i-1)= -ax;
+    U1x.insert(i,i)= 1.0*J; //just initialise to some random variable
+    U1x.insert(i,i+1)= -ax;
+    U1x.insert(i,i-1)= -ax;
 }
 U1x.insert(0,0)= 1.0*J;
 U1x.insert(0,1)= -ax;
@@ -132,9 +132,9 @@ U1x.makeCompressed();
 U2x = U1x.conjugate();
 U2x.makeCompressed();
 for(int i=1;i<yDivs;i++){
-U1y.insert(i,i)= 1.0*J; //just initialise to some random variable
-U1y.insert(i,i+1)= -ay;
-U1y.insert(i,i-1)= -ay;
+    U1y.insert(i,i)= 1.0*J; //just initialise to some random variable
+    U1y.insert(i,i+1)= -ay;
+    U1y.insert(i,i-1)= -ay;
 }
 U1y.insert(0,0)= 1.0*J;
 U1y.insert(0,1)= -ay;
@@ -151,8 +151,8 @@ VectorXcd psiX(xDivs+1), psiY(yDivs+1), U2psix(xDivs+1), U2psiy(yDivs+1);
 VectorXcd conjPsix(xDivs+1), conjPsiy(yDivs+1), auxX(xDivs+1), auxY(yDivs+1);
 ArrayXd probDensityx(xDivs+1), probDensityy(yDivs+1), velocityFieldx(xDivs+1), velocityFieldy(yDivs+1), auxArrayx(xDivs+1), auxArrayy(yDivs+1);
 //we define the trajectory matrix
-double** traj=new double*[timeIts+1];
-for (int i=0; i<=timeIts; ++i){ traj[i]= new double[2];} // the trajectory is saved in an array of timeIts arrays of 2 doubles (xi, yi)
+double** traj=new double*[timeIts+2];
+for (int i=0; i<=(timeIts+1); ++i){ traj[i]= new double[2];} // the trajectory is saved in an array of timeIts arrays of 2 doubles (xi, yi)
 // each of the timeIts arrays contains the value for the trajectory in each of the x,y at that iteration
 double vx, vy;
 //We open the output streams
@@ -175,188 +175,188 @@ probabDataFile << std::setprecision(17);
 trajDataFile << std::setprecision(17);
 //BEGINNING OF THE ALGORITHM FOR EACH OF THE INITIAL CONDITIONS----------------------------------------------------------------
 for(int trajNum=0; trajNum<numTrajs; ++trajNum){ //this is a potential multithreading branching point
-//We initialise the SPCWF conditioning the full WF to the intial values of the trajectories of this iteration
-for(int i=0; i<=xDivs; ++i){
-psiX(i) = initialFullWF(xgrid(i), initialPosy[trajNum]);
-}
-for(int i=0; i<=yDivs; ++i){
-psiY(i) = initialFullWF(initialPosx[trajNum], ygrid(i));
-}
-traj[0][0]=initialPosx[trajNum];
-traj[0][1]=initialPosy[trajNum];
-// TIME ITERATIONS BEGIN -----------------------------------------------------------------------------------------------------
-for(int it=0; it<timeIts; ++it){
-//NEXT POSITION OF THE TRAJECTORY OBTAINED -----------------------------
-//Using the current SPCWF, the velocity field of each dimension at this time is obtained and the next position of the trajectory calculated
-//first for the x dimension-------------------------------------
-//we first get the probability density function and the inverse psi
-probDensityx =abs2(psiX.array());
-conjPsix = conj(psiX.array());
-// psi_qi^-1* diff(psi_qi,qi) is computed:
-//the borders are get with an Euler difference o(dq) and the immediate divisions with a central difference o(dq^2)
-auxX(0) = conjPsix(0)*(psiX(1)-psiX(0))/(dx*probDensityx(0));
-auxX(1) = conjPsix(1)*(psiX(2)-psiX(0))/(2.0*dx*probDensityx(1));
-//the rest of points are got with a o(dq^4) difference
-for(int i=2; i<=xDivs-2; ++i){
-auxX(i) = conjPsix(i)*(-psiX(i+2) + 8.0*psiX(i+1) - 8.0*psiX(i-1) +psiX(i-2))/(12*dx*probDensityx(i));
-}
-auxX(xDivs-1) = conjPsix(xDivs-1)*(psiX(xDivs)-psiX(xDivs-2))/(2.0*dx*probDensityx(xDivs-1));
-auxX(xDivs) = conjPsix(xDivs)*(psiX(xDivs)-psiX(xDivs-1))/(dx*probDensityx(xDivs));
-// imaginary part is extracted and the velocity field obtained
-velocityFieldx = (hbar/mx)*imag(auxX.array());
-//now the y dimension------------------------------------
-//we first get the probability density function and the inverse psi
-probDensityy =abs2(psiY.array());
-conjPsiy = conj(psiY.array());
-// psi_qi^-1* diff(psi_qi,qi) is computed:
-//the borders are get with an Euler difference o(dq) and the immediate divisions with a central difference o(dq^2)
-auxY(0) = conjPsiy(0)*(psiY(1)-psiY(0))/(dy*probDensityy(0));
-auxY(1) = conjPsiy(1)*(psiY(2)-psiY(0))/(2.0*dy*probDensityy(1));
-//the rest of points are got with a o(dq^4) difference
-for(int i=2; i<=yDivs-2; ++i){
-auxY(i) = conjPsiy(i)*(-psiY(i+2) + 8.0*psiY(i+1) - 8.0*psiY(i-1) +psiY(i-2))/(12*dy*probDensityy(i));
-}
-auxY(yDivs-1) = conjPsiy(yDivs-1)*(psiY(yDivs)-psiY(yDivs-2))/(2.0*dy*probDensityy(yDivs-1));
-auxY(yDivs) = conjPsiy(yDivs)*(psiY(yDivs)-psiY(yDivs-1))/(dy*probDensityy(yDivs));
-// imaginary part is extracted and the velocity field obtained
-velocityFieldy = (hbar/my)*imag(auxY.array());
-//we apply the discretisation of the grid to the traj positions
-fractional = std::modf((traj[it][0]-xmin)/dx, &whole);
-if(whole>=xDivs){whole=xDivs-2;}else if(whole<0){whole=0;}
-vx=(1-fractional)*velocityFieldx(whole)+fractional*velocityFieldx(whole+1);
-traj[it+1][0] = traj[it][0]+vx*dt;
-fractional = std::modf((traj[it][1]-ymin)/dy, &whole);
-if(whole>=yDivs){whole=yDivs-2;}else if(whole<0){whole=0;}
-vy= (1-fractional)*velocityFieldy(whole)+fractional*velocityFieldy(whole+1);
-traj[it+1][1] = traj[it][1]+vy*dt;
-//The norms of the SPCWFs Nx and Ny for Uj term calculation are obtained with a composed trapezium rule--------------------------------------------------------------------
-//for Nx
-Nx=0.5*(probDensityx(0)+probDensityx(xDivs));
-for(int i=1; i<xDivs; ++i){Nx+=probDensityx(i);}
-Nx*=dx;
-Ny=0.5*(probDensityy(0)+probDensityy(yDivs));
-for(int i=1; i<yDivs; ++i){Ny+=probDensityy(i);}
-Ny*=dy;
-//Uj(x,t) values of the XO algorithm are calculated so they can be ----------------------------------------------------------------------------
-lastjUsedInItx=-1.0;
-sumaParaChisx=0.0;
-for(int j=0; j<=xjmax; ++j){
-for(int i=0; i<=xDivs; ++i){
-posx = xgrid(i);
-//we get the Uj for this x and this j
+  //We initialise the SPCWF conditioning the full WF to the intial values of the trajectories of this iteration
+  for(int i=0; i<=xDivs; ++i){
+    psiX(i) = initialFullWF(xgrid(i), initialPosy[trajNum]);
+  }
+  for(int i=0; i<=yDivs; ++i){
+    psiY(i) = initialFullWF(initialPosx[trajNum], ygrid(i));
+  }
+  traj[0][0]=initialPosx[trajNum];
+  traj[0][1]=initialPosy[trajNum];
+  // TIME ITERATIONS BEGIN -----------------------------------------------------------------------------------------------------
+  for(int it=0; it<=timeIts; ++it){
+    //NEXT POSITION OF THE TRAJECTORY OBTAINED -----------------------------
+    //Using the current SPCWF, the velocity field of each dimension at this time is obtained and the next position of the trajectory calculated
+    //first for the x dimension-------------------------------------
+    //we first get the probability density function and the inverse psi
+    probDensityx =abs2(psiX.array());
+    conjPsix = conj(psiX.array());
+    // psi_qi^-1* diff(psi_qi,qi) is computed:
+    //the borders are get with an Euler difference o(dq) and the immediate divisions with a central difference o(dq^2)
+    auxX(0) = conjPsix(0)*(psiX(1)-psiX(0))/(dx*probDensityx(0));
+    auxX(1) = conjPsix(1)*(psiX(2)-psiX(0))/(2.0*dx*probDensityx(1));
+    //the rest of points are got with a o(dq^4) difference
+    for(int i=2; i<=xDivs-2; ++i){
+      auxX(i) = conjPsix(i)*(-psiX(i+2) + 8.0*psiX(i+1) - 8.0*psiX(i-1) +psiX(i-2))/(12*dx*probDensityx(i));
+    }
+    auxX(xDivs-1) = conjPsix(xDivs-1)*(psiX(xDivs)-psiX(xDivs-2))/(2.0*dx*probDensityx(xDivs-1));
+    auxX(xDivs) = conjPsix(xDivs)*(psiX(xDivs)-psiX(xDivs-1))/(dx*probDensityx(xDivs));
+    // imaginary part is extracted and the velocity field obtained
+    velocityFieldx = (hbar/mx)*imag(auxX.array());
+    //now the y dimension------------------------------------
+    //we first get the probability density function and the inverse psi
+    probDensityy =abs2(psiY.array());
+    conjPsiy = conj(psiY.array());
+    // psi_qi^-1* diff(psi_qi,qi) is computed:
+    //the borders are get with an Euler difference o(dq) and the immediate divisions with a central difference o(dq^2)
+    auxY(0) = conjPsiy(0)*(psiY(1)-psiY(0))/(dy*probDensityy(0));
+    auxY(1) = conjPsiy(1)*(psiY(2)-psiY(0))/(2.0*dy*probDensityy(1));
+    //the rest of points are got with a o(dq^4) difference
+    for(int i=2; i<=yDivs-2; ++i){
+      auxY(i) = conjPsiy(i)*(-psiY(i+2) + 8.0*psiY(i+1) - 8.0*psiY(i-1) +psiY(i-2))/(12*dy*probDensityy(i));
+    }
+    auxY(yDivs-1) = conjPsiy(yDivs-1)*(psiY(yDivs)-psiY(yDivs-2))/(2.0*dy*probDensityy(yDivs-1));
+    auxY(yDivs) = conjPsiy(yDivs)*(psiY(yDivs)-psiY(yDivs-1))/(dy*probDensityy(yDivs));
+    // imaginary part is extracted and the velocity field obtained
+    velocityFieldy = (hbar/my)*imag(auxY.array());
+    //we apply the discretisation of the grid to the traj positions
+    fractional = std::modf((traj[it][0]-xmin)/dx, &whole);
+    if(whole>=xDivs){whole=xDivs-2;}else if(whole<0){whole=0;}
+    vx=(1-fractional)*velocityFieldx(whole)+fractional*velocityFieldx(whole+1);
+    traj[it+1][0] = traj[it][0]+vx*dt;
+    fractional = std::modf((traj[it][1]-ymin)/dy, &whole);
+    if(whole>=yDivs){whole=yDivs-2;}else if(whole<0){whole=0;}
+    vy= (1-fractional)*velocityFieldy(whole)+fractional*velocityFieldy(whole+1);
+    traj[it+1][1] = traj[it][1]+vy*dt;
+    //The norms of the SPCWFs Nx and Ny for Uj term calculation are obtained with a composed trapezium rule--------------------------------------------------------------------
+    //for Nx
+    Nx=0.5*(probDensityx(0)+probDensityx(xDivs));
+    for(int i=1; i<xDivs; ++i){Nx+=probDensityx(i);}
+    Nx*=dx;
+    Ny=0.5*(probDensityy(0)+probDensityy(yDivs));
+    for(int i=1; i<yDivs; ++i){Ny+=probDensityy(i);}
+    Ny*=dy;
+    //Uj(x,t) values of the XO algorithm are calculated so they can be ----------------------------------------------------------------------------
+    lastjUsedInItx=-1.0;
+    sumaParaChisx=0.0;
+    for(int j=0; j<=xjmax; ++j){
+      for(int i=0; i<=xDivs; ++i){
+        posx = xgrid(i);
+        //we get the Uj for this x and this j
 
-Uj=0.5*(eigenstatesForSectionsInx(ymin,posx,j)*psiY(0) + eigenstatesForSectionsInx(ymax,posx,j)*psiY(yDivs));
-for(int k=1; k<yDivs; ++k){ Uj=Uj+eigenstatesForSectionsInx(ygrid(k),posx,j)*psiY(k);}
- Ujx_container(i, j)=Uj*dy/((cdouble) sqrt(Nx*Ny));
-Chijx_container(i,j)=Ujx_container(i, j)*psiX(i);
-}
-lastjUsedInItx=j;
-sumaParaChisx+=abs2(Chijx_container.col(j)).sum();
-if((sumaChisx(j)=sumaParaChisx*dx)>=chiSumTolerance){break;}
-//Ujx_normFactors(j) = sqrt((abs2(psiX.array()*Ujx_container.col(j)).sum())*(xjmax+1)); //sure we miss the 1/2 for the first and last elements in the trapezium rule, but due to the number of entries in the vector this will turn out negligible
-}
-if(b_y!=0){
-lastjUsedInIty=-1.0;
-sumaParaChisy=0.0;
-for(int j=0; j<=yjmax; ++j){
-for(int i=0; i<=yDivs; ++i){
-posy = ygrid(i);
-//we get the Uj for this y and this j
-Uj=0.5*(eigenstatesForSectionsIny(xmin,posy,j)*psiX(0) + eigenstatesForSectionsIny(xmax,posy,j)*psiX(xDivs));
-for(int k=1; k<xDivs; ++k){ Uj=Uj+eigenstatesForSectionsIny(xgrid(k),posy,j)*psiX(k);}
- Ujy_container(i, j)=Uj*dx/((cdouble) sqrt(Nx*Ny));
-Chijy_container(i,j)=Ujy_container(i, j)*psiY(i);
-}
-lastjUsedInIty=j;
-sumaParaChisy+=abs2(Chijy_container.col(j)).sum();
-if((sumaChisy(j)=sumaParaChisy*dy)>=chiSumTolerance){break;}
-//Ujy_normFactors(j) = sqrt((abs2(psiY.array()*Ujy_container.col(j)).sum())*(yjmax+1));
-}
-}
-//The Ui propagator matrices of each dimension x,y are updated for this time iteration-------------------------------------------------------------------------------------
-posy = traj[it][1];
-for(int i=0; i<=xDivs; ++i){
-posx = xgrid(i);
-kineticCor = 0.0;
-advectiveCor = 0.0;
-//correlPot =0.0;
-for(int j=0; j<=lastjUsedInItx; ++j){ //generate the kinetic and advective correlation potentials for this spatial grid point posx
-kineticCor = kineticCor - Ujx_container(i,j)* 0.5*hbar*hbar*diffyyEigenstatesForSectionsInx(posy, posx, j)/my;
-advectiveCor = advectiveCor + Ujx_container(i,j)* vy*hbar*diffyEigenstatesForSectionsInx(posy, posx, j);
+        Uj=0.5*(eigenstatesForSectionsInx(ymin,posx,j)*psiY(0) + eigenstatesForSectionsInx(ymax,posx,j)*psiY(yDivs));
+        for(int k=1; k<yDivs; ++k){ Uj=Uj+eigenstatesForSectionsInx(ygrid(k),posx,j)*psiY(k);}
+        Ujx_container(i, j)=Uj*dy/((cdouble) sqrt(Nx*Ny));
+        Chijx_container(i,j)=Ujx_container(i, j)*psiX(i);
+      }
+      lastjUsedInItx=j;
+      sumaParaChisx+=abs2(Chijx_container.col(j)).sum();
+      if((sumaChisx(j)=sumaParaChisx*dx)>=chiSumTolerance){break;}
+      //Ujx_normFactors(j) = sqrt((abs2(psiX.array()*Ujx_container.col(j)).sum())*(xjmax+1)); //sure we miss the 1/2 for the first and last elements in the trapezium rule, but due to the number of entries in the vector this will turn out negligible
+    }
+    if(b_y!=0){
+    lastjUsedInIty=-1.0;
+    sumaParaChisy=0.0;
+    for(int j=0; j<=yjmax; ++j){
+      for(int i=0; i<=yDivs; ++i){
+        posy = ygrid(i);
+        //we get the Uj for this y and this j
+        Uj=0.5*(eigenstatesForSectionsIny(xmin,posy,j)*psiX(0) + eigenstatesForSectionsIny(xmax,posy,j)*psiX(xDivs));
+        for(int k=1; k<xDivs; ++k){ Uj=Uj+eigenstatesForSectionsIny(xgrid(k),posy,j)*psiX(k);}
+         Ujy_container(i, j)=Uj*dx/((cdouble) sqrt(Nx*Ny));
+        Chijy_container(i,j)=Ujy_container(i, j)*psiY(i);
+      }
+      lastjUsedInIty=j;
+      sumaParaChisy+=abs2(Chijy_container.col(j)).sum();
+      if((sumaChisy(j)=sumaParaChisy*dy)>=chiSumTolerance){break;}
+      //Ujy_normFactors(j) = sqrt((abs2(psiY.array()*Ujy_container.col(j)).sum())*(yjmax+1));
+    }
+    }
+    //The Ui propagator matrices of each dimension x,y are updated for this time iteration-------------------------------------------------------------------------------------
+    posy = traj[it][1];
+    for(int i=0; i<=xDivs; ++i){
+      posx = xgrid(i);
+      kineticCor = 0.0;
+      advectiveCor = 0.0;
+      //correlPot =0.0;
+      for(int j=0; j<=lastjUsedInItx; ++j){ //generate the kinetic and advective correlation potentials for this spatial grid point posx
+        kineticCor = kineticCor - Ujx_container(i,j)* 0.5*hbar*hbar*diffyyEigenstatesForSectionsInx(posy, posx, j)/my;
+        advectiveCor = advectiveCor + Ujx_container(i,j)* vy*hbar*diffyEigenstatesForSectionsInx(posy, posx, j);
 
-//correlPot = correlPot + ( Ujx_container(i,j) )*(kineticCor + J*advectiveCor);
-}
-correlPot=$29$*kineticCor+J*advectiveCor*$30$;
-U1x.coeffRef(i,i) = 1.0+J*dt*(hbar*hbar/(mx*dx*dx)+ W(posx, posy) + $31$*correlPot.real()+J*correlPot.imag()*$32$ )/((cdouble)2.0*hbar);
-U2x.coeffRef(i,i) = 1.0-J*dt*(hbar*hbar/(mx*dx*dx)+ W(posx, posy) + $31$*correlPot.real()+J*correlPot.imag()*$32$ )/((cdouble)2.0*hbar);
-G_J_x(i,0) = $31$*correlPot.real();
-G_J_x(i,1) = $32$*correlPot.imag();
-KinAdv_x(i,0)=$29$*kineticCor.real();
-KinAdv_x(i,1)=$29$*kineticCor.imag();
-KinAdv_x(i,2)=$30$*advectiveCor.real();
-KinAdv_x(i,3)=$30$*advectiveCor.imag();
-}
-posx = traj[it][0];
-for(int i=0; i<=yDivs; ++i){
-posy = ygrid(i);
-correlPot =0.0;
-if(b_y!=0){
-for(int j=0; j<=lastjUsedInIty; ++j){ //generate the kinetic and advective correlation potentials for this spatial grid point posx
-kineticCor = -0.5*hbar*hbar*diffxxEigenstatesForSectionsIny(posx, posy, j)/mx;
-advectiveCor = vx*hbar*diffxEigenstatesForSectionsIny(posx, posy, j);
+        //correlPot = correlPot + ( Ujx_container(i,j) )*(kineticCor + J*advectiveCor);
+      }
+      correlPot=$29$*kineticCor+J*advectiveCor*$30$;
+      U1x.coeffRef(i,i) = 1.0+J*dt*(hbar*hbar/(mx*dx*dx)+ W(posx, posy) + $31$*correlPot.real()+J*correlPot.imag()*$32$ )/((cdouble)2.0*hbar);
+      U2x.coeffRef(i,i) = 1.0-J*dt*(hbar*hbar/(mx*dx*dx)+ W(posx, posy) + $31$*correlPot.real()+J*correlPot.imag()*$32$ )/((cdouble)2.0*hbar);
+      G_J_x(i,0) = $31$*correlPot.real();
+      G_J_x(i,1) = $32$*correlPot.imag();
+      KinAdv_x(i,0)=$29$*kineticCor.real();
+      KinAdv_x(i,1)=$29$*kineticCor.imag();
+      KinAdv_x(i,2)=$30$*advectiveCor.real();
+      KinAdv_x(i,3)=$30$*advectiveCor.imag();
+    }
+    posx = traj[it][0];
+    for(int i=0; i<=yDivs; ++i){
+      posy = ygrid(i);
+      correlPot =0.0;
+      if(b_y!=0){
+        for(int j=0; j<=lastjUsedInIty; ++j){ //generate the kinetic and advective correlation potentials for this spatial grid point posx
+          kineticCor = -0.5*hbar*hbar*diffxxEigenstatesForSectionsIny(posx, posy, j)/mx;
+          advectiveCor = vx*hbar*diffxEigenstatesForSectionsIny(posx, posy, j);
 
-correlPot = correlPot + ( Ujy_container(i,j) )*(kineticCor + J*advectiveCor);
-}
-}
-U1y.coeffRef(i,i)= 1.0+J*dt*(hbar*hbar/(my*dy*dy)+ W(posx,posy) + b_y*correlPot)/((cdouble)2.0*hbar);
-U2y.coeffRef(i,i)= 1.0-J*dt*(hbar*hbar/(my*dy*dy)+ W(posx,posy) + b_y*correlPot)/((cdouble)2.0*hbar);
+          correlPot = correlPot + ( Ujy_container(i,j) )*(kineticCor + J*advectiveCor);
+        }
+      }
+      U1y.coeffRef(i,i)= 1.0+J*dt*(hbar*hbar/(my*dy*dy)+ W(posx,posy) + b_y*correlPot)/((cdouble)2.0*hbar);
+      U2y.coeffRef(i,i)= 1.0-J*dt*(hbar*hbar/(my*dy*dy)+ W(posx,posy) + b_y*correlPot)/((cdouble)2.0*hbar);
 
-//G_J_y(i,0) = correlPot.real();//nG_J_y(i,1) = correlPot.imag();
+      //G_J_y(i,0) = correlPot.real();//nG_J_y(i,1) = correlPot.imag();
 
-}
-U1x.makeCompressed();
-U1y.makeCompressed();
-U2x.makeCompressed();
-U2y.makeCompressed();
-//LU decomposition done
-LUsolverx.compute(U1x);
-if(LUsolverx.info()!=Success) {
-cout << "LUx decomposition FAILED!" << endl;
-return 1;
-}
-U2psix= U2x*psiX;
-psiX = LUsolverx.solve(U2psix); //the wavefunction of the next time iteration is generated
-LUsolvery.compute(U1y);
-if(LUsolvery.info()!=Success) {
-cout << "LUy decomposition FAILED!" << endl;
-return 1;
-}
-U2psiy= U2y*psiY;
-psiY = LUsolvery.solve(U2psiy);
-if( it%outputDataEvery == 0){ //then we output the data
-probabDataFile <<"KA-Norm_x=" << Nx<<endl<<probDensityx << endl << endl<<endl;
-probabDataFile<<"KA-Norm_y=" << Ny<<endl << probDensityy << endl << endl<<endl;
- for(int j=0; j<=lastjUsedInItx; ++j){
-DATA_sumChiInfo<<j<<" "<<sumaChisx(j)<<endl;
-}
- DATA_sumChiInfo<<endl<<endl;
- DATA_chiInfo <<abs(Chijx_container.leftCols(lastjUsedInItx+1))<<endl<<endl<<endl;
-DATA_G_J_x<<G_J_x<<endl<<endl<<endl;
-//DATA_G_J_y<<G_J_y<<endl<<endl<<endl;
-DATA_KinAdv_x << KinAdv_x<<endl<<endl<<endl;
-//DATA_KinAdv_y << KinAdv_y<<endl<<endl<<endl;
-DATA_XO_Re_Uj_x << Ujx_container.real() << endl<<endl<<endl;
-DATA_XO_Im_Uj_x << Ujx_container.imag() << endl << endl << endl;
-}
-}
-for(int it=0; it<timeIts; ++it){
-if( it%outputDataEvery == 0){ //then we output the data
-trajDataFile << traj[it][0] << " " << traj[it][1] << " ";
-trajDataFile <<" 0"<<endl;
-if(traj[it][0]>=xBound){trajProportionCrossed(it)+=1;}
-}
-}
-}
+    }
+    U1x.makeCompressed();
+    U1y.makeCompressed();
+    U2x.makeCompressed();
+    U2y.makeCompressed();
+    //LU decomposition done
+    LUsolverx.compute(U1x);
+    if(LUsolverx.info()!=Success) {
+      cout << "LUx decomposition FAILED!" << endl;
+      return 1;
+    }
+    U2psix= U2x*psiX;
+    psiX = LUsolverx.solve(U2psix); //the wavefunction of the next time iteration is generated
+    LUsolvery.compute(U1y);
+    if(LUsolvery.info()!=Success) {
+      cout << "LUy decomposition FAILED!" << endl;
+      return 1;
+    }
+    U2psiy= U2y*psiY;
+    psiY = LUsolvery.solve(U2psiy);
+    if( it%outputDataEvery == 0){ //then we output the data
+      probabDataFile <<"KA-Norm_x=" << Nx<<endl<<probDensityx << endl << endl<<endl;
+      probabDataFile<<"KA-Norm_y=" << Ny<<endl << probDensityy << endl << endl<<endl;
+      for(int j=0; j<=lastjUsedInItx; ++j){
+        DATA_sumChiInfo<<j<<" "<<sumaChisx(j)<<endl;
+      }
+      DATA_sumChiInfo<<endl<<endl;
+      DATA_chiInfo <<abs(Chijx_container.leftCols(lastjUsedInItx+1))<<endl<<endl<<endl;
+      DATA_G_J_x<<G_J_x<<endl<<endl<<endl;
+      //DATA_G_J_y<<G_J_y<<endl<<endl<<endl;
+      DATA_KinAdv_x << KinAdv_x<<endl<<endl<<endl;
+      //DATA_KinAdv_y << KinAdv_y<<endl<<endl<<endl;
+      DATA_XO_Re_Uj_x << Ujx_container.real() << endl<<endl<<endl;
+      DATA_XO_Im_Uj_x << Ujx_container.imag() << endl << endl << endl;
+    }
+  } //end time iteration loop
+  for(int it=0; it<=timeIts; ++it){
+    if( it%outputDataEvery == 0){ //then we output the data
+      trajDataFile << traj[it][0] << " " << traj[it][1] << " ";
+      trajDataFile <<" 0"<<endl;
+      if(traj[it][0]>=xBound){trajProportionCrossed(it)+=1;}
+    }
+  }
+} //end TrajectoryNumber loop
 probabDataFile.close();
 trajDataFile.close();
 DATA_chiInfo.close();
@@ -373,22 +373,31 @@ int enoughStepy=yDivs*potentialPlotFinness;
 double* posArx=new double[xDivs+1];
 double* posAry=new double[yDivs+1];
 for(int i=0; i<=xDivs; i+=enoughStepx){
-posArx[i]=xgrid(i);}
+  posArx[i]=xgrid(i);
+}
 for(int j=0; j<=yDivs; j+=enoughStepy){
-posAry[j]=ygrid(j);}
+  posAry[j]=ygrid(j);
+}
 potentialToPlot.open("DATA_potentialToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt");
 trajProps.open("DATA_XO_KA_trajProps_k=$28$.txt");
 trajProportionCrossed = (1/(double)numTrajs)*trajProportionCrossed;
+// we also output the trajectory proportion that crossed x=0 at each time - in order to compute the transmission -
 for(int it=0; it<=timeIts; ++it){
-if(it%outputDataEvery ==0){trajProps<<trajProportionCrossed(it)<<endl;
+    if(it%outputDataEvery ==0){trajProps<<trajProportionCrossed(it)<<endl;
+  }
+}
 for(int i=0; i<=xDivs; i+=enoughStepx){
-for(int j=0; j<=yDivs; j+=enoughStepy){
-potentialToPlot << posArx[i] << " " << posAry[j] << " " << W(posArx[i], posAry[j])<< endl;
+  for(int j=0; j<=yDivs; j+=enoughStepy){
+      potentialToPlot << posArx[i] << " " << posAry[j] << " " << W(posArx[i], posAry[j])<< endl;
+  }potentialToPlot<<endl;
 }potentialToPlot<<endl;
-}potentialToPlot<<endl;
-}}
+
 potentialToPlot.close();
 trajProps.close();
+
+for(int i=0; i<=(timeIts+1); i++){ delete[] traj[i]; }
+delete[] traj;
+
 return 0;
 }
 
@@ -545,8 +554,8 @@ VectorXcd psiX(xDivs+1), psiY(yDivs+1), U2psix(xDivs+1), U2psiy(yDivs+1);
 VectorXcd conjPsix(xDivs+1), conjPsiy(yDivs+1), auxX(xDivs+1), auxY(yDivs+1);
 ArrayXd probDensityx(xDivs+1), probDensityy(yDivs+1), velocityFieldx(xDivs+1), velocityFieldy(yDivs+1), auxArrayx(xDivs+1), auxArrayy(yDivs+1);
 //we define the trajectory matrix
-double** traj=new double*[timeIts+1];
-for (int i=0; i<=timeIts; ++i){ traj[i]= new double[2];} // the trajectory is saved in an array of timeIts arrays of 2 doubles (xi, yi)
+double** traj=new double*[timeIts+2];
+for (int i=0; i<=(timeIts+1); ++i){ traj[i]= new double[2];} // the trajectory is saved in an array of timeIts arrays of 2 doubles (xi, yi)
 // each of the timeIts arrays contains the value for the trajectory in each of the x,y at that iteration
 double vx, vy;
 //We open the output streams
@@ -570,7 +579,7 @@ psiY(i) = initialFullWF(initialPosx[trajNum], ygrid(i));
 traj[0][0]=initialPosx[trajNum];
 traj[0][1]=initialPosy[trajNum];
 // TIME ITERATIONS BEGIN -----------------------------------------------------------------------------------------------------
-for(int it=0; it<timeIts; ++it){
+for(int it=0; it<=timeIts; ++it){
 //NEXT POSITION OF THE TRAJECTORY OBTAINED -----------------------------
 //Using the current SPCWF, the velocity field of each dimension at this time is obtained and the next position of the trajectory calculated
 //first for the x dimension-------------------------------------
@@ -660,7 +669,7 @@ probabDataFile <<"Norm_x=" << Nx<<endl<<probDensityx << endl << endl<<endl;
 probabDataFile<<"Norm_y=" << Ny<<endl << probDensityy << endl << endl<<endl;
  }
 }
-for(int it=0; it<timeIts; ++it){
+for(int it=0; it<=timeIts; ++it){
 if( it%outputDataEvery == 0){ //then we output the data
 trajDataFile << traj[it][0] << " " << traj[it][1] << " ";
 trajDataFile <<" 0"<<endl;
@@ -695,5 +704,7 @@ potentialToPlot << posArx[i] << " " << posAry[j] << " " << W(posArx[i], posAry[j
 }}
 potentialToPlot.close();
 trajProps.close();
+for(int i=0; i<=(timeIts+1); i++){ delete[] traj[i]; }
+delete[] traj;
 return 0;
 }
