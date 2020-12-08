@@ -8,7 +8,8 @@ rm DATA_CN_Im_Uj.txt
 rm DATA_CN_Re_Uj.txt
 rm DATA_XO_Im_Uj.txt
 rm DATA_XO_Re_Uj.txt
-rm DATA_G_J_x.txt
+rm DATA_G_J_x_KA.txt
+rm DATA_G_J_with_CN_and_KA_trajs.txt
 rm DATA_KinAdv_x.txt
 rm DATA_probDensity_conditional_WF_CN.txt
 rm DATA_probDensity_WF_CN.txt
@@ -17,9 +18,11 @@ rm DATA_sumChiInfo_XO.txt
 rm DATA_sumChiInfo_CN.txt
 rm DATA_rawSimulationData_2D_CN.txt
 rm DATA_probabilityToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt
-rm rm DATA_probabilityToPlot_2D_XO_KinAdv_BornHuang_tINDEP.txt
+rm DATA_probabilityToPlot_2D_XO_KinAdv_BornHuang_tINDEP.txt
 rm DATA_potentialToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt
 rm DATA_trajectoriesToPlot*
+rm DATA_Full_WF_G_J_CN.txt
+rm DATA_derivatives_S_R.txt
 
 rm CODE_CN2D_ChiCalculator.cpp
 rm CODE_simulator_*

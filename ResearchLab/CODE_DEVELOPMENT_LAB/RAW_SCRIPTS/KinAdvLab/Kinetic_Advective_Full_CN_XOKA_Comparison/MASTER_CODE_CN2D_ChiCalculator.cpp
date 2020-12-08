@@ -22,8 +22,8 @@ using namespace std;
 
 ifstream inputFileWF;
 
-int nx1=$4$,nx2=$5$, numIt=$10$, numTrajs=$12$, gridPoints, aux;
-double x1min=$6$,x1max=$7$,x2min=$8$,x2max=$9$,xBound=$11$,dx1,dx2, normWF, sumCorners, sumBorders, sumInterior, sumaParaChisx, hbar=$14$, m1=$15$, m2=$16$, fractionalx1, fractionalx2, wholex1, wholex2, dt=$17$;
+int nx1=$4$,nx2=$5$, numIt=$10$, numTrajs=$12$, gridPoints, aux, wholex1, wholex2;
+double x1min=$6$,x1max=$7$,x2min=$8$,x2max=$9$,xBound=$11$,dx1,dx2, normWF, sumCorners, sumBorders, sumInterior, sumaParaChisx, hbar=$14$, m1=$15$, m2=$16$, fractionalx1, fractionalx2, wholex1f, wholex2f, dt=$17$;
 double xmin=$6$,xmax=$7$,ymin=$8$,ymax=$9$;
 double * trajectoriesx1, * trajectoriesx2;
 //The adiabatic states for sections in x and the maximum desired j to calculate
@@ -105,14 +105,14 @@ for(int tIt=0; tIt<=numIt; ++tIt){
 
 
     // psi^-1* diff(psi,x)/ absWF is computed
-    for(int i=0; i<nx1; i++){
+    for(int i=0; i<=nx1; i++){
         for(int j=0; j<nx2;j++){
-        if(i==0){
-            auxComplexVectorx1(j)=conjPsi(j)*(WF(nx2+1+j)-WF(j))/(absWF(j)*dx1);
+            if(i==0){
+                auxComplexVectorx1(j)=conjPsi(j)*(WF(nx2+1+j)-WF(j))/(absWF(j)*dx1);
             } else if(i==nx1){
                 auxComplexVectorx1(nx1*(nx2+1)+j)=conjPsi(nx1*(nx2+1)+j)*(WF(nx1*(nx2+1)+j)-WF((nx1-1)*(nx2+1)+j))/(absWF(nx1*(nx2+1)+j)*dx1);
             } else if(i==1 || i==(nx1-1)){
-                auxComplexVectorx1(i*(nx2+1)+j)=conjPsi(i*(nx2+1)+j)*(WF((i+1)*(nx2+1)+j)-WF((i-1)*(nx2+1)+j))/(2*absWF(i*(nx2+1)+j)*dx1);
+                auxComplexVectorx1(i*(nx2+1)+j)=conjPsi(i*(nx2+1)+j)*(WF((i+1)*(nx2+1)+j)-WF((i-1)*(nx2+1)+j))/(2.0*absWF(i*(nx2+1)+j)*dx1);
             } else{
                 auxComplexVectorx1(i*(nx2+1)+j)=conjPsi(i*(nx2+1)+j)*(-WF((i+2)*(nx2+1)+j)+8.0*WF((i+1)*(nx2+1)+j)-8.0*WF((i-1)*(nx2+1)+j)+WF((i-2)*(nx2+1)+j))/(12.0*absWF(i*(nx2+1)+j)*dx1);
             }
@@ -121,10 +121,10 @@ for(int tIt=0; tIt<=numIt; ++tIt){
             } else if(j==nx2){
                 auxComplexVectorx2(i*(nx2+1)+nx2)=conjPsi(i*(nx2+1)+nx2)*(WF(i*(nx2+1)+nx2)-WF(i*(nx2+1)+nx2-1))/(absWF(i*(nx2+1)+nx2)*dx2);
             } else if(j==1 || j==(nx2-1)){
-                auxComplexVectorx2(i*(nx2+1)+j)=conjPsi(i*(nx2+1)+j)*(WF(i*(nx2+1)+j+1)-WF(i*(nx2+1)+j-1))/(2*absWF(i*(nx2+1)+j)*dx2);
+                auxComplexVectorx2(i*(nx2+1)+j)=conjPsi(i*(nx2+1)+j)*(WF(i*(nx2+1)+j+1)-WF(i*(nx2+1)+j-1))/(2.0*absWF(i*(nx2+1)+j)*dx2);
             }else{
                 auxComplexVectorx2(i*(nx2+1)+j)=conjPsi(i*(nx2+1)+j)*(-WF(i*(nx2+1)+j+2)+8.0*WF(i*(nx2+1)+j+1)-8.0*WF(i*(nx2+1)+j-1)+WF(i*(nx2+1)+j-2))/(12.0*absWF(i*(nx2+1)+j)*dx2);
-        } //THERE IS SOMETHING WRONG WITH THE X1 AXIS!
+            }
         }
     }
     // imaginary part is extracted and Jk obtained
@@ -132,8 +132,10 @@ for(int tIt=0; tIt<=numIt; ++tIt){
     vFieldx2 = (hbar/m2)*imag(auxComplexVectorx2);
     for(int i=0; i<numTrajs;i++){
         //we apply the discretisation of the grid to the traj positions
-        fractionalx1 = std::modf((trajectoriesx1[i]-x1min)/dx1, &wholex1);
-        fractionalx2 = std::modf((trajectoriesx2[i]-x2min)/dx2, &wholex2);
+        fractionalx1 = std::modf((trajectoriesx1[i]-x1min)/dx1, &wholex1f);
+        fractionalx2 = std::modf((trajectoriesx2[i]-x2min)/dx2, &wholex2f);
+        wholex1 = wholex1f;
+        wholex2 = wholex2f;
         if(wholex1>=nx1-1){wholex1=nx1-2;}else if(wholex1<0){wholex1=0;}
         if(wholex2>=nx2-1){wholex2=nx2-2;}else if(wholex2<0){wholex2=0;}
         trajectoriesx1[i] = trajectoriesx1[i]+( (1-fractionalx1)*vFieldx1( wholex1*(nx2+1) + wholex2)+fractionalx1*vFieldx1( (wholex1+1)*(nx2+1) + wholex2 ))*dt;

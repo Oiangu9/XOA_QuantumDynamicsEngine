@@ -25,17 +25,24 @@ apt-get install gnuplot-x11
 mkdir tmp
 cd tmp
 
-# Download Eigen3
+# Download Eigen3 - if eigen-3.3.7 is desired
 
-wget https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz
+#wget https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz
 
 # Untar Eigen
 
-tar -zxvf eigen-3.3.7.tar.gz
+#tar -zxvf eigen-3.3.7.tar.gz
+
+#cd eigen-3.3.7
+
+# Clone Eigen3 - if eigen 3.4 is desired (allows better array indexing using seq)
+
+git clone https://gitlab.com/libeigen/eigen.git
+
+cd eigen
 
 # Isolate the header files -the proper library we are interested on-
 
-cd eigen-3.3.7
 
 mkdir ../eigen3
 

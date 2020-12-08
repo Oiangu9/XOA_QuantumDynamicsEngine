@@ -2,8 +2,10 @@ ks_to_use------------------------
 0.1
 numk-----------------------------
 1
+sigmax sigmay mux muy------------
+2.0 6.0 -10.0 0.0
 potential------------------------
-double A=100, w=2.5, d=7.0, mu=0;if((y<=d) & (y>=-d)){ return 0.0;}else { if(x<=0){ return A*exp(-0.5*(x-mu)*(x-mu)/(w*w/16));} else {return A;}}
+double A=100, w=3.0, d=7.0, mu=0;if((y<=d) & (y>=-d)){ return 0.0;}else { if(x<=0){ return A*exp(-0.5*(x-mu)*(x-mu)/(w*w/16));} else {return A;}}
 EigenstatesSectionsInx-----------
 double d=7.0, L, o;if(x<0){ L=ymax-ymin; o=ymin;} else{ if(abs(y)>d){return 0.0;} L=2.0*d; o=-d; } return sqrt(2.0/L)*sin(j*PI*(y-o)/L);
 DiffyEigenstatesSectionsInx------No_hace_falta_para_CN2
@@ -15,11 +17,62 @@ jmax-----------------------------
 chiSumTolerance------------------No_hace_falta_para_CN2
 0.95
 numTrajs-------------------------
-30
+5
 nx ny_CN----------------------------CN
-140 140
+100 100
 nx ny_X0----------------------------XO
-200 200
+400 400
+xmin xmax------------------------
+-30.0 16.0
+ymin ymax------------------------
+-26.0 26.0
+numIt----------------------------
+2500
+dt-------------------------------
+0.004
+massx massy----------------------
+1.0 1.0
+hbar-----------------------------
+1.0
+Kin Adv G J----------------------
+1.0 1.0 1.0 1.0
+customInitialPositionTrajs-------
+1
+codeForCustomTrajs---------------
+double posymin=-5.0, posymax=5.0, centerx=-10.0; for(int k=0; k<numTrajs; ++k){ initialPosx[k]=centerx; initialPosy[k]= posymin+(posymax-posymin)*k/(numTrajs-1.0);}
+xBound---------------------------
+0.0
+outputDataEvery------------------
+30
+gif------------------------------
+G
+ExpLabel-------------------------
+test
+
+ks_to_use------------------------
+1.0
+numk-----------------------------
+1
+sigmax sigmay mux muy------------
+2.0 6.0 -10.0 0.0
+potential------------------------
+return 0.0;
+EigenstatesSectionsInx-----------
+double d=7.0, L, o; L=ymax-ymin; o=ymin; return sqrt(2.0/L)*sin(j*PI*(y-o)/L);
+DiffyEigenstatesSectionsInx------No_hace_falta_para_CN2
+double d=7.0, L, o; L=ymax-ymin; o=ymin; return sqrt(2.0/L)*(j*PI/L)*cos(j*PI*(y-o)/L);
+DiffyyEigenstatesSectionsInx-----No_hace_falta_para_CN2
+double d=7.0, L, o;L=ymax-ymin; o=ymin;return sqrt(2.0/L)*(-j*j*PI*PI/(L*L))*sin(j*PI*(y-o)/L);
+jmax-----------------------------
+1
+chiSumTolerance------------------No_hace_falta_para_CN2
+0.95
+numTrajs-------------------------
+10
+nx ny_CN----------------------------CN
+300 300
+nx ny_X0----------------------------XO
+300 300
 xmin xmax------------------------
 -25.0 16.0
 ymin ymax------------------------
@@ -29,11 +82,15 @@ numIt----------------------------
 dt-------------------------------
 0.004
 massx massy----------------------
-1.0 0.07
+1.0 1.0
 hbar-----------------------------
 1.0
 Kin Adv G J----------------------
-1.0 0.0 0.0 1.0
+1.0 1.0 1.0 1.0
+customInitialPositionTrajs?------
+0
+codeForCustomTrajs---------------
+0
 xBound---------------------------
 0.0
 outputDataEvery------------------
@@ -47,6 +104,8 @@ ks_to_use------------------------
 0.1 0.2 0.4 0.6
 numk-----------------------------
 4
+sigmax sigmay mux muy------------
+2.0 6.0 -10.0 0.0
 potential------------------------
 double A=100, w=2.5, d=7.0, mu=0;if((y<=d) & (y>=-d)){ return 0.0;}else { if(x<=0){ return A*exp(-0.5*(x-mu)*(x-mu)/(w*w/16));} else {return A;}}
 EigenstatesSectionsInx-----------
@@ -79,6 +138,10 @@ hbar-----------------------------
 1.0
 Kin Adv G J----------------------
 1.0 1.0 1.0 1.0
+customInitialPositionTrajs?------
+0
+codeForCustomTrajs---------------
+0
 xBound---------------------------
 0.0
 outputDataEvery------------------

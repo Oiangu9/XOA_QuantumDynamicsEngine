@@ -1,4 +1,4 @@
-$$32$1$CODE_simulator_XO_KinAdv.cpp$$
+$$34$1$CODE_simulator_XO_KinAdv.cpp$$
 
 // 2D SCHRODINGER EQUATION SOLVER - XO ALGORITHM Kinetic and Advective Correlation Potential approximation of G and J:
 // The Conditional Single Particle Wave Function (CSPWF) of the dimensions (x,y) will be evolved for each initial conditions using a 1D Cranck Nicolson method for the Pseudo Schrodinger Equations
@@ -20,6 +20,7 @@ using namespace Eigen;
 using namespace std;
 #define PI 3.141592653589793238463
 #define INF 1000000.0
+#define customTrajs $33$
 //USER INPUT DECLARATION----------------------------------------------------------------------
 //We declare the Spatial and Time grids - names are self-explaning
 double xmin = $7$, xmax = $8$, ymin = $9$, ymax = $10$, t0=0.0, dt=$11$, posx, posy, Nx, Ny;
@@ -83,32 +84,40 @@ int main(){
 for(int k=0; k<=xDivs; ++k){xgrid(k)=xmin+k*dx;}
 for(int k=0; k<=yDivs;++k){ygrid(k)=ymin+dy*k;}
 
-//The initial positions of each trajectory that will be evolved using the algorithm are chosen according to the probability distribution given by the modulus squared of the initial wave function
+
 int numTrajs=$13$; // we choose the number of trajectories that will be evolved
-int gridPointsFullWF=(xDivs+1)*(yDivs+1);
-double fractional, whole;
-ArrayXd probabDensity(gridPointsFullWF);
-ArrayXcd initialFullPsi(gridPointsFullWF);
+int gridPointsFullWF=(xDivs+1)*(yDivs+1), whole;
+double fractional, wholef;
 double* initialPosx = (double*) malloc(numTrajs*sizeof(double));
 double* initialPosy = (double*) malloc(numTrajs*sizeof(double));
-// the initial state of the full wavefunction is generated in order to obtain its modulus squared in each point
-for(int i=0; i<=xDivs; ++i){
-  for(int j=0; j<=yDivs; ++j){
-    initialFullPsi(i*(yDivs+1) + j) = initialFullWF(xgrid(i), ygrid(j));
-  }
+
+if(customTrajs==0){ //The initial positions of each trajectory that will be evolved using the algorithm are chosen according to the probability distribution given by the modulus squared of the initial wave function
+    ArrayXcd initialFullPsi(gridPointsFullWF);
+    ArrayXd probabDensity(gridPointsFullWF);
+    // the initial state of the full wavefunction is generated in order to obtain its modulus squared in each point
+    for(int i=0; i<=xDivs; ++i){
+      for(int j=0; j<=yDivs; ++j){
+        initialFullPsi(i*(yDivs+1) + j) = initialFullWF(xgrid(i), ygrid(j));
+      }
+    }
+    // the probability associated with each space point is generated
+    probabDensity =100*abs2(initialFullPsi);
+    // the random number generator initialised
+    double* probabClist = probabDensity.data();
+    std::default_random_engine generator;
+    std::discrete_distribution<int> distribution (probabClist,probabClist+gridPointsFullWF-1);
+    // and the initial positions chosen according to the associated probabilities
+    for(int i=0; i<numTrajs; i++){
+      aux=distribution(generator); //returns the winner index of the prob vector -> we must revert the indexing to 2d indexes
+      initialPosx[i] = xmin + ((int) aux/(yDivs+1))*dx;
+      initialPosy[i] = ymin + (aux%(yDivs+1))*dy;
+    }
+}else{ // custom trajectory selection by user. Initial positions should be charged in arrays initialPosx, initialPosy
+
+    $34$
+
 }
-// the probability associated with each space point is generated
-probabDensity =100*abs2(initialFullPsi);
-// the random number generator initialised
-double* probabClist = probabDensity.data();
-std::default_random_engine generator;
-std::discrete_distribution<int> distribution (probabClist,probabClist+gridPointsFullWF-1);
-// and the initial positions chosen according to the associated probabilities
-for(int i=0; i<numTrajs; i++){
-  aux=distribution(generator); //returns the winner index of the prob vector -> we must revert the indexing to 2d indexes
-  initialPosx[i] = xmin + ((int) aux/(yDivs+1))*dx;
-  initialPosy[i] = ymin + (aux%(yDivs+1))*dy;
-}
+
 // begin the time iterations for each evolved trajectory - UL, UR must be renamed in every iteration - as if it was a time dependant potential algorithm for a 1D particle
 //we declare and prepare the propagator matrices for the Cranck Nicolson (CN) evolution
 SparseMatrix<cdouble> U1x(xDivs+1, xDivs+1), U2x(xDivs+1, xDivs+1);
@@ -152,8 +161,11 @@ VectorXcd conjPsix(xDivs+1), conjPsiy(yDivs+1), auxX(xDivs+1), auxY(yDivs+1);
 ArrayXd probDensityx(xDivs+1), probDensityy(yDivs+1), velocityFieldx(xDivs+1), velocityFieldy(yDivs+1), auxArrayx(xDivs+1), auxArrayy(yDivs+1);
 //we define the trajectory matrix
 double** traj=new double*[timeIts+2];
-for (int i=0; i<=(timeIts+1); ++i){ traj[i]= new double[2];} // the trajectory is saved in an array of timeIts arrays of 2 doubles (xi, yi)
+for (int i=0; i<=(timeIts+1); ++i){ traj[i]= new double[4];} // the trajectory is saved in an array of timeIts arrays of 4 doubles (xi, yi, vxi, vyi)
 // each of the timeIts arrays contains the value for the trajectory in each of the x,y at that iteration
+traj[timeIts+1][2]=0.0; //timeIts+2 traj points are computed, while only timeIts+1 general iterations are made -thus that many speeds we will have
+traj[timeIts+1][3]=0.0;
+
 double vx, vy;
 //We open the output streams
 ofstream probabDataFile, trajDataFile, DATA_chiInfo, DATA_sumChiInfo, DATA_G_J_x, DATA_G_J_y, DATA_KinAdv_x, DATA_KinAdv_y, DATA_XO_Re_Uj_x, DATA_XO_Im_Uj_x;
@@ -162,8 +174,8 @@ probabDataFile.open("DATA_probabilityToPlot_2D_XO_KinAdv_BornHuang_tINDEP.txt");
 trajDataFile.open("DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$28$.txt");
 DATA_chiInfo.open("DATA_chiInfo_XO.txt");
 DATA_sumChiInfo.open("DATA_sumChiInfo_XO.txt");
-DATA_G_J_x.open("DATA_G_J_x.txt");
-//DATA_G_J_y.open("DATA_G_J_y.txt");
+DATA_G_J_x.open("DATA_G_J_x_KA.txt");
+//DATA_G_J_y.open("DATA_G_J_y_KA.txt");
 DATA_XO_Re_Uj_x.open("DATA_XO_Re_Uj.txt");
 DATA_XO_Im_Uj_x.open("DATA_XO_Im_Uj.txt");
 
@@ -221,14 +233,19 @@ for(int trajNum=0; trajNum<numTrajs; ++trajNum){ //this is a potential multithre
     // imaginary part is extracted and the velocity field obtained
     velocityFieldy = (hbar/my)*imag(auxY.array());
     //we apply the discretisation of the grid to the traj positions
-    fractional = std::modf((traj[it][0]-xmin)/dx, &whole);
+    fractional = std::modf((traj[it][0]-xmin)/dx, &wholef);
+    whole = wholef;
     if(whole>=xDivs){whole=xDivs-2;}else if(whole<0){whole=0;}
     vx=(1-fractional)*velocityFieldx(whole)+fractional*velocityFieldx(whole+1);
     traj[it+1][0] = traj[it][0]+vx*dt;
-    fractional = std::modf((traj[it][1]-ymin)/dy, &whole);
+    traj[it][2] = vx;
+    fractional = std::modf((traj[it][1]-ymin)/dy, &wholef);
+    whole = wholef;
     if(whole>=yDivs){whole=yDivs-2;}else if(whole<0){whole=0;}
     vy= (1-fractional)*velocityFieldy(whole)+fractional*velocityFieldy(whole+1);
     traj[it+1][1] = traj[it][1]+vy*dt;
+    traj[it][3] = vy;
+
     //The norms of the SPCWFs Nx and Ny for Uj term calculation are obtained with a composed trapezium rule--------------------------------------------------------------------
     //for Nx
     Nx=0.5*(probDensityx(0)+probDensityx(xDivs));
@@ -351,8 +368,7 @@ for(int trajNum=0; trajNum<numTrajs; ++trajNum){ //this is a potential multithre
   } //end time iteration loop
   for(int it=0; it<=timeIts; ++it){
     if( it%outputDataEvery == 0){ //then we output the data
-      trajDataFile << traj[it][0] << " " << traj[it][1] << " ";
-      trajDataFile <<" 0"<<endl;
+      trajDataFile << traj[it][0] << " " << traj[it][1] << " 0 "<<traj[it][2]<< " "<< traj[it][3]<< endl;
       if(traj[it][0]>=xBound){trajProportionCrossed(it)+=1;}
     }
   }
@@ -488,8 +504,8 @@ for(int k=0; k<=yDivs;++k){ygrid(k)=ymin+dy*k;}
 
 //The initial positions of each trajectory that will be evolved using the algorithm are chosen according to the probability distribution given by the modulus squared of the initial wave function
 int numTrajs=$13$; // we choose the number of trajectories that will be evolved
-int gridPointsFullWF=(xDivs+1)*(yDivs+1);
-double fractional, whole;
+int gridPointsFullWF=(xDivs+1)*(yDivs+1), whole;
+double fractional, wholef;
 ArrayXd probabDensity(gridPointsFullWF);
 ArrayXcd initialFullPsi(gridPointsFullWF);
 double* initialPosx = (double*) malloc(numTrajs*sizeof(double));
@@ -615,11 +631,13 @@ auxY(yDivs) = conjPsiy(yDivs)*(psiY(yDivs)-psiY(yDivs-1))/(dy*probDensityy(yDivs
 // imaginary part is extracted and the velocity field obtained
 velocityFieldy = (hbar/my)*imag(auxY.array());
 //we apply the discretisation of the grid to the traj positions
-fractional = std::modf((traj[it][0]-xmin)/dx, &whole);
+fractional = std::modf((traj[it][0]-xmin)/dx, &wholef);
+whole = wholef;
 if(whole>=xDivs){whole=xDivs-2;}else if(whole<0){whole=0;}
 vx=(1-fractional)*velocityFieldx(whole)+fractional*velocityFieldx(whole+1);
 traj[it+1][0] = traj[it][0]+vx*dt;
-fractional = std::modf((traj[it][1]-ymin)/dy, &whole);
+fractional = std::modf((traj[it][1]-ymin)/dy, &wholef);
+whole = wholef;
 if(whole>=yDivs){whole=yDivs-2;}else if(whole<0){whole=0;}
 vy= (1-fractional)*velocityFieldy(whole)+fractional*velocityFieldy(whole+1);
 traj[it+1][1] = traj[it][1]+vy*dt;
