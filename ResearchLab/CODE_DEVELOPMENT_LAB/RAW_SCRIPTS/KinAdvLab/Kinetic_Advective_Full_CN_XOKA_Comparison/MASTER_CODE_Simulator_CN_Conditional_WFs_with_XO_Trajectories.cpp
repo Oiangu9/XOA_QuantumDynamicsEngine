@@ -162,8 +162,8 @@ for(int trajIdx=0; trajIdx<trajNum; trajIdx++){
 
       // Output the results
       // the norm and the conditional wf probability densities
-      DATA_conditWF_CN <<"CN-Norm_x=" << N_x<<endl<<probDensityx << endl << endl<<endl;
-      DATA_conditWF_CN<<"CN-Norm_y=" << N_y<<endl << probDensityy << endl << endl<<endl;
+      DATA_conditWF_CN <<"CN-Norm_x=" << N_x<<endl<<probDensityx/N_x << endl << endl<<endl;
+      DATA_conditWF_CN<<"CN-Norm_y=" << N_y<<endl << probDensityy/N_y << endl << endl<<endl;
 
       // output the U_jx
       DATA_CN_Re_Uj << Ujx_container.real() << endl << endl << endl;
@@ -191,7 +191,7 @@ for(int trajIdx=0; trajIdx<trajNum; trajIdx++){
       if(trajIdx==0){
           //conjPsi = inverse(WF);
           conjPsi = conj(WF);
-          C = log(absWF);
+          //C = log(absWF);
           // We first compute the numerical derivatives we will need
           // dS(x,y,t)/dy = hbar/R^2*Im(Psi_conj dPsi(x,y,t)/dy) = hbar*Im(Psi^-1 dPsi(x,y,t)/dy)
           // dR(x,y,t)/dR
