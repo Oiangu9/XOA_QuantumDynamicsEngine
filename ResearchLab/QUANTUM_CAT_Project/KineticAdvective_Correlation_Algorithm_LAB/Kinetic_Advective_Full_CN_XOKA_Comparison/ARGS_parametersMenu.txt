@@ -5,29 +5,29 @@ numk-----------------------------
 sigmax sigmay mux muy------------
 2.0 6.0 -10.0 0.0
 potential------------------------
-double A=100, w=3.0, d=7.0, mu=0;if((y<=d) & (y>=-d)){ return 0.0;}else { if(x<=0){ return A*exp(-0.5*(x-mu)*(x-mu)/(w*w/16));} else {return A;}}
+return 0.0;
 EigenstatesSectionsInx-----------
-double d=7.0, L, o;if(x<0){ L=ymax-ymin; o=ymin;} else{ if(abs(y)>d){return 0.0;} L=2.0*d; o=-d; } return sqrt(2.0/L)*sin(j*PI*(y-o)/L);
+double L, o; L=ymax-ymin; o=ymin; return sqrt(2.0/L)*sin(j*PI*(y-o)/L);
 DiffyEigenstatesSectionsInx------No_hace_falta_para_CN2
-double d=7.0, L, o;if(x<0){ L=ymax-ymin; o=ymin;} else{ if(abs(y)>d){return 0.0;} L=2.0*d; o=-d; } return sqrt(2.0/L)*(j*PI/L)*cos(j*PI*(y-o)/L);
+double L, o; L=ymax-ymin; o=ymin; return sqrt(2.0/L)*(j*PI/L)*cos(j*PI*(y-o)/L);
 DiffyyEigenstatesSectionsInx-----No_hace_falta_para_CN2
-double d=7.0, L, o;if(x<0){ L=ymax-ymin; o=ymin;} else{ if(abs(y)>d){return 0.0;} L=2.0*d; o=-d; } return sqrt(2.0/L)*(-j*j*PI*PI/(L*L))*sin(j*PI*(y-o)/L);
+double L, o; L=ymax-ymin; o=ymin; return sqrt(2.0/L)*(-j*j*PI*PI/(L*L))*sin(j*PI*(y-o)/L);
 jmax-----------------------------
-1
+8
 chiSumTolerance------------------No_hace_falta_para_CN2
 0.95
 numTrajs-------------------------
-5
+6
 nx ny_CN----------------------------CN
-100 100
+340 340
 nx ny_X0----------------------------XO
-400 400
+800 800
 xmin xmax------------------------
 -30.0 16.0
 ymin ymax------------------------
 -26.0 26.0
 numIt----------------------------
-2500
+7000
 dt-------------------------------
 0.004
 massx massy----------------------
@@ -39,15 +39,15 @@ Kin Adv G J----------------------
 customInitialPositionTrajs-------
 1
 codeForCustomTrajs---------------
-double posymin=-5.0, posymax=5.0, centerx=-10.0; for(int k=0; k<numTrajs; ++k){ initialPosx[k]=centerx; initialPosy[k]= posymin+(posymax-posymin)*k/(numTrajs-1.0);}
+double posymin=-5.0, posymax=5.0, centerx1=-10.0, centerx2=-9; for(int k=0; k<numTrajs/2; ++k){ initialPosx[k]=centerx1; initialPosy[k]= posymin+(posymax-posymin)*k/(numTrajs/2-1.0);} for(int k=0; k<numTrajs/2; ++k){ initialPosx[k]=centerx2; initialPosy[k]= posymin+(posymax-posymin)*k/(numTrajs/2-1.0);}
 xBound---------------------------
 0.0
 outputDataEvery------------------
-30
+50
 gif------------------------------
 G
 ExpLabel-------------------------
-test
+Benchmark_V_0_Normalize_Conditionals
 
 ks_to_use------------------------
 1.0
