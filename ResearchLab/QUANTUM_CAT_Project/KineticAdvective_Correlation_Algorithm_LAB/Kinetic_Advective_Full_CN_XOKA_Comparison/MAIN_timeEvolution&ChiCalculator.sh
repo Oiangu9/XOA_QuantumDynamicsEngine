@@ -135,13 +135,13 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
     echo "(2) Executing calculations for the time evolution...."
     echo " Generating code and compiling..."
 
-    ./EXE_codeFileGenerator_2D_CN_tINDEP "$psiIni" "$potential" $nx1CN $nx2CN $x1min $x1max $x2min $x2max $dt $numIt $mass1 $mass2 $hbar  $outputEvery 1
+    #./EXE_codeFileGenerator_2D_CN_tINDEP "$psiIni" "$potential" $nx1CN $nx2CN $x1min $x1max $x2min $x2max $dt $numIt $mass1 $mass2 $hbar  $outputEvery 1
     g++ -Wall -O CODE_simulator_2D_CN_tINDEP.cpp -o EXE_simulator_2D_CN_tINDEP
     echo " Done!"
     echo ""
     echo " Executing calculations..."
     START_TIME=$SECONDS
-    ./EXE_simulator_2D_CN_tINDEP
+    #./EXE_simulator_2D_CN_tINDEP
     CALCULATION_TIME=$SECONDS
     echo " Done! " $(($CALCULATION_TIME - $START_TIME)) " seconds required!"
     echo ""
@@ -154,11 +154,11 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
     dt_berri=$(echo "$dt * $outputEvery" | bc)
 
     path=$(pwd)/DATA_rawSimulationData_2D_CN.txt
-    ./EXE_codeFileGenerator_CN2D_ChiCalculator "$path" "$functionEigenstates" $jmax $nx1CN $nx2CN $x1min $x1max $x2min $x2max $tIts $xBound $numTrajs $k0 $hbar $mass1 $mass2 $dt_berri 1
+    #./EXE_codeFileGenerator_CN2D_ChiCalculator "$path" "$functionEigenstates" $jmax $nx1CN $nx2CN $x1min $x1max $x2min $x2max $tIts $xBound $numTrajs $k0 $hbar $mass1 $mass2 $dt_berri 1
 
     g++ -Wall -O CODE_CN2D_ChiCalculator.cpp -o EXE_CN2D_ChiCalculator
 
-    ./EXE_CN2D_ChiCalculator
+    #./EXE_CN2D_ChiCalculator
 
     CALCULATION_TIME=$SECONDS
     echo " Done! " $(($CALCULATION_TIME - $START_TIME)) " seconds required!"
@@ -179,14 +179,14 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
     b_y=0
 
 
-    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 $Kin $Adv $G $J $customTrajs "$customTrajsCode" 1
+    #./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 $Kin $Adv $G $J $customTrajs "$customTrajsCode" 1
 
     g++ -Wall -O CODE_simulator_XO_KinAdv.cpp -o EXE_simulator_XO_KinAdv
     echo " Done!"
     echo ""
     echo " Executing calculations..."
     START_TIME=$SECONDS
-    ./EXE_simulator_XO_KinAdv
+    #./EXE_simulator_XO_KinAdv
     CALCULATION_TIME=$SECONDS
     echo " Done! " $(($CALCULATION_TIME - $START_TIME)) " seconds required!"
     echo ""
@@ -198,13 +198,13 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
     DATA_traj_XO_File="DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt"
     DATA_wf_CN_File="DATA_rawSimulationData_2D_CN.txt"
 
-    ./EXE_codeFileGenerator_CN_Conditional_WFs_with_XO_Trajectories "$DATA_traj_XO_File" "$DATA_wf_CN_File" $nx1CN $nx2CN $jmax $x1min $x2min $x1max $x2max $tIts $numTrajs "$functionEigenstates" $chiSumTolerance $mass1 $mass2 $hbar 1
+    #./EXE_codeFileGenerator_CN_Conditional_WFs_with_XO_Trajectories "$DATA_traj_XO_File" "$DATA_wf_CN_File" $nx1CN $nx2CN $jmax $x1min $x2min $x1max $x2max $tIts $numTrajs "$functionEigenstates" $chiSumTolerance $mass1 $mass2 $hbar 1
 
     g++ -Wall -O CODE_Simulator_CN_Conditional_WFs_with_XO_Trajectories.cpp -o EXE_Simulator_CN_Conditional_WFs_with_XO_Trajectories
 
     echo " Executing calculations..."
     START_TIME=$SECONDS
-    ./EXE_Simulator_CN_Conditional_WFs_with_XO_Trajectories
+    #./EXE_Simulator_CN_Conditional_WFs_with_XO_Trajectories
 
     CALCULATION_TIME=$SECONDS
     echo " Done! " $(($CALCULATION_TIME - $START_TIME)) " seconds required!"
@@ -218,7 +218,7 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
         echo " Generating GIF..."
 
         gnuplot -e "set terminal gif size 1950, 1350 font 'Helvetica,10' animate delay 1; set output '../ANIMATION_GIFS/$expLabel CN vs XOKA $currentDateTime jmax($jmax) numTrajs($numTrajs).gif'; t=0; tCN=0; countTrajs=0; tmax=2*$numIt*$numTrajs/$outputEvery; dx1=($x1max-($x1min))/$nx1; dx2=($x2max-($x2min))/$nx2; dx1CN=($x1max-($x1min))/$nx1CN; dx2CN=($x2max-($x2min))/$nx2CN; array posx1[$nx1+1]; array posx2[$nx2+1]; array posx1CN[$nx1CN+1]; array posx2CN[$nx2CN+1]; do for [i=1:($nx1+1)] { posx1[i] = $x1min + i*dx1 }; do for [i=1:($nx2+1)] { posx2[i] = $x2min + i*dx2 }; do for [i=1:($nx1CN+1)] { posx1CN[i] = $x1min + i*dx1CN }; do for [i=1:($nx2CN+1)] { posx2CN[i] = $x2min + i*dx2CN }; while(t<tmax){ set multiplot;
-        set origin 0.0, 0.66; set size 0.25, 0.33; clear; set key title 'CN |WF(x,y)|^2' at 1,40; set xtics auto; set palette rgbformulae 33,13,10; set pm3d map; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position x'; set ylabel 'Position y'; set cbrange[0:0.012]; set colorbox; splot 'DATA_probDensity_WF_CN.txt' index tCN title columnheader(1); unset pm3d; unset view; unset colorbox; unset key;
+        set origin -0.005, 0.66; set size 0.25, 0.33; clear; set key title 'CN |WF(x,y)|^2' at 1,36; set xtics auto; set palette rgbformulae 33,13,10; set pm3d map; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position x'; set ylabel 'Position y'; set cbrange[0:0.012]; set colorbox user origin 0.215,0.72 size 0.008,0.22; splot 'DATA_probDensity_WF_CN.txt' index tCN title columnheader(1); unset pm3d; unset view; unset colorbox; unset key;
         set origin 0, 0.33; set size 0.25, 0.33; clear; set key title 'Potential Energy heatmap and KA trajectories'; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position x'; set ylabel 'Position y'; set pm3d map; set palette rgbformulae 33,13,10; set cbrange[0:100]; set colorbox; splot 'DATA_potentialToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' title 'Potential Energy Map', 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' title 'Resultant Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'black', 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' every ::1::(t/2+2) title 'traced KA Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'red';unset pm3d; unset view; unset colorbox; unset key;
         set origin -0.007,0.0; set size 0.25, 0.33; clear; set key title 'R^4 G_x(x,y,t) for this trajectory KA y(t)'; set palette rgbformulae 33,13,10; set pm3d map; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position x'; set ylabel 'Position y'; set cbrange[-2e-7<*:*<1e-6]; set colorbox; splot 'DATA_Full_WF_G_J_CN.txt' index t using 1:2:3 title 'Full WF R^4 G_x(x,y,t)'; unset pm3d; unset view; unset colorbox; unset key;
         set origin 0.25, 0.66; set size 0.25, 0.33; clear; set key title '' inside; set xrange [$x1min:$x1max]; set yrange [0:0.4]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=2:($jmax+1)] 'DATA_chiInfo_XO.txt' index t/2 using (posx1[\$0+1]):i title sprintf('KA |Chi^{%d}(x)|',i-1) w l, for [i=2:($jmax+1)] 'DATA_chiInfo_CN.txt' index tCN using (posx1CN[\$0+1]):i title sprintf('CN |Chi^{%d}(x)|',i-1) w l, for [i=2:($jmax+1)] 'DATA_chiInfo_CN_w_KA_trajs.txt' index t/2 using (posx1CN[\$0+1]):i title sprintf('CN with KA traj condit wfs |Chi^{%d}(x)|',i-1) w l;
@@ -257,14 +257,14 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
     yjmax=0
     b_y=0
 
-    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 2
+    #./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 2
 
     g++ -Wall -O CODE_simulator_XO_NoGJ.cpp -o EXE_simulator_XO_NoGJ
     echo " Done!"
     echo ""
     echo " Executing calculations..."
     START_TIME=$SECONDS
-    ./EXE_simulator_XO_NoGJ
+    #./EXE_simulator_XO_NoGJ
     CALCULATION_TIME=$SECONDS
     echo " Done! " $(($CALCULATION_TIME - $START_TIME)) " seconds required!"
     echo ""
@@ -297,7 +297,7 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
 done
 
 g++ -Wall -O3 CODE_proportionUnifier_ErrorCalculator.cpp -o EXE_proportionUnifier_ErrorCalculator
-    ./EXE_proportionUnifier_ErrorCalculator $numk $tIts $ks
+    #./EXE_proportionUnifier_ErrorCalculator $numk $tIts $ks
 
     gnuplot -e "set terminal png size 1800,500; set output '$label Transmitace_XOKA_CNTrajs_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = 2*$numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:t[i] title sprintf('SPCWF using KinAdv kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:i title sprintf('CN Trajects kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference SPCWF KinAdv vs CN_Trajs'; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:i title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
 
