@@ -17,37 +17,37 @@ jmax-----------------------------
 chiSumTolerance------------------No_hace_falta_para_CN2
 0.95
 numTrajs-------------------------
-5
+6
 nx ny_CN----------------------------CN
-100 100
-nx ny_X0----------------------------XO
 400 400
+nx ny_X0----------------------------XO
+800 800
 xmin xmax------------------------
 -30.0 16.0
 ymin ymax------------------------
--26.0 26.0
+-30.0 30.0
 numIt----------------------------
-2500
+7000
 dt-------------------------------
 0.004
 massx massy----------------------
-1.0 1.0
+1.0 0.07
 hbar-----------------------------
 1.0
 Kin Adv G J----------------------
-1.0 1.0 1.0 1.0
+1.0 0.0 1.0 0.0
 customInitialPositionTrajs-------
 1
 codeForCustomTrajs---------------
-double posymin=-5.0, posymax=5.0, centerx=-10.0; for(int k=0; k<numTrajs; ++k){ initialPosx[k]=centerx; initialPosy[k]= posymin+(posymax-posymin)*k/(numTrajs-1.0);}
+double posymin=-5.0, posymax=5.0, centerx1=-10.0, centerx2=-9; for(int k=0; k<numTrajs/2; ++k){ initialPosx[k]=centerx1; initialPosy[k]= posymin+(posymax-posymin)*k/(numTrajs/2-1.0);} for(int k=0; k<numTrajs/2; ++k){ initialPosx[k]=centerx2; initialPosy[k]= posymin+(posymax-posymin)*k/(numTrajs/2-1.0);}
 xBound---------------------------
 0.0
 outputDataEvery------------------
-30
+40
 gif------------------------------
 G
 ExpLabel-------------------------
-test
+Standard_CustomTrajs_KG_yes_AJ_no_
 
 ks_to_use------------------------
 1.0
