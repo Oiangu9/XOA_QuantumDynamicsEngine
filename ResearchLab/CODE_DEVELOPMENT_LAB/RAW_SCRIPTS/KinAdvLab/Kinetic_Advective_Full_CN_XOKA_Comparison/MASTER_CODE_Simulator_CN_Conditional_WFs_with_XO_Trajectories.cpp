@@ -74,7 +74,7 @@ cdouble arrayEl, Uj;
 ArrayXd probDensityx(xDivs+1), probDensityy(yDivs+1), abs2WF(gridPoints), absWF(gridPoints), dS_dy(gridPoints), dR_dy(gridPoints), d2S_dy2(gridPoints), d2R_dy2(gridPoints), C(gridPoints), dC_dy(gridPoints), d2C_dy2(gridPoints);
 double N_x, N_y, sumaParaChisx, wholexf, wholeyf;
 
-MatrixXd x_y_Gx_Jx(gridPoints, 4), G_J_x_cond(xDivs+1, 2);
+MatrixXd x_y_Gx_Jx(gridPoints, 10), G_J_x_cond(xDivs+1, 2);
 
 ArrayXd xgrid(xDivs+1), ygrid(yDivs+1), sumaChisx(jmax+1);
 for(int k=0; k<=xDivs; ++k){xgrid(k)=xmin+k*dx;}
@@ -270,7 +270,7 @@ for(int trajIdx=0; trajIdx<trajNum; trajIdx++){
       x_y_Gx_Jx.col(2) = dR_dy;
       x_y_Gx_Jx.col(3) = d2R_dy2;
 
-      DATA_derivatives << x_y_Gx_Jx<<endl;
+      DATA_derivatives << x_y_Gx_Jx(all, seq(1,4))<<endl;
 
       // get it ready for the true output - will only be repeated in the first trajectory
       for(int ix=0; ix<=xDivs; ix++){
@@ -291,6 +291,13 @@ for(int trajIdx=0; trajIdx<trajNum; trajIdx++){
     // Compute G_x(x,y,t) and J_x(x,y,t) for this trajectory
     x_y_Gx_Jx.col(2) = dS_dy*(dS_dy*(1.0/(2.0*my)) - abs2WF*traj[tIt][3])-hbar*hbar/(2.0*my)*d2R_dy2*absWF*abs2WF;
     x_y_Gx_Jx.col(3) = hbar*dR_dy*absWF*( abs2WF*traj[tIt][3]-2*dS_dy/my )-(hbar/2.0*my)*abs2WF*d2S_dy2;
+
+    x_y_Gx_Jx.col(4) = dS_dy;
+    x_y_Gx_Jx.col(5) = d2S_dy2;
+    x_y_Gx_Jx.col(6) = dR_dy;
+    x_y_Gx_Jx.col(7) = d2R_dy2;
+    x_y_Gx_Jx.col(8) = (dS_dy/abs2WF)*(dS_dy*(1.0/(2.0*my))/abs2WF - traj[tIt][3])-hbar*hbar/(2.0*my)*d2R_dy2/absWF;;
+    x_y_Gx_Jx.col(9) = hbar*dR_dy/absWF*( traj[tIt][3]-dS_dy/my )-(hbar/2.0*my)*d2S_dy2;
 
     /*
     x_y_Gx_Jx.col(2)=dS_dy;
@@ -313,7 +320,7 @@ for(int trajIdx=0; trajIdx<trajNum; trajIdx++){
       DATA_G_J_Conditional << G_J_x_cond << endl <<endl <<endl;
       //DATA_Full_WF_G_J << x_y_Gx_Jx << endl << endl << endl;
       for(int ix=0; ix<=xDivs; ix++){
-          DATA_Full_WF_G_J <<  x_y_Gx_Jx.block(ix*yDivs+ix, 0, yDivs+1, 4)<< endl<<endl;
+          DATA_Full_WF_G_J <<  x_y_Gx_Jx.block(ix*yDivs+ix, 0, yDivs+1, 10)<< endl<<endl;
       }
       DATA_Full_WF_G_J<< endl;
 
