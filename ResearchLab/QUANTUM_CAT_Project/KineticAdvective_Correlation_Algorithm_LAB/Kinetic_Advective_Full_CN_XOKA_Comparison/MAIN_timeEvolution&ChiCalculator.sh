@@ -23,9 +23,18 @@ read ks
 echo "Introduce the number of ks"
 read trash
 read numk
-echo "Introduce the following parameters for the initial WF: sigmax sigmay mux muy"
-read trash trash trash trash
-read sigmax sigmay mux muy
+echo "Introduce the kind of intial WF to use GG for gaussian(x)*gaussian(y), GS for gaussian(x)*firstEigenstate(y)"
+read trash
+read psi
+if [[ $psi == *"GS"* ]]; then
+    echo "Introduce the following parameters for the intial WF g a1 a2 Lmax Lmin mux sigmax"
+    read trash trash trash trash trash trash trash
+    read g a1 a2 Lmax Lmin mux sigmax
+else
+    echo "Introduce the following parameters for the initial WF: sigmax sigmay mux muy"
+    read trash trash trash trash
+    read sigmax sigmay mux muy
+fi
 echo "Introduce the potential energy profile as a function of x and y"
 read trash
 read potential
@@ -126,7 +135,12 @@ fi
 for k0 in $ks
 do
 
-psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${k0}, ky=0; return pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2))* pow(1.0/(2*PI*sigmay*sigmay),0.25)*exp(J*ky*y-0.25*pow((y-muy)/sigmay,2));"
+
+if [[ $psi == *"GS"* ]]; then
+    psiIni="double g=${g},a1=${a1},a2=${a2},Lmax=${Lmax},Lmin=${Lmin}, kx=${k0}, mux=${mux}, sigmax=${sigmax}, o, L; o= -(Lmax-Lmin)/2.0*(1.0/(1.0+exp((x-a1)/g))+1.0/(1.0+exp((-x+a2)/g)))-Lmin/2.0; L=-2*o; if(y>(o+L) || y<o){return 0.0;} else{return sqrt(2.0/L)*sin(PI*(y-o)/L)*pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2));}"
+else
+    psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${k0}, ky=0; return pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2))* pow(1.0/(2*PI*sigmay*sigmay),0.25)*exp(J*ky*y-0.25*pow((y-muy)/sigmay,2));"
+fi
 
     expLabel="CN_k0_${k0}_${label}"
     # CRANCK NICOLSON!!!!---------------------------------------------------------------------------------------------
@@ -224,12 +238,12 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
         set origin 0.25, 0.66; set size 0.25, 0.33; clear; set key title '' inside; set xrange [$x1min:$x1max]; set yrange [0:0.4]; set xlabel 'Position x'; set ylabel '|Chi^j(x)|'; plot for [i=2:($jmax+1)] 'DATA_chiInfo_XO.txt' index t/2 using (posx1[\$0+1]):i title sprintf('KA |Chi^{%d}(x)|',i-1) w l, for [i=2:($jmax+1)] 'DATA_chiInfo_CN.txt' index tCN using (posx1CN[\$0+1]):i title sprintf('CN |Chi^{%d}(x)|',i-1) w l, for [i=2:($jmax+1)] 'DATA_chiInfo_CN_w_KA_trajs.txt' index t/2 using (posx1CN[\$0+1]):i title sprintf('CN with KA traj condit wfs |Chi^{%d}(x)|',i-1) w l;
         set origin 0.25, 0.33; set size 0.25, 0.33; clear; set xrange [-1:($jmax+2)]; set yrange [0:1.1]; set xtics 1; set xlabel 'jmax'; set ylabel 'integrate(\sum_{j=0}^{j=jmax}(|\chi^j(x)|^2))dx'; set key title; plot 'DATA_sumChiInfo_XO.txt' index t/2 using 1:2 with linespoint lw 3 pt 3 title 'KA', 'DATA_sumChiInfo_XO.txt' index t/2 using 1:2:(sprintf('%f', \$2)) with labels center offset -5.4,-.5 rotate by -45 notitle, 'DATA_sumChiInfo_CN.txt' index tCN using 1:2 with linespoint lw 3 pt 3 title 'exact CN', 'DATA_sumChiInfo_CN.txt' index tCN using 1:2:(sprintf('%f', \$2)) with labels center offset -3.4,-.5 rotate by -45 notitle, 'DATA_sumChiInfo_CN_with_KA_traj.txt' index t/2 using 1:2 with linespoint lw 3 pt 3 title 'Cn w KA trajs', 'DATA_sumChiInfo_CN_with_KA_traj.txt' index t/2 using 1:2:(sprintf('%f', \$2)) with labels center offset -1.4,-.5 rotate by -45 notitle; unset key;
         set origin 0.25,0.0; set size 0.25, 0.33; clear;  set xtics auto; set key title 'R^4 J_x(x,y,t) for this trajectory KA y(t)' at 1,39; set palette rgbformulae 33,13,10; set pm3d map; set xrange [$x1min:$x1max]; set yrange [$x2min:$x2max]; set xlabel 'Position x'; set ylabel 'Position y'; set cbrange[-2e-7<*:*<1.5e-7]; set colorbox; splot 'DATA_Full_WF_G_J_CN.txt' index t/2 using 1:2:4 title 'Full WF R^4 J_x(x,y,t)'; unset pm3d; unset view; unset colorbox; unset key;
-        set origin 0.5, 0.66; set size 0.25, 0.33; clear; set xtics auto; set xrange [$x1min:$x1max]; set yrange [0:0.01]; set key title 'x Conditional Wave Function Probability Density' inside; set xlabel 'Position x'; set ylabel 'Probab Density'; plot 'DATA_probabilityToPlot_2D_XO_KinAdv_BornHuang_tINDEP.txt' index t using (posx1[\$0+1]):1 title columnheader(1) w l, 'DATA_probDensity_conditional_WF_CN.txt' index t using (posx1CN[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' using 1:3 every ::(t/2)::(t/2+2) title 'x component of the Trajectory' w points lt 5 pt 6 ps 1 lc rgb 'red';
-        set origin 0.5, 0.33; set size 0.25, 0.33; clear; set xrange [$x2min:$x2max]; set yrange [0:0.01]; set key title 'y Conditional Wave Function Probability Density';  set xlabel 'Position y'; set ylabel 'Probab Density'; plot 'DATA_probabilityToPlot_2D_XO_KinAdv_BornHuang_tINDEP.txt' index (t+1) using (posx2[\$0+1]):1 title columnheader(1) w l, 'DATA_probDensity_conditional_WF_CN.txt' index (t+1) using (posx2CN[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' using 2:3 every ::(t/2)::(t/2+2) title 'y component of the Trajectory' w points lt 5 pt 6 ps 2 lc rgb 'red';
-        set origin 0.51, 0.0; set size 0.26, 0.33; clear; set key title ' ' inside; set xrange [$x1min:$x1max]; set xlabel 'Position x'; set ylabel 'G(x)'; set y2tics nomirror; set y2label 'J(x)'; set yrange [-1e-7<*:*<1e-6]; set y2range [-1e-7<*:*<1e-7]; plot 'DATA_G_J_with_CN_and_KA_trajs.txt' index t/2 using (posx1CN[\$0+1]):1 title 'R^4 G(x) CN with KA trajs' axes x1y1 w l lc rgb 'red', 'DATA_G_J_with_CN_and_KA_trajs.txt' index t/2 using (posx1CN[\$0+1]):2 title 'R^4 J(x) CN with KA trajs' axes x1y2 w l lc rgb 'blue'; unset y2tics; unset y2label; unset key;
+        set origin 0.5, 0.66; set size 0.25, 0.33; clear; set xtics auto; set xrange [$x1min:$x1max]; set yrange [0:0.013]; set key title 'x Conditional Wave Function Probability Density' inside; set xlabel 'Position x'; set ylabel 'Probab Density'; plot 'DATA_probabilityToPlot_2D_XO_KinAdv_BornHuang_tINDEP.txt' index t using (posx1[\$0+1]):1 title columnheader(1) w l, 'DATA_probDensity_conditional_WF_CN.txt' index t using (posx1CN[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' using 1:3 every ::(t/2)::(t/2+2) title 'x component of the Trajectory' w points lt 5 pt 6 ps 1 lc rgb 'red';
+        set origin 0.5, 0.33; set size 0.25, 0.33; clear; set xrange [$x2min:$x2max]; set yrange [0:0.013]; set key title 'y Conditional Wave Function Probability Density';  set xlabel 'Position y'; set ylabel 'Probab Density'; plot 'DATA_probabilityToPlot_2D_XO_KinAdv_BornHuang_tINDEP.txt' index (t+1) using (posx2[\$0+1]):1 title columnheader(1) w l, 'DATA_probDensity_conditional_WF_CN.txt' index (t+1) using (posx2CN[\$0+1]):1 title columnheader(1) w l, 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP_k=$k0.txt' using 2:3 every ::(t/2)::(t/2+2) title 'y component of the Trajectory' w points lt 5 pt 6 ps 2 lc rgb 'red';
+        set origin 0.51, 0.0; set size 0.26, 0.33; clear; set key title ' ' inside; set xrange [$x1min:$x1max]; set xlabel 'Position x'; set ylabel 'G(x)'; set y2tics nomirror; set y2label 'J(x)'; set yrange [-1e-5<*:*<1e-5]; set y2range [-1e-5<*:*<1e-5]; plot 'DATA_G_J_with_CN_and_KA_trajs.txt' index t/2 using (posx1CN[\$0+1]):1 title 'R^4 G(x) CN with KA trajs' axes x1y1 w l lc rgb 'red', 'DATA_G_J_with_CN_and_KA_trajs.txt' index t/2 using (posx1CN[\$0+1]):2 title 'R^4 J(x) CN with KA trajs' axes x1y2 w l lc rgb 'blue'; unset y2tics; unset y2label; unset key;
         set origin 0.75, 0.66; set size 0.25, 0.33; clear;  set key title; set xrange [$x1min:$x1max]; set xlabel 'Position x'; set ylabel 'Re{U^j(x,t)}'; set y2tics nomirror; set y2label 'Im{U^j(x,t)}'; set y2range [-7.5:5.5]; set yrange [-5.5:5.5]; plot for [i=2:($jmax+1)] 'DATA_XO_Re_Uj.txt' index t/2 using (posx1[\$0+1]):i title sprintf('KA Re{U^{%d}(x,t)}',i-1) axes x1y1 w l, for [i=2:($jmax+1)] 'DATA_CN_Re_Uj.txt' index t/2 using (posx1CN[\$0+1]):i title sprintf('CN Re{U^{%d}(x,t)}',i-1) axes x1y1 w l, for [i=2:($jmax+1)] 'DATA_XO_Im_Uj.txt' index t/2 using (posx1[\$0+1]):i title sprintf('KA Im{U^{%d}(x,t)}',i-1) axes x1y2 w l, for [i=2:($jmax+1)] 'DATA_CN_Im_Uj.txt' index t/2 using (posx1CN[\$0+1]):i title sprintf('CN Im{U^{%d}(x,t)}',i-1) axes x1y2 w l; unset y2tics; unset y2label;
-        set origin 0.75, 0.33; set size 0.25, 0.33; clear; set key title ' ' inside; set xrange [$x1min:$x1max]; set yrange [-0.5:0.5]; set xlabel 'Position x'; set ylabel 'Kin'; set y2tics nomirror; set y2label 'Adv'; set y2range [-0.5:0.5]; plot 'DATA_KinAdv_x.txt' index t/2 using (posx1[\$0+1]):1 title 'Re{Kin(x)}' axes x1y1 w l, 'DATA_KinAdv_x.txt' index t/2 using (posx1[\$0+1]):2 title 'Im{Kin(x)}' axes x1y1 w l, 'DATA_KinAdv_x.txt' index t/2 using (posx1[\$0+1]):3 title 'Re{Adv(x)}' axes x1y2 w l, 'DATA_KinAdv_x.txt' index t/2 using (posx1[\$0+1]):4 title 'Im{Adv(x)}' axes x1y2 w l; unset y2tics; unset y2label;
-        set origin 0.76, 0.0; set size 0.25, 0.33; clear; set key title ' ' inside; set xrange [$x1min:$x1max]; set yrange [-0.07:0.07]; set xlabel 'Position x'; set ylabel 'G(x)'; set y2tics nomirror; set y2label 'J(x)'; set y2range [-0.07:0.07]; plot 'DATA_G_J_x_KA.txt' index t/2 using (posx1[\$0+1]):1 title 'G(x) KA aprox' axes x1y1 w l lc rgb 'red', 'DATA_G_J_x_KA.txt' index t/2 using (posx1[\$0+1]):2 title 'J(x) KA aprox' axes x1y2 w l lc rgb 'blue'; unset y2tics; unset y2label; unset key;
+        set origin 0.75, 0.33; set size 0.25, 0.33; clear; set key title ' ' inside; set xrange [$x1min:$x1max]; set yrange [-0.7:0.7]; set xlabel 'Position x'; set ylabel 'Kin'; set y2tics nomirror; set y2label 'Adv'; set y2range [-0.7:0.7]; plot 'DATA_KinAdv_x.txt' index t/2 using (posx1[\$0+1]):1 title 'Re{Kin(x)}' axes x1y1 w l, 'DATA_KinAdv_x.txt' index t/2 using (posx1[\$0+1]):2 title 'Im{Kin(x)}' axes x1y1 w l, 'DATA_KinAdv_x.txt' index t/2 using (posx1[\$0+1]):3 title 'Re{Adv(x)}' axes x1y2 w l, 'DATA_KinAdv_x.txt' index t/2 using (posx1[\$0+1]):4 title 'Im{Adv(x)}' axes x1y2 w l; unset y2tics; unset y2label;
+        set origin 0.76, 0.0; set size 0.25, 0.33; clear; set key title ' ' inside; set xrange [$x1min:$x1max]; set yrange [-0.1:0.1]; set xlabel 'Position x'; set ylabel 'G(x)'; set y2tics nomirror; set y2label 'J(x)'; set y2range [-0.1:0.1]; plot 'DATA_G_J_x_KA.txt' index t/2 using (posx1[\$0+1]):1 title 'G(x) KA aprox' axes x1y1 w l lc rgb 'red', 'DATA_G_J_x_KA.txt' index t/2 using (posx1[\$0+1]):2 title 'J(x) KA aprox' axes x1y2 w l lc rgb 'blue'; unset y2tics; unset y2label; unset key;
         t=t+2; tCN=tCN+1; if(tCN>($tIts)){tCN=0;}; unset multiplot;}"
 
         echo "Done!"
@@ -243,6 +257,7 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
     echo ""
 
 
+    if [[ $customTrajs == *"0"* ]]; then
 
     # XO NO G,J------------------------------------------------------------------------------
     echo "XO No GJ time!!---------------------------------"
@@ -289,6 +304,7 @@ psiIni="double sigmax=${sigmax}, sigmay=${sigmay}, mux=${mux}, muy=${muy}, kx=${
 
 	fi
 
+    fi
     echo ""
     echo "All the simulations for k=" $k0 " completed.-------------------------"
     echo "Thanks for trusting XOA engine"
