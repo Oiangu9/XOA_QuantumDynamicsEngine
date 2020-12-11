@@ -1,13 +1,13 @@
 2d_WF(x,y)---------
-double sigmax=2.0, sigmay=6, mux=-8.0, muy=0.0, kx=0.1, ky=0; return pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2))* pow(1.0/(2*PI*sigmay*sigmay),0.25)*exp(J*ky*y-0.25*pow((y-muy)/sigmay,2));
+double g=1.0,a1=0.0,a2=12.0,Lmax=40.0,Lmin=7.0, kx=1.0, mux=-13, sigmax=3.0, o, L; o= -(Lmax-Lmin)/2.0*(1.0/(1.0+exp((x-a1)/g))+1.0/(1.0+exp((-x+a2)/g)))-Lmin/2.0; L=-2*o; if(y>(o+L) || y<o){return 0.0;} else{return sqrt(2.0/L)*sin(PI*(y-o)/L)*pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2));}
 potential(x,y)----------
-return 0;
+double g=1.0,a1=0.0,a2=12.0,Lmax=40.0,Lmin=7.0,L1; L1= (Lmax-Lmin)/2.0*(1.0/(1.0+exp((x-a1)/g))+1.0/(1.0+exp((-x+a2)/g)))+Lmin/2.0; if(y>L1 || y<-L1){return 100.0;} else{return 0.0;}
 nx ny--------------------
 850 850
 xmin_xmax_ymin_ymax-------------------
 -25.0 25.0 -22.0 22.0
 massx_massy---------------
-1.0 3.5
+1.0 0.5
 hbar---------------
 1.0
 
