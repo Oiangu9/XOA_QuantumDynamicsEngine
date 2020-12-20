@@ -257,7 +257,6 @@ fi
     echo ""
 
 
-    if [[ $customTrajs == *"0"* ]]; then
 
     # XO NO G,J------------------------------------------------------------------------------
     echo "XO No GJ time!!---------------------------------"
@@ -272,7 +271,7 @@ fi
     yjmax=0
     b_y=0
 
-    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 2
+    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery $xBound $k0 $customTrajs "$customTrajsCode" 2
 
     g++ -Wall -O CODE_simulator_XO_NoGJ.cpp -o EXE_simulator_XO_NoGJ
     echo " Done!"
@@ -302,7 +301,7 @@ fi
         set origin 0.0, 0.5; set size 0.5, 0.5; clear; set xrange [$xmin:$xmax]; set yrange [$ymin:$ymax]; set xlabel 'Position x'; set ylabel 'Position y'; if ((t-(2*$tIt*countTrajs)) >= 2*$tIt){ countTrajs=countTrajs+1; }; set pm3d map; set palette rgbformulae 33,13,10; splot 'DATA_potentialToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' index ((t-(2*$tIt*countTrajs))/2) title 'Potential Energy Map', 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' title 'Resultant Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'black', 'DATA_trajectoriesToPlot_2D_XO_CN_KinAdv_BornHuang_tINDEP.txt' every ::1::(t/2+2) title 'Trajectories' w points lt 5 pt 4 ps 0.2 lc rgb 'red';
         t=t+2; unset multiplot; }"
 
-	fi
+
 
     fi
     echo ""
