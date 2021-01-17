@@ -47,6 +47,9 @@ read diffy_functionEigenstates
 echo "Introduce an expression for the second derivative in y of the eigenstates as a function of x and j - NOT NECESSARY FOR CN2"
 read trash
 read diffyy_functionEigenstates
+echo " Would you like to use Xabier's correction? (1 if yes, 0 if not)"
+read trash
+read correctionOiangu
 echo " Introduce the maximum j of the chis you want me to calculate"
 read trash
 read jmax
@@ -130,11 +133,15 @@ if [[ $customTrajs == *"0"* ]]; then
 customTrajsCode=" "
 fi
 
-    tIts=$(echo "$numIt / $outputEvery" | bc)
+tIts=$(echo "$numIt / $outputEvery" | bc)
+
+version_of_XOKA="1"
+if [[ $correctionOiangu == *"1"* ]]; then
+version_of_XOKA="3"
+fi
 
 for k0 in $ks
 do
-
 
 if [[ $psi == *"GS"* ]]; then
     psiIni="double g=${g},a1=${a1},a2=${a2},Lmax=${Lmax},Lmin=${Lmin}, kx=${k0}, mux=${mux}, sigmax=${sigmax}, o, L; o= -(Lmax-Lmin)/2.0*(1.0/(1.0+exp((x-a1)/g))+1.0/(1.0+exp((-x+a2)/g)))-Lmin/2.0; L=-2*o; if(y>(o+L) || y<o){return 0.0;} else{return sqrt(2.0/L)*sin(PI*(y-o)/L)*pow(1.0/(2*PI*sigmax*sigmax),0.25)*exp(J*kx*x-0.25*pow((x-mux)/sigmax,2));}"
@@ -149,7 +156,7 @@ fi
     echo "(2) Executing calculations for the time evolution...."
     echo " Generating code and compiling..."
 
-    ./EXE_codeFileGenerator_2D_CN_tINDEP "$psiIni" "$potential" $nx1CN $nx2CN $x1min $x1max $x2min $x2max $dt $numIt $mass1 $mass2 $hbar  $outputEvery 1
+    ./EXE_codeFileGenerator_2D_CN_tINDEP "$psiIni" "$potential" $nx1CN $nx2CN $x1min $x1max $x2min $x2max $dt $numIt $mass1 $mass2 $hbar  $outputEvery $version_of_XOKA 1
     g++ -Wall -O CODE_simulator_2D_CN_tINDEP.cpp -o EXE_simulator_2D_CN_tINDEP
     echo " Done!"
     echo ""
@@ -193,7 +200,7 @@ fi
     b_y=0
 
 
-    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 $Kin $Adv $G $J $customTrajs "$customTrajsCode" 1
+    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 $Kin $Adv $G $J $customTrajs "$customTrajsCode" $version_of_XOKA
 
     g++ -Wall -O CODE_simulator_XO_KinAdv.cpp -o EXE_simulator_XO_KinAdv
     echo " Done!"
@@ -314,12 +321,12 @@ done
 g++ -Wall -O3 CODE_proportionUnifier_ErrorCalculator.cpp -o EXE_proportionUnifier_ErrorCalculator
     ./EXE_proportionUnifier_ErrorCalculator $numk $tIts $ks
 
-    gnuplot -e "set terminal png size 1800,500; set output '$label Transmitace_XOKA_CNTrajs_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = 2*$numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:t[i] title sprintf('SPCWF using KinAdv kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:i title sprintf('CN Trajects kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference SPCWF KinAdv vs CN_Trajs'; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:i title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
+    gnuplot -e "set terminal png size 1800,500; set output '../ANIMATION_GIFS/$label Transmitace_XOKA_CNTrajs_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = 2*$numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:t[i] title sprintf('SPCWF using KinAdv kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:i title sprintf('CN Trajects kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference SPCWF KinAdv vs CN_Trajs'; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:i title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
 
-    gnuplot -e "set terminal png size 1800,500; set output '$label Transmitace_XOKA_CNArea_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = 2*$numk+i }; array a[$numk+1]; do for [i=1:($numk)] { a[i] = $numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:t[i] title sprintf('SPCWF using KinAdv kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:a[i] title sprintf('CN Probability Density kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference SPCWF KinAdv vs CN_ProbabDens'; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:a[i] title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
+    gnuplot -e "set terminal png size 1800,500; set output '../ANIMATION_GIFS/$label Transmitace_XOKA_CNArea_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = 2*$numk+i }; array a[$numk+1]; do for [i=1:($numk)] { a[i] = $numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:t[i] title sprintf('SPCWF using KinAdv kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:a[i] title sprintf('CN Probability Density kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference SPCWF KinAdv vs CN_ProbabDens'; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:a[i] title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
 
-    gnuplot -e "set terminal png size 1800,500; set output '$label Transmitace_XOKA_XONoGJ_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = 2*$numk+i }; array a[$numk+1]; do for [i=1:($numk)] { a[i] = 3*$numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:t[i] title sprintf('SPCWF using KinAdv kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:a[i] title sprintf('SPCWF No G,J kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference SPCWF KinAdv vs SPCWF No GJ '; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:t[i] title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
+    gnuplot -e "set terminal png size 1800,500; set output '../ANIMATION_GIFS/$label Transmitace_XOKA_XONoGJ_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = 2*$numk+i }; array a[$numk+1]; do for [i=1:($numk)] { a[i] = 3*$numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:t[i] title sprintf('SPCWF using KinAdv kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:a[i] title sprintf('SPCWF No G,J kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference SPCWF KinAdv vs SPCWF No GJ '; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:t[i] title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
 
-    gnuplot -e "set terminal png size 1800,500; set output '$label Transmitace_XONoGJ_CNTrajs_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = 4*$numk+i }; array a[$numk+1]; do for [i=1:($numk)] { a[i] = 3*$numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:i title sprintf('CN Trajects kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:a[i] title sprintf('SPCWF No G,J kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference CN Trajs vs SPCWF No GJ '; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:a[i] title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
+    gnuplot -e "set terminal png size 1800,500; set output '../ANIMATION_GIFS/$label Transmitace_XONoGJ_CNTrajs_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = 4*$numk+i }; array a[$numk+1]; do for [i=1:($numk)] { a[i] = 3*$numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:i title sprintf('CN Trajects kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:a[i] title sprintf('SPCWF No G,J kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference CN Trajs vs SPCWF No GJ '; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:a[i] title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
 
-    gnuplot -e "set terminal png size 1800,500; set output '$label Transmitace_XONoGJ_CNArea_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = $numk+i }; array b[$numk+1]; do for [i=1:($numk)] { b[i] = 4*$numk+i }; array a[$numk+1]; do for [i=1:($numk)] { a[i] = 3*$numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:t[i] title sprintf('CN Prob Density kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:a[i] title sprintf('SPCWF No G,J kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference CN Prob Denst vs SPCWF No GJ '; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:b[i] title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
+    gnuplot -e "set terminal png size 1800,500; set output '../ANIMATION_GIFS/$label Transmitace_XONoGJ_CNArea_gc_time.png'; array t[$numk+1]; do for [i=1:($numk)] { t[i] = $numk+i }; array b[$numk+1]; do for [i=1:($numk)] { b[i] = 4*$numk+i }; array a[$numk+1]; do for [i=1:($numk)] { a[i] = 3*$numk+i }; tmax1=$numk*4+1; tmax2=$numk*5+1; set multiplot; set origin 0.0,0.0; set size 0.5, 1.0; set yrange [0:0.4]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Aproximated Transmited Density'; plot for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:t[i] title sprintf('CN Prob Density kx_0= k_{%d}',i) w l, for [i=1:($numk)] 'DATA_porpsToPlot.txt' using tmax1:a[i] title sprintf('SPCWF No G,J kx_0= k_{%d}',i) w l; set origin 0.5, 0.0; set size 0.5, 1.0; clear; set yrange [0:0.1]; set xrange [0:$tIts]; set xlabel 'time (a.u.)'; set ylabel 'Absolute Difference CN Prob Denst vs SPCWF No GJ '; plot for [i=1:($numk)] 'DATA_errorsToPlot.txt' using tmax2:b[i] title sprintf('Initial k = k_{%d}',i) w l; unset multiplot;"
