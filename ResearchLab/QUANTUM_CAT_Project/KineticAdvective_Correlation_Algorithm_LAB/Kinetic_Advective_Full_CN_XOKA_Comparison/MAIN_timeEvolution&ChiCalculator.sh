@@ -47,6 +47,9 @@ read diffy_functionEigenstates
 echo "Introduce an expression for the second derivative in y of the eigenstates as a function of x and j - NOT NECESSARY FOR CN2"
 read trash
 read diffyy_functionEigenstates
+echo " Do you want to use Xabier's correction? If yes input 1, else 0"
+read trash
+read oianguCorrection
 echo " Introduce the maximum j of the chis you want me to calculate"
 read trash
 read jmax
@@ -130,6 +133,11 @@ if [[ $customTrajs == *"0"* ]]; then
 customTrajsCode=" "
 fi
 
+XOKA_version="1"
+if [[ $oianguCorrection == *"1"* ]]; then
+XOKA_version="3"
+fi
+
 tIts=$(echo "$numIt / $outputEvery" | bc)
 
 
@@ -150,7 +158,7 @@ do
     echo " (2) CODE COMPILATION and EXECUTION"
     echo " Generating code and compiling..."
 
-    potentialPlotFineness=0.013
+    potentialPlotFineness=0.007
     eigenstatesForSectionsIny="return 0;"
     diffxEigenstatesForSectionsIny="return 0;"
     diffxxEigenstatesForSectionsIny="return 0;"
@@ -158,7 +166,7 @@ do
     b_y=0
 
 
-    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 $Kin $Adv $G $J $customTrajs "$customTrajsCode" 1
+    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 $Kin $Adv $G $J $customTrajs "$customTrajsCode" $XOKA_version
 
     g++ -Wall -O CODE_simulator_XO_KinAdv.cpp -o EXE_simulator_XO_KinAdv
     echo " Done!"
@@ -233,7 +241,7 @@ do
     echo " (2) CODE COMPILATION and EXECUTION"
     echo " Generating code and compiling..."
 
-    potentialPlotFineness=0.013
+    potentialPlotFineness=0.007
     eigenstatesForSectionsIny="return 0;"
     diffxEigenstatesForSectionsIny="return 0;"
     diffxxEigenstatesForSectionsIny="return 0;"
