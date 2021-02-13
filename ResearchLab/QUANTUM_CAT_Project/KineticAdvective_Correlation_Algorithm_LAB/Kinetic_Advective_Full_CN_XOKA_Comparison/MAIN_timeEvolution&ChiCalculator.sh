@@ -47,6 +47,9 @@ read diffy_functionEigenstates
 echo "Introduce an expression for the second derivative in y of the eigenstates as a function of x and j - NOT NECESSARY FOR CN2"
 read trash
 read diffyy_functionEigenstates
+echo " Would you like to use Xabier's correction? (1 if yes, 0 if not)"
+read trash
+read correctionOiangu
 echo " Introduce the maximum j of the chis you want me to calculate"
 read trash
 read jmax
@@ -130,7 +133,13 @@ if [[ $customTrajs == *"0"* ]]; then
 customTrajsCode=" "
 fi
 
-    tIts=$(echo "$numIt / $outputEvery" | bc)
+tIts=$(echo "$numIt / $outputEvery" | bc)
+
+version_of_XOKA="1"
+if [[ $correctionOiangu == *"1"* ]]; then
+version_of_XOKA="3"
+fi
+
 
 for k0 in $ks
 do
@@ -193,7 +202,7 @@ fi
     b_y=0
 
 
-    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 $Kin $Adv $G $J $customTrajs "$customTrajsCode" 1
+    ./EXE_codeFileGenerator_2D_XO_KINADV_BornHuang_tINDEP "$psiIni" "$potential" $mass1 $mass2 $nx1 $nx2 $x1min $x1max $x2min $x2max $dt $numIt $numTrajs $potentialPlotFineness $hbar $outputEvery "$functionEigenstates" "$diffy_functionEigenstates" "$diffyy_functionEigenstates" "$eigenstatesForSectionsIny" "$diffxEigenstatesForSectionsIny" "$diffxxEigenstatesForSectionsIny" $jmax $yjmax $b_y $chiSumTolerance $xBound $k0 $Kin $Adv $G $J $customTrajs "$customTrajsCode" $version_of_XOKA
 
     g++ -Wall -O CODE_simulator_XO_KinAdv.cpp -o EXE_simulator_XO_KinAdv
     echo " Done!"

@@ -14,6 +14,8 @@ DiffyEigenstatesSectionsInx------No_hace_falta_para_CN2
 double g=1.0,a1=0.0,a2=12.0,Lmax=40.0,Lmin=7.0,o, L; o= -(Lmax-Lmin)/2.0*(1.0/(1.0+exp((x-a1)/g))+1.0/(1.0+exp((-x+a2)/g)))-Lmin/2.0; L=-2*o; if(y>(o+L) || y<o){return 0.0;} else{return sqrt(2.0/L)*(j*PI/L)*cos(j*PI*(y-o)/L);}
 DiffyyEigenstatesSectionsInx-----No_hace_falta_para_CN2
 double g=1.0,a1=0.0,a2=12.0,Lmax=40.0,Lmin=7.0,o, L; o= -(Lmax-Lmin)/2.0*(1.0/(1.0+exp((x-a1)/g))+1.0/(1.0+exp((-x+a2)/g)))-Lmin/2.0; L=-2*o; if(y>(o+L) || y<o){return 0.0;} else{return sqrt(2.0/L)*(-j*j*PI*PI/(L*L))*sin(j*PI*(y-o)/L);}
+use_Oiangu_Correction------------
+1
 jmax-----------------------------
 1
 chiSumTolerance------------------No_hace_falta_para_CN2
