@@ -992,7 +992,7 @@ for(int trajNum=0; trajNum<numTrajs; ++trajNum){ //this is a potential multithre
 
         Uj=0.5*(eigenstatesForSectionsInx(ymin,posx,j)*psiY(0) + eigenstatesForSectionsInx(ymax,posx,j)*psiY(yDivs));
         for(int k=1; k<yDivs; ++k){ Uj=Uj+eigenstatesForSectionsInx(ygrid(k),posx,j)*psiY(k);}
-        Ujx_container(i, j)=Uj*dy/(psiY_in_y_traj_pos);
+        Ujx_container(i, j)=Uj*dy/(0.5*(psiY_in_y_traj_pos+psiX_in_x_traj_pos));
         Chijx_container(i,j)=Ujx_container(i, j)*psiX(i);
       }
       lastjUsedInItx=j;
