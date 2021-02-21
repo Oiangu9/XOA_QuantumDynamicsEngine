@@ -351,8 +351,8 @@ for(int trajNum=0; trajNum<numTrajs; ++trajNum){ //this is a potential multithre
     U2psiy= U2y*psiY;
     psiY = LUsolvery.solve(U2psiy);
     if( it%outputDataEvery == 0){ //then we output the data
-      probabDataFile <<"KA-Norm_x=" << Nx<<endl<<probDensityx << endl << endl<<endl;
-      probabDataFile<<"KA-Norm_y=" << Ny<<endl << probDensityy << endl << endl<<endl;
+      probabDataFile <<"KA-Norm_x=" << Nx<<endl<<probDensityx/Nx << endl << endl<<endl;
+      probabDataFile<<"KA-Norm_y=" << Ny<<endl << probDensityy/Ny << endl << endl<<endl;
       for(int j=0; j<=lastjUsedInItx; ++j){
         DATA_sumChiInfo<<j<<" "<<sumaChisx(j)<<endl;
       }
@@ -1077,8 +1077,8 @@ for(int trajNum=0; trajNum<numTrajs; ++trajNum){ //this is a potential multithre
     U2psiy= U2y*psiY;
     psiY = LUsolvery.solve(U2psiy);
     if( it%outputDataEvery == 0){ //then we output the data
-      probabDataFile <<"KA-Norm_x=" << Nx<<";|psi(traj)|^2="<<prob_in_traj_x<< endl<<probDensityx << endl << endl<<endl;
-      probabDataFile<<"KA-Norm_y=" << Ny<<";|psi(traj)|^2="<<prob_in_traj_y <<endl << probDensityy << endl << endl<<endl;
+      probabDataFile <<"KA-Norm_x=" << Nx<<";|psi(traj)|^2="<<prob_in_traj_x<< endl<<probDensityx/Nx << endl << endl<<endl;
+      probabDataFile<<"KA-Norm_y=" << Ny<<";|psi(traj)|^2="<<prob_in_traj_y <<endl << probDensityy/Ny << endl << endl<<endl;
       for(int j=0; j<=lastjUsedInItx; ++j){
         DATA_sumChiInfo<<j<<" "<<sumaChisx(j)<<endl;
       }
