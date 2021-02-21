@@ -17,9 +17,9 @@ double g=1.0,a1=0.0,a2=12.0,Lmax=40.0,Lmin=7.0,o, L; o= -(Lmax-Lmin)/2.0*(1.0/(1
 use_Oiangu_Correction------------
 1
 jmax-----------------------------
-1
+5
 chiSumTolerance------------------No_hace_falta_para_CN2
-0.95
+2.0
 numTrajs-------------------------
 2
 nx ny_CN----------------------------CN
@@ -39,7 +39,7 @@ massx massy----------------------
 hbar-----------------------------
 1.0
 Kin Adv G J----------------------
-1.0 0.0 1.0 0.0
+1.0 1.0 1.0 1.0
 customInitialPositionTrajs-------
 0
 codeForCustomTrajs---------------

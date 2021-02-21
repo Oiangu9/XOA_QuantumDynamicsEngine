@@ -176,8 +176,8 @@ DATA_chiInfo.open("DATA_chiInfo_XO.txt");
 DATA_sumChiInfo.open("DATA_sumChiInfo_XO.txt");
 DATA_G_J_x.open("DATA_G_J_x_KA.txt");
 //DATA_G_J_y.open("DATA_G_J_y_KA.txt");
-DATA_XO_Re_Uj_x.open("DATA_XO_Re_Uj.txt");
-DATA_XO_Im_Uj_x.open("DATA_XO_Im_Uj.txt");
+//DATA_XO_Re_Uj_x.open("DATA_XO_Re_Uj.txt");
+//DATA_XO_Im_Uj_x.open("DATA_XO_Im_Uj.txt");
 
 DATA_KinAdv_x.open("DATA_KinAdv_x.txt");
 //DATA_KinAdv_y.open("DATA_KinAdv_y.txt");
@@ -362,8 +362,8 @@ for(int trajNum=0; trajNum<numTrajs; ++trajNum){ //this is a potential multithre
       //DATA_G_J_y<<G_J_y<<endl<<endl<<endl;
       DATA_KinAdv_x << KinAdv_x<<endl<<endl<<endl;
       //DATA_KinAdv_y << KinAdv_y<<endl<<endl<<endl;
-      DATA_XO_Re_Uj_x << Ujx_container.real() << endl<<endl<<endl;
-      DATA_XO_Im_Uj_x << Ujx_container.imag() << endl << endl << endl;
+      //DATA_XO_Re_Uj_x << Ujx_container.real() << endl<<endl<<endl;
+      //DATA_XO_Im_Uj_x << Ujx_container.imag() << endl << endl << endl;
     }
   } //end time iteration loop
   for(int it=0; it<=timeIts; ++it){
@@ -377,8 +377,8 @@ probabDataFile.close();
 trajDataFile.close();
 DATA_chiInfo.close();
 DATA_sumChiInfo.close();
-DATA_XO_Re_Uj_x.close();
-DATA_XO_Im_Uj_x.close();
+//DATA_XO_Re_Uj_x.close();
+//DATA_XO_Im_Uj_x.close();
 
 //We output the shape of the potential in order to be able to plot it
 ofstream potentialToPlot, trajProps;
@@ -896,8 +896,8 @@ DATA_chiInfo.open("DATA_chiInfo_XO.txt");
 DATA_sumChiInfo.open("DATA_sumChiInfo_XO.txt");
 DATA_G_J_x.open("DATA_G_J_x_KA.txt");
 //DATA_G_J_y.open("DATA_G_J_y_KA.txt");
-DATA_XO_Re_Uj_x.open("DATA_XO_Re_Uj.txt");
-DATA_XO_Im_Uj_x.open("DATA_XO_Im_Uj.txt");
+//DATA_XO_Re_Uj_x.open("DATA_XO_Re_Uj.txt");
+//DATA_XO_Im_Uj_x.open("DATA_XO_Im_Uj.txt");
 
 DATA_KinAdv_x.open("DATA_KinAdv_x.txt");
 //DATA_KinAdv_y.open("DATA_KinAdv_y.txt");
@@ -991,7 +991,7 @@ for(int trajNum=0; trajNum<numTrajs; ++trajNum){ //this is a potential multithre
 
         Uj=0.5*(eigenstatesForSectionsInx(ymin,posx,j)*psiY(0) + eigenstatesForSectionsInx(ymax,posx,j)*psiY(yDivs));
         for(int k=1; k<yDivs; ++k){ Uj=Uj+eigenstatesForSectionsInx(ygrid(k),posx,j)*psiY(k);}
-        Ujx_container(i, j)=Uj*dy/(psiY_in_y_traj_pos);
+        Ujx_container(i, j)=Uj*dy/(0.5*(psiY_in_y_traj_pos+psiX_in_x_traj_pos));
         Chijx_container(i,j)=Ujx_container(i, j)*psiX(i);
       }
       lastjUsedInItx=j;
@@ -1088,8 +1088,8 @@ for(int trajNum=0; trajNum<numTrajs; ++trajNum){ //this is a potential multithre
       //DATA_G_J_y<<G_J_y<<endl<<endl<<endl;
       DATA_KinAdv_x << KinAdv_x<<endl<<endl<<endl;
       //DATA_KinAdv_y << KinAdv_y<<endl<<endl<<endl;
-      DATA_XO_Re_Uj_x << Ujx_container.real() << endl<<endl<<endl;
-      DATA_XO_Im_Uj_x << Ujx_container.imag() << endl << endl << endl;
+      //DATA_XO_Re_Uj_x << Ujx_container.real() << endl<<endl<<endl;
+      //DATA_XO_Im_Uj_x << Ujx_container.imag() << endl << endl << endl;
     }
   } //end time iteration loop
   for(int it=0; it<=timeIts; ++it){
@@ -1103,8 +1103,8 @@ probabDataFile.close();
 trajDataFile.close();
 DATA_chiInfo.close();
 DATA_sumChiInfo.close();
-DATA_XO_Re_Uj_x.close();
-DATA_XO_Im_Uj_x.close();
+//DATA_XO_Re_Uj_x.close();
+//DATA_XO_Im_Uj_x.close();
 
 //We output the shape of the potential in order to be able to plot it
 ofstream potentialToPlot, trajProps;
