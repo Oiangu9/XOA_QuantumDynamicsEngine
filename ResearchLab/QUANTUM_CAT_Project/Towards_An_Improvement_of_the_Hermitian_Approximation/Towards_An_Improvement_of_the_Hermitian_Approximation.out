@@ -1,0 +1,19 @@
+\BOOKMARK [1][-]{section.1}{The Exact Schr\366dinger-like Equation for Conditional Wave-Functions}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Shape I: The Kinetic and Advective Correlation Potentials}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Shape II: Introducing the Born-Huang ansatz onto the K,A potentials}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Shape III: \040Rewriting K and A in terms of the CWF - The Real Potentials G and J}{section.1}% 4
+\BOOKMARK [1][-]{section.2}{The Approximation 1.0}{}% 5
+\BOOKMARK [2][-]{subsection.2.1}{Algorithm 1.0 - The Hermitian Approximation}{section.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Using CWF.SE.I: the Raw K and A}{subsection.2.1}% 7
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Using CWF.SE.II: the Born-Huang K.BH and A.BH}{subsection.2.1}% 8
+\BOOKMARK [3][-]{subsubsection.2.1.3}{Using CWF.SE.III: the Raw G and J}{subsection.2.1}% 9
+\BOOKMARK [1][-]{section.3}{The Approximation 2.0}{}% 10
+\BOOKMARK [2][-]{subsection.3.1}{Algorithm 2.0 - The Paradoxical Approximation }{section.3}% 11
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Using CWF.SE.II}{subsection.3.1}% 12
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Using CWF.SE.III}{subsection.3.1}% 13
+\BOOKMARK [3][-]{subsubsection.3.1.3}{Example where the approach works: The Single Slit Transmission}{subsection.3.1}% 14
+\BOOKMARK [1][-]{section.4}{Reconstructing the Full Wave-Function from CWF-s}{}% 15
+\BOOKMARK [2][-]{subsection.4.1}{Using the CWF definition}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.2}{Fitting the best Full wavefunction we can}{section.4}% 17
+\BOOKMARK [1][-]{section.5}{Suggestion for a self-consistent Composed Algorithm}{}% 18
+\BOOKMARK [1][-]{section*.28}{References}{}% 19

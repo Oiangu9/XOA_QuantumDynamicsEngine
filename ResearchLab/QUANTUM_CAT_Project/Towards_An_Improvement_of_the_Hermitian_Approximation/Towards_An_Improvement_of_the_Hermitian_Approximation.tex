@@ -1,0 +1,647 @@
+\documentclass[11pt, a4paper]{article} % , draft
+\usepackage[utf8]{inputenc}
+
+\usepackage{enumitem} % customiçe item dots etc
+\usepackage{textgreek} % obv
+\usepackage{physics} % for easy derivative notation
+\usepackage{amsmath}
+\usepackage{amsthm} %theorems
+\usepackage{amssymb}
+\usepackage{mathtools} % for matrices with blocks inside
+\usepackage[scr=boondoxo]{mathalfa}
+\usepackage{pst-node}%
+\usepackage{mathrsfs}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+\newcommand{\mc}{\multicolumn{1}{c}}
+\newcommand{\R}{\mathbb{R}} % command for real R
+\newcommand{\Holo}{\mathcal{H}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\z}{\mathpzc{s}}
+\newcommand{\p}{\mathpzc{r}}
+\newcommand{\s}{\mathbb{S}}
+\newcommand{\W}{\mathbb{W}}
+\newcommand{\U}{\mathscr{U}}
+\usepackage{csquotes}
+\MakeOuterQuote{"}
+\setlength{\parskip}{0.3 cm}
+
+
+%\usepackage{nath} % authomatic parenthesis stuff
+%\delimgrowth=1
+\usepackage[left=2cm, right=2cm, top=2.1cm, bottom=2.1cm]{geometry} % set custom margins
+\usepackage{graphicx} % to insert figures
+\usepackage{grffile}
+\graphicspath{{Figures/}} % define the figure folder path
+\usepackage{subcaption} % for multiple figures at once each with a caption
+\usepackage{multirow} %multirow in tables
+
+\usepackage{caption}
+\captionsetup[figure]{font=footnotesize} %adjust caption size
+\captionsetup[table]{font=footnotesize} %adjust caption size
+
+\usepackage{booktabs} % for pretty tabs in tables
+\usepackage{siunitx} % Required for alignment
+\captionsetup{labelfont=bf} % bold face captations
+
+\usepackage{hyperref} % makes every reference a hyperlink
+\hypersetup{
+    colorlinks=true,
+    linkcolor=violet,
+    filecolor=[rgb]{0.69, 0.19, 0.38},      
+    urlcolor=[rgb]{0.0, 0.81, 0.82},
+    citecolor=[rgb]{0.69, 0.19, 0.38}
+}
+
+\usepackage{epigraph} % for quotations in teh begginig
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\renewcommand{\qedsymbol}{o.\textepsilon.\textdelta}
+
+\newtheorem{prop}{Proposition} %so I can use propositions
+\newtheorem{cor}{Corollary} %so I can use corollaries
+\newtheorem{defi}{Definition} %so I can use corollaries
+
+\makeatother % all this is for the epigraph
+\usepackage{imakeidx} % make index
+\makeindex[columns=3, title=Alphabetical Index, intoc]
+
+\title{\vspace{-1.0cm} {\bf Towards an improvement of the Hermitian Approximation } \vspace{0.2cm} \\ }
+\date{\vspace{-11ex}}
+\let\clipbox\relax
+\usepackage{adjustbox}
+\newcolumntype{?}{!{\vrule width 1.5pt}}
+\usepackage{abstract}
+\setlength{\absleftindent}{0mm}
+\setlength{\absrightindent}{0mm}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\clearpage
+\setcounter{page}{1}
+\vspace{-0.3 cm}
+\section{The Exact Schrödinger-like Equation for Conditional Wave-Functions}
+
+Given an isolated quantum system with $N$ degrees of freedom described by the spatial variables $\vec{x}=(x_1,...,x_N)\in \R^n$, the sate of which is given by the normalized full $N$ dimensional wavefunction $\Psi(\vec{x},t)$, its dynamics are governed by the time dependent Schrödinger Equation (TDSE):
+\begin{equation}\label{TDSE}\tag{TDSE}
+i\hbar \pdv{\Psi(\vec{x}, t)}{t} = - \sum_{k=1}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\Psi(\vec{x},t)}{x_k} + U(\vec{x},t)\Psi(\vec{x},t)
+\end{equation}
+where $U(\vec{x},t)$ is the time dependant potential energy field that bends the wavefunction, $\{m_k\}_{k=0}^N$ are the masses of each degree of freedom, $\hbar$ is the experimentally fixed Planck constant and $i=\sqrt{-1}$. The unitary time evolution of the TDSE will allow $\forall t$: $ \int_{-\infty}^\infty \Psi(\vec{x},t)^\dagger \Psi(\vec{x},t) d\vec{x}=1 $.
+
+Given an initial point $\vec{x}(t_0)\in \R^N$, we can evolve a trajectory for the quantum system by interpreting the spatial variation of the phase of the full wavefunction as its velocity field (following Bohmian Mechanics). That is, defining the velocity field for the $k$-th dimension as:
+$$
+v_k(\vec{x},t) = \frac{\hbar}{m_k}\pdv{ Phase(\Psi(\vec{x},t))}{x_k}=\frac{\hbar}{m_k}\mathbb{I}m\qty(\Psi^{-1}(\vec{x},t)\pdv{}{x_k}\Psi(\vec{x},t))
+$$
+Then, given the point $\vec{x}(t_0)\in \R^N$, the trajectory $\vec{x}(t)$ crossing it at $t_0$ will be uniquely defined by:
+$$
+\dv{}{t}x^\beta_k(t)=v_k(\vec{x}(t),t) \quad \forall k\in \{1,...,N\}\vspace{-0.05 cm}
+$$
+Given a particular Bohmian Trajectory for the system, that we will label with $\beta$, $\vec{x}^\beta(t)$, we will define for each $x_a\in\{x_k\}_{k=1}^N$ the degrees of freedom of the rest of the system as $\vec{x_b}=(x_1,...,x_{a-1},x_{a+1},...,x_N)$. Now, let us define the Conditional Wavefunction (CWF) for $x_a$, given the $\beta$-th Bohmian trajectory for the rest of degrees of freedom $\vec{x}_b^\beta(t)$, as:
+\begin{equation}\label{CWF}\tag{CWF}
+\psi_a^\beta(x_a,t) := \Psi(x_a, \vec{x}_b^\beta(t), t)\vspace{-0.05 cm}
+\end{equation}
+In what follows we will show three different ways to exactly arrive to a set of Schrödinger like equations for the conditional wave-functions. We will call them in general "the exact Schrödinger like Equation for Conditional Wave-Functions" and shorten them by \hypertarget{CWF.SE}{(CWF.SE)}. \vspace{-0.3 cm}
+
+\subsection{Shape I: The Kinetic and Advective Correlation Potentials}
+
+Now, given the Bohmian Trajectory for the system labelled by $\beta$, $\vec{x}^\beta(t)$, for each $x_a\in\{x_k\}_{k=1}^N$ we can condition the full wavefunction in the TDSE to the trajectory for $\vec{x}_b=(x_1,...,x_{a-1},x_{a+1},...,x_N)$:
+$$
+i\hbar \pdv{\Psi(\vec{x}, t)}{t}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} = - \sum_{k=1}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\Psi(\vec{x},t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} + U(\vec{x},t)\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta}\Psi(\vec{x},t)\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta}
+$$
+Noting that by the chain rule:
+$$
+\dv{\Psi(x_a, \vec{x}_b^\beta(t), t)}{t} = \pdv{\Psi(\vec{x}, t)}{t}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} + \sum_{\substack{k=1; \\ k\neq a}}^{N} \pdv{\Psi(\vec{x}, t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)
+$$
+We get:
+$$
+i\hbar \dv{\Psi(x_a, \vec{x}_b^\beta(t), t)}{t} = - \frac{\hbar^2}{2m_a}\pdv[2]{\Psi(x_a, \vec{x}_b^\beta(t), t)}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)\Psi(x_a, \vec{x}_b^\beta(t), t) 
+$$
+$$
+- \sum_{\substack{k=1; \\ k\neq a}}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\Psi(\vec{x},t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} + i \hbar  \sum_{\substack{k=1; \\ k\neq a}}^{N} \pdv{\Psi(\vec{x}, t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)
+$$
+
+Where we see that all the terms introducing an explicit dependence from the rest of the system ($\vec{x}_b$) on $x_a$ are gathered in the last two terms, let us define them as the Kinetic Correlation Potential (\ref{K}) and the Advective Correlation Potential (\ref{A}):
+
+\begin{equation}\label{K}\tag{K}
+K(x_a, \vec{x}_b^\beta(t), t) = - \ \sum_{\substack{k=1; \\ k\neq a}}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\Psi(\vec{x},t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}
+\end{equation}
+\begin{equation}\label{A}\tag{A}
+A(x_a, \vec{x}_b^\beta(t), t) =  i \hbar  \sum_{\substack{k=1; \\ k\neq a}}^{N} \pdv{\Psi(\vec{x}, t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)
+\end{equation}
+
+They are both complex valued potentials that introduce the correlations (exchange and entanglement) with the rest of the degrees of freedom in the equation (even if $U(x_a, \vec{x}_b^\beta(t), t)$ also introduces some of them).
+
+
+In its terms, the full TDSE can be rewritten as:
+\begin{equation*}\label{CWF.SE.I}\tag{CWF.SE.I}
+i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)]\psi_a^\beta(x_a t) + K(x_a, \vec{x}_b^\beta(t), t) +A(x_a, \vec{x}_b^\beta(t), t) \quad
+\end{equation*}
+
+We will call this the exact conditional wave-function Schrödinger like Equation (\ref{CWF.SE.I}). If we could solve this for each $x_a\in\{x_k\}_{k=1}^N$ given the potential energy $U$, an initial shape for the full wavefunction $\Psi(\vec{x}, t_0)$ and an initial position of the trajectory $\vec{x}^\beta(t_0)$, then we would be evolving the exact shape of the \ref{CWF}-s if we evolve the trajectory $\vec{x}^\beta(t)$ in a coupled fashion. Note that the ordinary differential equations ruling the trajectory can be solved even if we only knew the CWF-s! This is because each $a$-th velocity field is obtianed by a derivative of the same spatial variable. As such, they only depend on the CWF-s:
+$$
+\dv{}{t}x^\beta_a(t)=v_a(x_a^\beta (t), \vec{x}^\beta_b(t),t)=\frac{\hbar}{m_k}\mathbb{I}m\qty(\psi_a^\beta(x_a, t)^{-1}\pdv{}{x_k}\psi_a^\beta(x_a, t),t) \quad \forall a\in \{1,...,N\}
+$$
+\subsection{Shape II: Introducing the Born-Huang ansatz onto the \ref{K},\ref{A} potentials}
+
+As the potential energy $U(\vec{x},t)$ is a known function, for each $x_a\in\{x_k\}_{k=1}^N$  we can define the Transversal Section Eigenstates \ref{TSEig} as the set of functions $\{\Phi_{x_a}^j(\vec{x}_b,t)\}_{j=0}^\infty$ such that:
+\begin{equation}\label{TSEig}\tag{TSEig}
+\qty(- \sum_{k=1; k\neq a}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{}{x_k}+U(x_a,\vec{x}_b,t) )\Phi_{x_a}^j(\vec{x}_b,t) = E_{x_a}^j(t)\Phi_{x_a}^j(\vec{x}_b,t)
+\end{equation}
+for $j\in\{0,1,2,3,...\}$. We order the indices $j$ such that the eigenvalues known as energies of the transversal sections fulfill: $E_{x_a}^0(t)\leq E_{x_a}^1(t)\leq E_{x_a}^2(t)...$.
+
+Note that each $\Phi_{x_a}^j(\vec{x}_b,t)$ is a different eigenstate as a function of $a$ (the variable left aside), of where in the domain of $x_a$ we look at and the time in which we look at ($U(x_a,\vec{x}_b,t)$ will vary in $x_a$ and $t$). Thus, we compute these eigenstates for each $a$, $x_a$ and $t$.
+
+As the \ref{TSEig} are the eigenstates of a Hermitian Operator, they can be chosen to satisfy the orthonormality condition on each transversal section Hilbert space. That is:
+$$
+\int_{-\infty}^\infty \Phi_{x_a}^k(\vec{x}_b,t)^\dagger \Phi_{x_a}^j(\vec{x}_b,t) d\vec{x}_b=\delta_{kj} \equiv \begin{cases}1\ if\ k=j\\0\ if\ k\neq j \end{cases}\quad \forall t\geq t_0
+$$
+
+If the potential $U$ is known, then in principle there are plenty of numerical algorithms capable of getting these eigenstates.
+
+Now, for each $x_a\in\{x_k\}_{k=1}^N$ as the set of \ref{TSEig} $\{\Phi_{x_a}^j(\vec{x}_b,t)\}_{j=0}^\infty$ are the eigenstaes of a Hermitian operator, they will be a complete basis for the transversal section Hilbert spaces, meaning we can expand the full wavefunction in their terms as:
+\begin{equation}\label{BH}\tag{BH}
+\Psi(\vec{x},t)=\sum_{j=0}^\infty \chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)
+\end{equation}
+where:
+\begin{equation}\label{chi}\tag{chi}
+\chi_a^j(x_a,t):= \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \Psi(\vec{x},t) d\vec{x}_b
+\end{equation}
+This is the so called Born-Huang expansion (\ref{BH}) of the full wave-function, while the coefficients of the expansion $\{\chi_a^j(x_a,t)\}_{j=0}^\infty$ are called the Adiabatic Coefficients (\ref{chi}).
+
+In particular, if we condition the (\ref{BH}) ansatz to the trajectory $\vec{x}_b^\beta(t)$, we can get an expansion of the \ref{CWF}:
+$$
+\psi_a^\beta(x_a,t) = \Psi(x_a, \vec{x}_b^\beta(t), t) = \sum_{j=0}^\infty \chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)
+$$
+
+We could now re-write the Kinetic and Advective Correlation potentials (\ref{K}, \ref{A}) in terms of this ansatz:
+\begin{equation}\label{K.BH}\tag{K.BH}
+K(x_a, \vec{x}_b^\beta(t), t) = -  \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \chi_a^j(x_a,t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}
+\end{equation}
+\begin{equation}\label{A.BH}\tag{A.BH}
+A(x_a, \vec{x}_b^\beta(t), t) =  i \hbar \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \chi_a^j(x_a,t) \pdv{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)
+\end{equation}
+where we note that unlike the full wave function $\Psi(x_a, \vec{x}_b,t)$, the \ref{TSEig} $\Phi_{x_a}^j(\vec{x}_b,t))$ are known, which means their numerical or analytic derivatives will also be known. Thus, we have effectively isolated the unknown out of any derivative in the shape of the \ref{chi} $\chi^j_a(x_a,t)$. The point is that these coefficients still depend on the full wave-function, so we will still be unable to obtain simple expressions for the \ref{CWF}-s. Still, the exact Schrödinger like Equation for the CWF-s (\ref{CWF.SE.I}) can be rewritten in an alternative shape in terms of this Born-Huang ansatz by using (\ref{A.BH}) and (\ref{K.BH}):
+\begin{equation}\label{CWF.SE.II}\tag{CWF.SE.II}
+i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)]\psi_a^\beta(x_a t) + K_{BH}(x_a, \vec{x}_b^\beta(t), t) +A_{BH}(x_a, \vec{x}_b^\beta(t), t) 
+\end{equation}
+where by $ K_{BH}$ and $ A_{BH}$ we mean \ref{K} and \ref{A} but in their Born-Huang ansatz denpendence shape given in (\ref{K.BH}) and (\ref{A.BH}).
+
+The fact that the \ref{TSEig} are an orthonormal set makes the norm of the expanded wavefunction to be equal to:
+$$
+\sum_{j=0}^\infty \int_{-\infty}^\infty \chi_a^j(x_a,t)^\dagger \chi_a^j(x_a,t) dx_a = \int_{-\infty}^\infty \Psi(\vec{x},t)^\dagger \Psi(\vec{x},t)d\vec{x}
+$$
+the proof is immediate. Thus, the quantity defined by $\lambda:=\sum_{j=0}^\infty \int_{-\infty}^\infty \qty|\chi_a^j(x_a,t)|^2 dx_a$ can be used as an indicator as which $j$ is big enough as for having captured the biggest part of the sum. That is, if we truncate the sum at $j=J$ such that $\lambda\simeq 1$, then the approximation to the full expansion will be good enough. We call each integral $P_j(t):=\int_{-\infty}^\infty \qty|\chi_a^j(x_a,t)|^2 dx_a$ the Population of the $j-th$ adiabatic level.
+\newpage
+\subsection{Shape III: \\ Rewriting \ref{K} and \ref{A} in terms of the CWF - The Real Potentials \ref{G} and \ref{J}}
+% Hemen G eta J definidu biher dire
+Following the development in Chp.1 V 6 of \cite{JordiXO}: In order to find a linear Schrödinger like equation for the CWF-s we are going to employ the following "trick". An arbitrary non-zero single valued complex function $f(x, t):\R^2 \rightarrow \C$ can be imposed to be the solution of a 1D Schrödinger equation:\vspace{-0.3cm}
+$$
+i \hbar \pdv{f(x,t)}{t} = -\frac{\hbar^2}{2 m}\pdv[2]{f(x,t)}{x} + W(x,t) f(x,t)
+$$
+if the potential term $W(x, t)$ is defined as:\vspace{-0.3cm}
+$$
+W(x, t) := \qty(i \hbar \pdv{f(x,t)}{t} +\frac{\hbar^2}{2 m}\pdv[2]{f(x,t)}{x} ) \frac{1}{f(x,t)}\vspace{-0.3cm}
+$$
+The proof is immediate. An observation that we must note is that for an arbitrary $f(x,t)$, the potential $W(x,t)$ can be complex as well! Which is not the case in the usual Schrödinger Equation. But we already assumed that \ref{K} and \ref{A} could be so. \vspace{-0.3cm}\\
+
+Then, using this for the CWF-s $\psi_a^\beta(x_a,t)$, we will obtain an alternative to \ref{CWF.SE.I}.
+
+We must first evaluate the CWF in polar form $\psi^\beta_a(x_a,t)=\p(x_a,t) e^{i\z(x_a,t) / \hbar}$ in the expression for $W(x_a,t)$:
+$$
+W(x_a, t) = \qty(i \hbar \pdv{\psi_a^\beta(x_a,t)}{t} +\frac{\hbar^2}{2 m_a}\pdv[2]{\psi_a^\beta(x_a,t)}{x_a} ) \frac{1}{\psi_a^\beta(x_a,t)} = \qty(i \hbar \pdv{\qty(\p e^{i\z/\hbar})}{t} +\frac{\hbar^2}{2 m_a}\pdv[2]{\qty(\p e^{i\z/\hbar})}{x_a} ) \frac{1}{\p e^{i\z/\hbar}}
+$$
+using the Leibniz derivation rule several times and an inverse chain rule, rearranging we arrive at:
+$$
+W(x_a, t)=-\frac{1}{2m_a} \qty( \qty(\pdv{\z_a}{x_a})^2 -\frac{\hbar^2}{\p_a}\pdv[2]{\p_a}{x_a})\ -\pdv{\z_a}{t}+ \ i \ \frac{\hbar}{\p_a^2} \qty(\pdv{\p_a^2}{t}+\pdv{}{x_a}\qty(\frac{\p_a^2}{m_a}\pdv{\z_a}{x_a}))
+$$
+%Separating the real and imaginary parts:
+%$$
+%\begin{cases}
+%\mathbb{R}e\{W(x_a,t)\}=-\pdv{\z_a(x_a,t)}{t}-\frac{1}{2m_a} \qty( \qty(\pdv{\z_a(x_a,t)}{x_a})^2 -\frac{\hbar^2}{\p_a(x_a,t)}\pdv[2]{\p_a(x_a,t)}{x_a})\vspace{-0.3cm} \\ \\
+%\mathbb{I}m\{W(x_a, t)\} = \frac{\hbar}{\p_a(x_a,t)^2} \qty(\pdv{\p_a^2}{t}+\pdv{}{x_a}\qty(\frac{\p_a^2}{m_a}\pdv{\z_a}{x_a}))\vspace{-0.1cm}
+%\end{cases}
+%$$
+%Where we can recognize the \ref{QHJE} for a single particle in 1D. As such, the real part of W is simply the scalar real potential, then the Hamiltonian, followed by the kinetic energy and the quantum potential of a 1D particle.
+%Which is clearly a modified particle conservation equation \ref{CE}. Note how if  $Im\{W(x_a, t)\} =0$ then we get the common continuity equation, which would mean that probability is conserved, and the solution $\Phi(x_a,t)$ would preserve its norm at all times (the conditional $r_a^2$ would integrate a same norm at all times in its spatial dimension $x_a$). Nonetheless, if $Im\{W(x_a, t)\} \neq 0$, then particles/probability are NOT conserved, and their source or sink will be quantified by $\frac{2 \_a^2}{\hbar} Im\{W(x_a, t)\}$. Therefore, the norm of $\psi_a^\beta(x_a,t)$ will not need to be preserved in the time evolution. \vspace{-0.3cm}\\
+
+If W has that shape, $\psi_a^\beta(x_a,t)$ will be the solution of the differential equation:\vspace{-0.2cm}
+$$
+i \hbar \pdv{\psi_a^\beta(x_a,t)}{t} = -\frac{\hbar^2}{2 m}\pdv[2]{\psi_a^\beta(x_a,t)}{x_a} + W(x_a,t) \psi_a^\beta(x_a,t)\vspace{-0.2cm}
+$$
+which if $Im\{W\} =0$ would look like an actual single particle SE. However, $W$ depends on parts of the CWF itself, so the differential equation is indeed non-linear.\\
+
+We can further develop the expression of W using the conditional definition of $\psi_a^\beta$. Note that $\psi_a^\beta ( x_a, t) = \Psi(x_a,t; \ \vec{x}_b^\beta(t))$ and thus $\z(x_a,t)=S(x_a, \vec{x}_b^\beta(t),t)$ and $\p (x_a,t)=R(x_a, \vec{x}_a^\beta (t),t)$, where we have that the full wavefunction in polar form is $\Psi(\vec{x},t)=R(\vec{x},t)e^{iS(\vec{x},t)/\hbar}$. Carefully evaluating them in $W$ and applying the chain rule, the real part of $W(x_a,t)=\W(x_a,t;\ \vec{x}_b^\beta(t))$ yields:
+$$
+\R e\{W(x_a,t)\}=\R e\{\W(x_a,t; \vec{x}_b^\beta(t))\}=\vspace{-0.12cm}
+$$
+$$
+-\frac{1}{2m_a} \qty(\pdv{S(x_a,t;\vec{x}_b^\beta(t))}{x_a})^2 +\frac{\hbar^2}{2m_aR(x_a,t;\ \vec{x}_b^\beta(t))}\pdv[2]{R(x_a, t; \ \vec{x}_b^\beta(t))}{x_a}-\dv{S(x_a,t,\vec{x}_b^\beta(t))}{t}=\vspace{-0.1cm}
+$$
+$$
+-\frac{1}{2m_a} \qty(\pdv{\z_a(x_a,t)}{x_a})^2 +\frac{\hbar^2}{2m_a\p_a(x_a,t)}\pdv[2]{\p_a(x_a, t)}{x_a}- \ \qty(\pdv{S(x_a,t,\vec{x}_b)}{t}\Big\rvert_{\vec{x}_b^\beta(t)}+\sum_{k=1;\ k\neq a}^n \pdv{S(x_a,t,\vec{x}_b)}{x_k}\Big\rvert_{x_k^\beta(t)} \dv{x_k^\beta(t)}{t})\vspace{-0.12cm}
+$$
+
+Note how the only terms introducing some coupling with the rest of particles are the last two. They are the source of the {\bf entanglement}, {\bf exchange} and {\bf correlations} with the rest of the dimensions. Now, knowing that the full wave-function follows the \ref{TDSE} and thus the Quantum Hamilton-Jacobi Equation, we can evaluate the expression for $\pdv{S(x_a,t,\vec{x}_b)}{x_k}$ in the equation above:\vspace{-0.3cm}
+$$
+\R e\{W(x_a,t)\}=\ Re\{\W(x_a,t; \vec{x}_b^\beta(t))\}=\vspace{-0.14cm}
+$$
+\begin{equation*}
+\begin{split}
+-\frac{1}{2m_a} \qty(\pdv{\z_a(x_a,t)}{x_a})^2 +\frac{\hbar^2}{2m_a\p_a(x_a,t)}\pdv[2]{\p_a(x_a, t)}{x_a}- \ \sum_{k=1;\ k\neq a}^n \qty( \pdv{S(x_a,t,\vec{x}_b)}{x_k}\Big\rvert_{x_k^\beta(t)} \dv{x_k^\beta(t)}{t})\ + \\ \ +\sum_{k=1}^n \qty[\frac{1}{2m_k} \qty(\pdv{S}{x_k}\Big\rvert_{\vec{x}_b^\beta(t)})^2 -\frac{\hbar^2}{2m_kR}\pdv[2]{R}{x_k}\Big\rvert_{\vec{x}_b^\beta(t)} ] - U(x_a,t; \vec{x}_b^\beta(t))
+\end{split}
+\end{equation*}
+Observe that in the last sum, the $k=a$ term is equal to the two initial terms, which cancel each other out and we are left with the final expression:\vspace{-0.3cm}\label{ReW}
+\begin{equation*}
+\R e\{\W(x_a,t; \vec{x}_b^\beta(t))\}=\sum_{k=1;\ k \neq a}^n \qty[\frac{1}{2m_k} \qty(\pdv{S}{x_k}\Big\rvert_{\vec{x}_b^\beta(t)})^2 -\frac{\hbar^2}{2m_kR}\pdv[2]{R}{x_k}\Big\rvert_{\vec{x}_b^\beta(t)} -\pdv{S}{x_k}\Big\rvert_{x_k^\beta(t)} \dv{x_k^\beta(t)}{t} ] + V(x_a,t; \vec{x}_b^\beta(t))
+\end{equation*}
+We now have defined $\R e(W)$ without using $\psi_a^\beta$ in the same definition (necessary if we want to use the Schrödinger like equation computationally), at the cost of introducing the full wave-function to it. We see that this real part of $W$ is composed by the classical conditional potential energy $U$ introducing geometric constrictions between the coordinates and an additional part that stands for the quantum correlation with the rest of the system. We will call this the potential $G_a$:
+\begin{equation}\label{G}\tag{G}
+G_a(x_a,t;\ \vec{x}_b^\beta(t)):=  \sum_{k=1;\ k \neq a}^n \qty[\frac{1}{2m_k} \qty(\pdv{S}{x_k}\Big\rvert_{\vec{x}_b^\beta(t)})^2 -\frac{\hbar^2}{2m_kR}\pdv[2]{R}{x_k}\Big\rvert_{\vec{x}_b^\beta(t)} -\pdv{S}{x_k}\Big\rvert_{x_k^\beta(t)} \dv{x_k^\beta(t)}{t} ]
+\end{equation}
+Performing the same development for the imaginary part of $W$, that is, evaluating the definition of \ref{CWF} in $\mathbb{I}m\{W(x_a,t)\}$ and applying the chain rule:
+$$
+Im\{W(x_a,t)\}=Im\{\W(x_a,t; \vec{x}_b^\beta(t))\}=\vspace{-0.1cm}
+$$
+$$
+\frac{\hbar}{2R^2}\Big\rvert_{\vec{x}_b^\beta(t)} \qty( \pdv{R(x_a,t;\vec{x}_b^\beta(t))^2}{t} + \pdv{}{x_a} \qty(\frac{R^2}{m_a} \pdv{S(x_a,t; \vec{x}_b^\beta(t))}{x_a} ))=\vspace{-0.1cm}
+$$
+$$
+\frac{\hbar}{2R^2}\Big\rvert_{\vec{x}_b^\beta(t)} \qty( \pdv{R(x_a,t, \vec{x}_b)^2}{t}\Big\rvert_{\vec{x}_b^\beta(t)} + \sum_{k=1;\ k \neq a}^n \pdv{R^2}{x_k}\Big\rvert_{\vec{x}_b^\beta(t)} \dv{x_k^\beta(t)}{t} + \pdv{}{x_a} \qty(\frac{R^2}{m_a} \pdv{S(x_a,t; \vec{x}_b^\beta(t))}{x_a} ) )
+$$
+As the whole wave-function follows the \ref{TDSE}, we have an expression for the N-particle continuity equation, which evaluating at $\pdv{R(x_a,t, \vec{x}_b)^2}{t}$ and noting there is a cancellation of the $k=a$ term (as happened with the real case), we arrive at an expression independent of $\psi_a^\beta$ for the imaginary part. We will define the potential energy term $J_a(x_a,t; \vec{x}_b^\beta(t)):=\mathbb{I}m\{\W(x_a,t; \vec{x}_b^\beta(t))\}$.
+\begin{equation}\label{J}\tag{J}
+J_a(x_a,t; \vec{x}_b^\beta(t)):= \frac{\hbar}{2R^2}\Big\rvert_{\vec{x}_b^\beta(t)} \sum_{k=1;\ k \neq a}^n \qty[ \pdv{R^2}{x_k}\Big\rvert_{\vec{x}_b^\beta(t)} \dv{x_k^\beta(t)}{t} - \frac{1}{m_k} \pdv{}{x_k} \qty(R^2 \pdv{S}{x_k} )\Big\rvert_{\vec{x}_b^\beta(t)} ]
+\end{equation}
+
+With all, we have that the complex potential is decomposed in the following potential terms:
+$$
+W(x_a,t)=\W(x_a,t; \vec{x}_b^\beta(t))= U(x_a,t; \vec{x}_b^\beta(t)) + G_a(x_a,t; \vec{x}_b^\beta(t))+i\ J_a(x_a,t; \vec{x}_b^\beta(t))
+$$
+In a nutshell, we have decomposed the N dimensional \ref{TDSE} into an exact system of N coupled Schrödinger-like Equations for the CWF-s. For each $a \in \qty{1..n}$:
+\begin{equation}\label{CWF.SE.III}\tag{CWF.SE.III}
+i \hbar \pdv{\psi_a^\beta(x_a,t)}{t} = \qty[\frac{\hbar^2}{2m_a} \pdv[2]{}{x_a} +  U(x_a,t; \vec{x}_b^\beta(t)) + G_a(x_a,t; \vec{x}_b^\beta(t))+i\ J_a(x_a,t; \vec{x}_b^\beta(t))] \psi_a^\beta(x_a,t)
+\end{equation}
+\begin{equation*}
+\begin{split}
+\dv{x_a(t)}{t}=v_a(x_a,t)=\frac{1}{m_a}\pdv{\z_a(x_a, t)}{x_a}
+\end{split}
+\end{equation*}
+
+\newpage
+\section{The Approximation 1.0}
+
+Until here everything was theoretically correct, no approximations were assumed at any point. However, we have seen that the exact Schrödinger like equations for the CWF-s (in their three shapes) are not useful to surpass the many-body problem because in all three cases, there were terms that depended on the full wavefunction $\Psi(\vec{x},t)$ instead of only the CWF-s for a given trajectory $\beta$:\vspace{-0.3cm}
+\begin{itemize}
+\item In the case of \ref{CWF.SE.I}, \ref{K} and \ref{A} depended on derivatives of $\Psi$ on $\vec{x}_b$.
+
+\item In the case of \ref{CWF.SE.II} the computation of the $\chi^j_a$ coefficients depended on an overlap integral between $\Psi$ and the transversal section eigenstates.
+
+\item In the case of \ref{CWF.SE.III} both \ref{G} and \ref{J} depended on derivatives of the magnitude and phase of $\Psi$ on $\vec{x}_b$. 
+\end{itemize} 
+\vspace{-0.3cm}
+Therefore, it seems clear that if we want to introduce approximations at the theoretical level that can help us educatedly surpass the many body problem, it is the shape of $\Psi(\vec{x},t)$ used to compute \ref{K} and \ref{A}, the $\chi_a^j$ or \ref{G} and \ref{J}, that should be educatedly guessed.
+
+In particular, if we look back to the (\ref{CWF.SE.I}) and .II we can notice that if we achieve to write $\Psi(\vec{x},t)$ as proportional to the CWF $\psi_a^\beta(x_a,t)$, then the differential equations would take a linear look, which would allow us to use very convenient numerical resolution techniques like the Cranck Nicolson method.
+
+The simplest approximation we will use is to assume the full wave-function has the shape of a normalized factorizable product of functions that depend on a single spatial variable:
+$$
+\Psi(\vec{x},t)\simeq \frac{f_1(x_1,t)\cdots f_N(x_N,t)}{\sqrt{n_1(t)\cdots n_N(t)}}
+$$
+with $n_k(t):=\int_{\infty}^\infty f_k(x_k,t)^\dagger f_k(x_k,t)dx_k$. If we apply the definition of CWF:
+$$
+\Psi(x_a, \vec{x}_b^\beta(t),t)=\psi_a^\beta(x_a,t)\simeq  \frac{f_1(x_1^\beta(t),t)\cdots f_{a-1}(x_{a-1}^\beta(t),t)f_{a}(x_a,t)f_{a+1}(x_{a+1}^\beta(t),t)f_N(x_N^\beta(t),t)}{\sqrt{n_1(t)\cdots n_N(t)}}
+$$
+$$
+\Longrightarrow f_a(x_a,t)=\frac{\psi_a^\beta(x_a,t) \sqrt{n_1(t)\cdots n_N(t)}}{\prod_{\substack{k=1; \\ k\neq a}}^{N} f_k(x_k^\beta(t))}
+$$
+
+Evaluating it for every $a\in \{1,...,N\}$, we can see that the approximation is actually the same as:
+$$
+\Psi(\vec{x}, t)\simeq \frac{ \qty(\sqrt{n_1(t)\cdots n_N(t)})^N\prod_{a=1}^N \psi_a^\beta(x_a,t)}{\sqrt{n_1(t)\cdots n_N(t)}\ \qty(\prod_{\substack{k=1}}^{N} f_k(x_k^\beta(t)))^{N-1}} = \prod_{a=1}^N \psi_a^\beta(x_a,t) \cdot \qty(\frac{\sqrt{n_1(t)\cdots n_N(t)}}{f_1(x_1^\beta(t),t)\cdots f_N(x_N^\beta(t),t)})^{N-1}
+$$
+Where we can identify the one over the approximation evaluated in the trajectory and thus we get a simple expression for the approximation we are doing, in terms of the CWF-s:
+\begin{equation}\label{CWF.Prod}\tag{CWF.Prod}
+\Psi(\vec{x},t)= \frac{\psi_1^\beta(x_1,t)\cdots \psi_N^\beta(x_N,t)}{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}
+\end{equation}
+
+Therefore, the approximation we are doing is to assume that the full wavefunction is roughly equal to the product of the CWF-s divided by the value of the full wave-funciton $\Psi$ evaluated in each time in the position of the trajectory in the configuration space (a complex time varying dividing factor). One could argue that the value of the full wavefunction on the trajectory is unknown unless we know the whole wavefunction. However, we actually have $N$ different approximations for it, as in theory $\Psi(\vec{x}^\beta(t),t)=\psi^\beta_1(x_1^\beta(t),t)=\cdots=\psi^\beta_N(x_N^\beta(t),t)$, if we recall the definition (\ref{CWF}). Therefore, we could use as its best approximation the average of the $N$ estimations we have, one per approximate CWF.
+
+\subsection{Algorithm 1.0 - The Hermitian Approximation}
+\subsubsection{Using \ref{CWF.SE.I}: the Raw \ref{K} and \ref{A}}
+
+If we now introduce (\ref{CWF.Prod}) in the expressions for (\ref{K}) and (\ref{A}), we will get an approximation for them, that we will call $W^{(a)}_K\psi_a^\beta(x_a,t)$ and $W^{(a)}_A\psi_a^\beta(x_a,t)$:
+$$
+K(x_a, \vec{x}_b^\beta(t), t) \simeq - \qty(\ \sum_{\substack{k=1; \\ k\neq a}}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\psi_k^\beta(x_k,t)}{x_k}\Big\rvert_{x_k^\beta(t)}\cdot\frac{\prod_{\substack{s=1\\s\neq a,k}}^{N} \psi_s^\beta(x_s^\beta(t),t) }{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} )\psi_a^\beta(x_a,t) = W^{(a)}_K(\vec{x}_b^\beta (t),t)\psi_a^\beta(x_a,t)
+$$
+$$
+A(x_a, \vec{x}_b^\beta(t), t) \simeq i\hbar \qty(\ \sum_{\substack{k=1; \\ k\neq a}}^{N} \pdv{\psi_k^\beta(x_k,t)}{x_k}\Big\rvert_{x_k^\beta(t)}\cdot \dot{x}_k^\beta(t) \cdot\frac{\prod_{\substack{s=1\\s\neq a,k}}^{N} \psi_s^\beta(x_s^\beta(t),t) }{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} )\psi_a^\beta(x_a,t) = W^{(a)}_A(\vec{x}_b^\beta (t),t)\psi_a^\beta(x_a,t)
+$$
+
+Where we have defined (note that the product could be simplified using the approximation (\ref{CWF.Prod})):
+$$
+W^{(a)}_K(\vec{x}_b^\beta (t),t)=- \ \sum_{\substack{k=1; \\ k\neq a}}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\psi_k^\beta(x_k,t)}{x_k}\Big\rvert_{x_k^\beta(t)}\cdot\frac{\Psi(\vec{x}^\beta(t),t))}{\psi^\beta_a(x_a^\beta(t),t) \psi^\beta_k(x_k^\beta(t),t)} 
+$$
+$$
+W^{(a)}_A(\vec{x}_b^\beta (t),t)=\ i\hbar \sum_{\substack{k=1; \\ k\neq a}}^{N} \pdv{\psi_k^\beta(x_k,t)}{x_k}\Big\rvert_{x_k^\beta(t)}\cdot \dot{x}_k^\beta(t) \cdot\frac{\Psi(\vec{x}^\beta(t),t))}{\psi^\beta_a(x_a^\beta(t),t) \psi^\beta_k(x_k^\beta(t),t)}
+$$
+With them, the (\ref{CWF.SE.I}) would be left with a linear differential equation shape, such that we could now evolve the following N coupled linear equations in order to obtain the set of CWF-s $\{\psi_a^\beta(x_a t) \}_{a=1}^N$ and the trajectory $\vec{x}^\beta(t)$ given their initial conditions:
+$$
+i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)+ W^{(a)}_K(\vec{x}_b^\beta (t),t) +W^{(a)}_A(\vec{x}_b^\beta (t),t) ]\psi_a^\beta(x_a t)
+$$
+
+However, it turns out that the approximation (which may be correct if the full wave-function is really factorizable), leads to a shape for the complex correlation potentials that is purely time dependant. It is well known that this only introduces a time dependant global phase to the solution CWF-s relative to solving the same set of equations with $K\equiv 0$ and $A \equiv 0$. Thus, as the trajectories are evolved using the derivative of the phase, and as the probability distribution is given by the magnitude squared of the wavefunction, non of these quantities are changed by a global phase shift, meaning that the same solution can be obtained by only preserving the correlations introduced by the classical potential $U$. Leting $K\equiv 0 \equiv A$. That is, using the so called {\bf Hermitian Approximation} $\forall x_a \in \{ x_k\}_{k=1}^N$:
+\begin{equation}\label{Herm}\tag{Herm}
+i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)]\psi_a^\beta(x_a t)
+\end{equation}
+
+\subsubsection{Using \ref{CWF.SE.II}: the Born-Huang \ref{K.BH} and \ref{A.BH}}
+If we introduce this approximate shape for $\Psi(\vec{x},t)$ onto the computation of the coefficients $\chi_a^j(x_a,t)$ for the Born-Huang expansion of the approximate shape of the full wave-function:
+$$
+\chi_a^j(x_a,t)= \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \Psi(\vec{x},t) d\vec{x}_b \simeq \qty[\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k ] \psi_a^\beta(x_a t)
+$$
+
+Where if we define the factors:
+\begin{equation}\label{Uj}\tag{Uj}
+\U^j_a(t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k 
+\end{equation}
+Then, we are left with the $\chi^j_a$ adiabatic coefficients of the expansion for the \ref{CWF.Prod}:
+$$
+\chi_a^j(x_a,t)= \U^j_a(t)\psi_a^\beta(x_a t)
+$$
+One could see these $\chi^j_a$ coefficients as an approximation of the $\chi_a^j$ coefficients that the true full wavefunction $\Psi(\vec{x},t)$ would yield. However, even if this is indeed true, it would be an error to forget that they are actually the exact coefficients of the expansion for \ref{CWF.Prod}! If in a second step, this \ref{CWF.Prod} is then a good approximation for the exact full wavefunction or not, then that is another thing. This means that we should never forget that these $\chi_a^j$ mean:
+$$
+\sum_{j=0}^\infty \chi^j_a(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t) = \sum_{j=0}^\infty \Phi_{x_a}^j(\vec{x}_b,t) \qty[\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k ] \psi_a^\beta(x_a t)=
+$$
+$$
+=\sum_{j=0}^\infty \Phi_{x_a}^j(\vec{x}_b,t)\int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \qty[ \frac{\psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t) }{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} ]d\vec{x}=\frac{\psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t) }{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}
+$$
+where we have used that we are adding up all the infinite projections of the factorized product on each orthonormal eigenstate times the same eigenstate. By definition of orthonormal basis, this must add up to the original function: the factorizable product (its the so called {\bf completeness relation}).\\
+
+This means that, if we introduce these $\chi^j_a$ into the computation of \ref{K.BH} and \ref{A.BH} for the \ref{CWF.SE.II}, we get the following approximations for them:
+$$
+K(x_a, \vec{x}_b^\beta(t), t) \simeq - \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \U^j_a(t)\psi_a^\beta(x_a t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
+$$
+$$
+A(x_a, \vec{x}_b^\beta(t), t) \simeq i \hbar \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \U^j_a(t)\psi_a^\beta(x_a t) \pdv{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
+$$
+where we have defined the terms $W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)$ and $W_A^{(a)}(x_a, \vec{x}_b^\beta (t),t)$ by taking out the common factor CWF. We know the eigenstes and we know the terms $\U^j_a$ at each time, becasue we can evolve all the N CWF-s simultaneously. With this, \ref{CWF.SE.II} adopts a linear look:
+$$
+i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)+ W^{(a)}_K(x_a,\vec{x}_b^\beta (t),t) +W^{(a)}_A(x_a,\vec{x}_b^\beta (t),t) ]\psi_a^\beta(x_a t)
+$$
+
+Unlike in the previous case, it now looks like the approximation is giving us something additional to the Hermitian Approximation, because now $W^{(a)}_K$ and $W^{(a)}_A$ depend on $x_a$ per each $j-th$ term in the sum. Therefore, it looks like we should be able to obtain some correlation and entanglement we could not observe with the bare Hermitian Approximation.\\
+
+However, this is {\bf not} true. If we really use the infinite $j$ terms in the Born-Huang expansion, we have just seen above that we recover the approximation of the product of CWF-s. Thus, if in the expressions for $W^{(a)}_K$ and $W^{(a)}_A$ we revert the operations, we will get to see that they are exactly the same as the $W^{(a)}_K$ and $W^{(a)}_A$ we got in the previous section, that were purely time dependant. For example:
+$$
+W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)=
+$$
+$$
+- \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \U^j_a(t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} \psi_a^\beta(x_a t)=- \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{}{x_k}\qty[\sum_{j=0}^\infty  \U^j_a(t)\psi_a^\beta(x_a t) \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)]\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}
+$$
+$$
+=- \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{}{x_k} \frac{\psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t)}{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} \Big\rvert_{\vec{x}_b^\beta(t)}=- \qty(\ \sum_{\substack{k=1; \\ k\neq a}}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\psi_k^\beta(x_k,t)}{x_k}\Big\rvert_{x_k^\beta(t)}\frac{\prod_{\substack{s=1\\s\neq a,k}}^{N} \psi_s^\beta(x_s^\beta(t),t) }{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} )\psi_a^\beta(x_a,t) 
+$$
+$$
+=W_K^{(a)}(\vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
+$$
+
+Therefore, we end up in the same  conclusion: purely time dependant complex potentials lead to the Hermitian approximation. So, it looked like we had gained new insight, but we have not. Or have we? Let us emphasize that the recovering of the Hermitian approximation is only true when we use all the necessary $j$ to complete the expansion. However, if we truncate the expansion in a small enough $j$, then we will indeed have that $W^{(a)}_K$ and $W^{(a)}_A$ are dependant on $x_a$ through the parametrization of the eigenstates $\Phi_{x_a}^j(\vec{x}_b^\beta(t),t))$! Paradoxically, using a less precise expansion can lead to something that could capture some entanglement! This will be precisely the approximation we will work with after the next section.
+
+
+
+\subsubsection{Using \ref{CWF.SE.III}: the Raw \ref{G} and \ref{J}}
+Looking at the equations \ref{CWF.SE.I} and \ref{CWF.SE.III}, we notice that the relation between the Kinetic and Advective Correlation potentials and the \ref{G},\ref{J} real potentials is that:
+\begin{equation}\label{G(KA)}\tag{G(KA)}
+G_a(x_a,\vec{x}_b^\beta(t), t) = \mathbb{R}e\qty{\frac{K(x_a, \vec{x}_b^\beta(t), t)+A(x_a, \vec{x}_b^\beta(t), t)}{\psi_a^\beta(x_a t)}}
+\end{equation}
+\begin{equation}\label{J(KA)}\tag{J(KA)}
+J_a(x_a,\vec{x}_b^\beta(t), t) = \mathbb{I}m\qty{\frac{K(x_a, \vec{x}_b^\beta(t), t)+A(x_a, \vec{x}_b^\beta(t), t)}{\psi_a^\beta(x_a t)}}
+\end{equation}
+
+We therefore see that if the CWF product approximation \ref{CWF.Prod} made both \ref{K} and \ref{A} be a purely time dependant term times the CWF $\psi_a^\beta(x_a,t)$ (remember $K(x_a, \vec{x}_b^\beta(t), t) \simeq W^{(a)}_K(\vec{x}_b^\beta (t),t)\psi_a^\beta(x_a,t)$ and so for $A$), then this approximation will yield purely time dependent $G_a$ and $J_a$, which in fact will be:
+$$\begin{cases}
+G_a(x_a,\vec{x}_b^\beta(t), t)\simeq \R e\qty{W^{(a)}_K(\vec{x}_b^\beta (t),t) + W^{(a)}_A(\vec{x}_b^\beta (t),t)}\\ J_a(x_a,\vec{x}_b^\beta(t), t)\simeq \mathbb{I} m\qty{W^{(a)}_K(\vec{x}_b^\beta (t),t) + W^{(a)}_A(\vec{x}_b^\beta (t),t)} \end{cases}
+$$
+
+The conclusion is once again the same, looking back to (\ref{CWF.SE.III}), if $G_a$ and $J_a$ are purely time dependent, they will only introduce a global phase to the solution and thus we will obtain the same probability densities for the CWF-s and the same trajectories as simply using the Hermitian Approximation \ref{Herm}.
+
+This same result could have been obtained by making a Taylor expansion of $G_a$ and $J_a$ around the trajectory at each time and truncating them leaving only the zero-th order terms:
+$$\begin{cases}
+G(x_a, \vec{x}_b^\beta(t), t) = G(x_a^\beta(t), \vec{x}_b^\beta(t), t) + \pdv{G(x_a, \vec{x}_b^\beta(t), t)}{x_a}\Big\rvert_{x_a^\beta(t)} \qty(x_a-x_a^\beta(t))+ ... \\
+J(x_a, \vec{x}_b^\beta(t), t) = J(x_a^\beta(t), \vec{x}_b^\beta(t), t) + \pdv{J(x_a, \vec{x}_b^\beta(t), t)}{x_a}\Big\rvert_{x_a^\beta(t)} \qty(x_a-x_a^\beta(t))+ ... 
+\end{cases}
+$$ 
+\newpage
+\section{The Approximation 2.0}
+\subsection{Algorithm 2.0 - The Paradoxical Approximation }
+We have seen that if we use all the $j$ terms (or at least enough of them) in the Born-Huang expansion of the (\ref{CWF.Prod}) approximation, we recover the (\ref{CWF.Prod}) approximation of the full wave-function, which leads to the Hermitian approximation and fails to capture entanglement between the dimensions. However, we also realized that interesting enough, even if all the terms added up $\sum_{j=0}^\infty \chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)$ result in the factorized product of CWF-s, each term in the Born-Huang expansion, each $\chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)$, in themselves are for a general potential not factorizable in separate spatial variables! Even if the $\chi_a^j(x_a,t)$ are computed with the (\ref{CWF.Prod}) shape. And precisely it was the fact that we were imposing the shape of the full wavefunction $\Psi(\vec{x},t)$ to be factorizable that resulted in the approximate Advective and Kinetic Correlation Potentials to be purely time dependant. Therefore, if paradoxically, we use less adiabatic terms than those necessary to complete the expansion of (\ref{CWF.Prod}), say $J$, then the effective approximation we will be using on the full-wavefunction will be non-factorizable:
+\begin{equation}\label{Aprox.Trunc}\tag{Aprox.Trunc}
+\Psi(\vec{x},t)=\sum_{j=0}^J \chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)
+\end{equation}
+Note that $J$ must be small enough as to avoid the sum being a good enough approximation of the infinite sum. In order to quantify this, we could dynamically choose $J$ to avoid the norm $\lambda$ of the approximation defined in Section 1.2 to be bigger than a certain tolerance. This is because else the truncated sum will end up being a good enough approximation of the product of CWF-s and thus will loose its appeal.\\
+
+The bad thing about this approximation is that one knows nothing about to which degree the approximation is closer to the true solution CWF than the Hermitian approximation. The idea is that if the \ref{Aprox.Trunc} is close enough to the shape of the true full wavefunction, then it could work. Each particular potential will require to be reviewed in particular, in order to judge if this approximation for the regions where there is non-factorisability really makes sense or not. We will visit an example where it turns out to yield better results than the Hermitian approximation.
+
+\subsubsection{Using \ref{CWF.SE.II}}
+%Ekuaziñoa manifiesto itxi. Perhaps nire bisiñoa ipini respecto a las energias y tal. Behintzet ipini para la una energia (aunke iugual en la generalizacion a N ya no es tan simple).
+% Ipini G ta J zer izengo ziren!
+The only difference between using (\ref{Aprox.Trunc}) or (\ref{CWF.Prod}) when it comes to the approximate expression for (\ref{CWF.SE.II}) is that the sum over $j$ will not go until $j=\infty$, but until $j=J$ fixed according to the criterium stated above. Thus, we would have the same definition for (\ref{Uj}):
+$$
+\U^j_a(t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k 
+$$
+Such that $\chi_a^j(x_a,t)= \U^j_a(t)\psi_a^\beta(x_a t)$ and thus:
+$$
+K(x_a, \vec{x}_b^\beta(t), t) \simeq - \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^J \U^j_a(t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}\psi_a^\beta(x_a t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
+$$
+$$
+A(x_a, \vec{x}_b^\beta(t), t) \simeq i \hbar \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^J \U^j_a(t) \pdv{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)\psi_a^\beta(x_a t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
+$$
+where we see the only difference with respecto to the approximations we made for \ref{K} and \ref{A} in the previous algorithm, is that now the sum in $j$ stops at $J$. With this, \ref{CWF.SE.II} adopts a linear look that will now {\bf not} be equivalent to the Hermitian approximation, as $W_K$ and $W_A$ will now be $x_a$ dependent:
+$$
+i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)+ W^{(a)}_K(x_a,\vec{x}_b^\beta (t),t) +W^{(a)}_A(x_a,\vec{x}_b^\beta (t),t) ]\psi_a^\beta(x_a t)
+$$
+Again, this will work as long as $J$ is small enough. However, we do not have still any theoretically reliable proof that the approximations we are using for $W_K$ and $W_A$ are better than simply not using them. If they deviate a lot from the true shape they should have, then we might be making a bigger error than simply neglecting them!
+
+% Introducir aqui la notacion adiabatica y mi desarrollo aquel de energixetan. Ta jarri kasu partikualr modure j=1. 1.5h
+
+\subsubsection{Using \ref{CWF.SE.III}}
+When it comes to the \ref{G} and \ref{J} formalism, recalling the relation these real potentials had with the kinetic and advective correlation potentials that we manifested in equations (\ref{G(KA)}) and (\ref{J(KA)}), we can immediately see the approximations we are doing for them:
+$$
+G_a(x_a,\vec{x}_b^\beta(t),t)\simeq \R e \qty{ - \sum_{j=0}^J  \U^j_a(t) \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} +  i \hbar \pdv{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)}
+$$
+$$
+J_a(x_a,\vec{x}_b^\beta(t),t)\simeq \mathbb{I} m \qty{ - \sum_{j=0}^J  \U^j_a(t) \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} +  i \hbar \pdv{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)}
+$$
+
+Perhaps one could study the goodness of the approximation by looking at how close these expressions are to what we would expect from first or second order terms in the Taylor expansions around the trajectory that we introduced at the end of Section 2.1.3.
+
+
+\subsubsection{Example where the approach works: The Single Slit Transmission}
+% Azaldu eta resultauek jarri.
+The algorithm was implemented in a simple yet interesting 2D system where the Hermitian approximation fails dramatically to capture the physics: the transmission of a wave-packet through a bottleneck with infinite potential energy walls. This situation could model a sudden narrowing of the electron channel of a 2D electronic device.
+% ipini 2Dko guztixen notaziñoa, azaldu 2Dko problemie ta intuiziñoa citetan euren paper hori. Ta orduen jarri grafikak energuianak kontra k0 eta transmisiñoak kasu bakoitzien j desberdinekaz junto asus errores y la comparacion con el Hermitian. Ta azaldu intuiziñoa de zeba abi fknetandeuen ikusitze j=1egaz ze forma hartuko bien K potenkialak. BEtie aputr bat less interpretable. 1h+2h
+
+\newpage
+\section{Reconstructing the Full Wave-Function from CWF-s}
+% Idatzi algoritmoa baia ipini generiko moduen aprox de G,Jgaz
+Apart from the ontological interest that these algorithms where only one Bohmian trajectory and its associated CWF-s are evolved at each run could have, the observed results in quantum mechanics still are randomly found among the ensemble of possible trajectories. As such, the ensemble measurements are the most interesting for orthodox quantum mentality and perhaps quantum information and computation, as we cannot get rid of the probabilistic nature of the observation. Therefore, it seems clear that if the many-body problem can be educatedly surpassed in the computation of individual Bohmian trajectories and CWF-s as defined in (\ref{CWF}), we should try to take advantage from it to approach an approximate solution ffor the full wavefunction (which in reality contains information about all the possible trajectories and associated CWF-s). But how to do this?
+
+Let us see what is the information we have once an approximate solution to any of the shapes of the (CWF.SE) is found, and see if we can sew something from there:
+\begin{enumerate}
+\item[(a)] Given a bounded time domain $t\in [t_0,t_f]$, we know $\Psi(\vec{x},t=t_0)$ the full wave-function at the first time and $U(\vec{x},t)$ $\forall t[t_0,t_f]$, all of which were given a priori by the user or the problem we are facing.
+
+\item[(b)] We can choose $M$ initial positions in configuration space $\{\vec{x}^\beta(t_0)\}_{\beta=1}^M$ sampling them as independent observations from the initial wave-function, using its interpretation as probability density $\rho(\vec{x},t_0)=\Psi(\vec{x},t_0)^\dagger \Psi(\vec{x},t_0)$. Using each of the $M$ trajectories, we can define the set of $N$ conditional wave-functions (CWF) related to each as:
+$$
+\qty{\qty{ \psi^\beta_a(x_a,t_0)\equiv\Psi(x_a,\vec{x}_b^\beta(t_0),t_0)}_{a=1}^N}_{\beta=1}^M
+$$
+
+\item[(c)] If we are to use the Born-Huang ansatz, we will have calculated numerically or analytically the transversal section eigenstates $\qty{ \qty{ \Phi_a^j(\vec{x}_b,t)}_{j=0}^{J_a}}_{a=1}^N$, following equation (\ref{TSEig}).
+
+All (a), (b) and (c) will be as exact as the computer and numerical eigensolver allow us. In principle no theoretical approximations on them.
+
+\item[(d)] Using an approximation to one of the shapes of (\hyperlink{CWF.SE}{CWF.SE}), we will have an approximation of the following functions: \begin{itemize}
+\item $\{\vec{x}^\beta(t)\}_{\beta=1}^M \quad t \in [t_0, t_f]$
+\item $\qty{\qty{ \psi^\beta_a(x_a,t)}_{a=1}^N}_{\beta=1}^M \quad t \in [t_0, t_f]$
+\item In case the Born-Huang expansion was used: $\qty{\qty{\qty{ \chi_a^j(x_a,t)}_{a=1}^N}_{j=0}^{J_a}}_{\beta=1}^M \quad t \in [t_0, t_f]$
+\end{itemize}
+\end{enumerate}
+So the question at this point is: isn't there any way to unify all this information that each trajectory provides us? Should we really only use the resulting Bohmian trajectories as source of information, or can we use the information in the approximated CWF-s?
+
+\subsection{Using the CWF definition}
+In reality each conditional wave-function is a slice of the full wavefunction, meaning that if we had enough CWF-s (if $M$ was big enough and the trajectories were evenly enough sampled), we would effectively be also approximating the full wave-function. In fact, it is to expect that given a trajectory $\vec{x}^\beta(t)$. %azaldu zentroa CWfanan aproximaziño bat dala punto horrena ke si G,J aprox local kiza implike ke es lo mas correcto de la aproximacion. Doncs usando una interpolación weighteada perhaps por la probabilidad en ese punto estimada por ella misma klaro. O weightear las slices en si, ke en verdad abarcan mucho espasio. Ta esan orduen energiagaz ba zelan alko zan egin kisas. 0.45h
+
+\subsection{Fitting the best Full wavefunction we can}
+
+In this section we will play with an idea introduced by {\em Albareda G. et al} in Ref \cite{Albareda}.
+
+
+Instead of directly using individual CWF-s, we could gather the information that all of them contain fitting them the best way possible to the exact $N$ dimensional \ref{TDSE}. We dispose per each of the $N$ spatial dimension $x_a$, of $M$ different conditional wave-functions $\psi^\beta_a(x_a,t)$ (due to the $M$ trajectories). Thus, we could consider the linear combination of the tensor products of each trajectory's CWF set as an approximation to the full wavefunction. The obvious case would be to only use products of CWF-s evolved with the same trajectory $\beta$:
+$$
+\Psi(\vec{x},t)\simeq \sum_{\beta=1}^{M} c_\beta(t) \psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t) \quad for\ some\ c_\beta(t)\in \C\ to\ be\ fitted
+$$
+after all, if these approximate CWF-s were computed using Algorithm 1.0 or 2.0, in both cases the approximation we were using was that the full wave-function was a product of the CWF-s. We would now be extending the capacity of the ansatz to take non-factorizable shapes, as in principle, if we used enough $\R^N \times \R:\rightarrow \C$ linearly independent functions, we could end up approximating any function, even if the basis functions were a simple tensor product. The thing is that, we expect that these $M$ terms will be close enough to the full wavefuncton as to provide a better fit than a random set of $M$ functions of a given basis. Then the question would be, how do we choose the coefficients $c_\beta (t)$?
+
+Before going there, notice that with only doing this sum we might be wasting resources that we already have in hands: the more functions we use in the expansion, the better it will be, and yes, computing more trajectories (increasing $M$) could do it, but notice that we need not. We could actually use not only the combination $\psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t)$ but also any $\psi^{\beta_1}_1(x_1,t)\cdots \psi^{\beta_N}_N(x_N,t)$ with any combination $\beta_1,...,\beta_N \in \{1,...,M\}$ (mix CWF-s of different trajectories -CWF of dimension 1 of trajectory 3 times CWF of dimension 2 of trajectory 4 etc.-). Letting:
+%However, as we are not even checking that these functions are orthogonal or form a complete basis, and we just rely on the fact that as they were obtained with an approximation to the exact SE they will be close enough together to the true $\Psi$ as to allow through the correct fitting of the coefficients $c_\beta(t)$ to approach it, then, 
+\begin{equation}\label{CWF.LinComb}\tag{CWF.LinComb}
+\Psi(\vec{x},t)\simeq \sum_{s=1}^{M^N} c_s(t) \psi_1^{\sigma^{(1)}_s}(x_1,t)\cdots \psi_N^{\sigma^{(N)}_s}(x_N,t)
+\end{equation}
+where the set $\{\sigma^{(1)}_s, ..., \sigma^{(N)}_s\}_{s=1}^{M^N}$ is the set of all possible combinations of N elements that take values in $(1,2,..., M)$. It is true that these tensor products (among which there are also all the previous ones) might now not be that close to the full wave-function individually, but perhaps the extra effort to find more coefficients $c_s(t)$ is worth it. Still, this should be tested. After all, the fun thing about doing this is that thanks to the fact that the tensor products are close to the true TDSE evolution a smaller $M$ can be used providing a better quality than say, a set of $M$ eigenstates of the system Hamiltonian. Thus, if these $M^N$ combinations introduce equally "desviado" terms, then only using the $M$ might be better.
+
+In any of these cases though, how can we find the closest fit for this linear sum to the full wavefunction? Well, the ones that the best fit to the full \ref{TDSE} allow! If we introduce the \ref{CWF.LinComb} in the \ref{TDSE}:
+$$
+i\hbar \pdv{\Psi(\vec{x},t)}{t} = \sum_{k=1}^N \hat{T}_k\Psi(\vec{x},t)+U(\vec{x},t)\Psi(\vec{x},t)
+$$
+with $\hat{T}_k\equiv -\frac{\hbar^2}{2m_k}\pdv[2]{}{x_k}$:
+$$
+i\hbar \pdv{}{t} \qty(c_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)) =  \sum_{k=1}^N \hat{T}_k\qty(c_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t))+Uc_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)
+$$
+where there is an implicit sum of $s\in \{1,...M^N\}$ on both sides. By the Leibiniz rule, the $lhs$ leads to:
+$$
+i\hbar \qty(\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)\dv{}{t}c_s(t)+c_s(t)\sum_{k=1}^N \pdv{}{t}\psi_k^{\sigma_s^{(k)}}(x_k,t)\cdot \prod_{a=1;a\neq k}^N \psi_a^{\sigma_s^{(a)}}(x_a,t) )
+$$
+and we see that in the rhs:
+$$
+\hat{T}_k\qty(c_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)) = c_s(t)\sum_{k=1}^N \prod_{a=1;a\neq k}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)  \cdot \hat{T}_k \psi_k^{\sigma_s^{(k)}}(x_k,t) 
+$$
+Now, as for any of the possible approximations we have suggested, we know that the CWF-s $\psi^\beta_k(x_k,t)$ were obtained as a solution to:
+$$
+i\hbar \pdv{\psi^\beta_k(x_k,t)}{t} = \hat{T}_k\psi^\beta_k(x_k,t) + U(x_k, \vec{x}^\beta_b(t), t)\psi^\beta_k(x_k,t) + W^{(k)}(x_k, \vec{x}^\beta_{b}(t),t) \psi^\beta_k(x_k,t)
+$$
+where $ W^{(k)}(x_k, \vec{x}_{b}(t),t)$ is the approximation of $G_k(x_k,\vec{x}^\beta_b(t),t)+iJ_k(x_k,\vec{x}^\beta_b(t),t)$ or alternatively of $(K_k(x_k,\vec{x}^\beta_b(t),t)+A_k(x_k,\vec{x}^\beta_b(t),t))/\psi^\beta_k(x_k,t)$; a complex potential particular to the $\beta$-th trajectory and the $k$-th degree of freedom. Then, we can evaluate $i\hbar \pdv{\psi^\beta_k(x_k,t)}{t}$ in the $lhs$ of the previous equation and we will see that the terms of $\sum_{k=1}^N \hat{T}_k \psi^{\sigma_s^{(a)}}_k(x_k,t)$ will cancel each other, leaving:
+$$
+\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)] \dv{}{t}c_s(t) = \sum_{s=1}^{M^N}c_s(t) \Bigg[ U(\vec{x},t)\prod_{a=1}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t) 
+$$
+$$
+- \sum_{k=1}^N U(x_k,\vec{x}_b^{\sigma}(t),t)\psi_k^{\sigma_s^{(k)}}(x_k,t) \prod_{a=1; a\neq k}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t) -\sum_{k=1}^N W^{(k)}(x_k,\vec{x}_b^{\sigma}(t),t)\psi_k^{\sigma_s^{(k)}}(x_k,t) \prod_{a=1; a\neq k}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)\Bigg]
+$$
+
+Defining $V^{(k)}(\vec{x},t):=U(\vec{x},t)+W^{(k)}(\vec{x},t)$, then we are left with a rather compact expression ruling the time evolution of the coefficients in the linear expansion:
+\begin{equation}\label{PDE.c}\tag{PDE.c}
+\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)] \dv{}{t}c_s(t) = 
+\end{equation}
+$$
+\sum_{s=1}^{M^N} \qty[\qty( U(\vec{x},t)+\sum_{k=1}^N V^{(k)}(x_k, \vec{x}^{\sigma_s^{(k)}}_b(t),t))\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)]c_s(t)
+$$
+As all $U, V$ and the CWF-s $\psi_a^{\sigma_s^{(a)}}(x_a,t)$ are known, we just have the coefficients that are unknown. We can get rid of the spatial dependance in $\vec{x}$ and thus be left with simple ordinary differential equations (ODEs) for the $c_s(t)$ if for instance, we multiply the $rhs$ and $lhs$ by $\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)^\dagger$ for any of the $s\in \{1,...,M^N\}$. For each possible $s$ we will get one ODE for the set $\{c_s(t)\}_{s=1}^{M^N}$. As we have $M^N$ coefficients $c_s(t)$ and we can do this trick for that many times, we will get a system of $M^N$ ODEs with $M^N$ unknown functions. Let us see their shape. Let each side of \ref{PDE.c} be multiplied by $\prod_{a=1}^N \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger$ for a certain trajectory combiantion $\eta\in\{1,...,M^N \}$ and integrate each side in the whole domain (which will in principle be $\R^N$):
+$$
+\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \int_{-\infty}^\infty \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger \psi_a^{\sigma_s^{(a)}}(x_a,t)dx_a] \dv{}{t}c_s(t) = 
+$$
+$$
+\sum_{s=1}^{M^N} \Bigg[ \int_{-\infty}^\infty U(\vec{x},t) \prod_{a=1}^N \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger \psi_a^{\sigma_s^{(a)}}(x_a,t)dx_a+
+$$
+$$
++\sum_{k=1}^N \int_{-\infty}^\infty V^{(k)}(x_k, \vec{x}^{\sigma_s^{(k)}}_b(t),t) \prod_{a=1}^N \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger \psi_a^{\sigma_s^{(a)}}(x_a,t)dx_a\Bigg]c_s(t)
+$$
+Now, if we denote:
+$$
+\bra{f(x_1,...,x_r,t)}\ket{g(x_1,...,x_r,t)}:=\int_{-\infty}^\infty f^\dagger g dx_1\cdots dx_r
+$$
+Then the above expression is equivalent to:
+$$
+\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \bra{\psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{\psi_a^{\sigma_s^{(a)}}(x_a,t)}] \dv{}{t}c_s(t) = 
+$$
+$$
+\sum_{s=1}^{M^N} \Bigg[\bra{\prod_{a=1}^N  \psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{U(\vec{x},t)  \prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)}+
+$$
+$$
++\sum_{k=1}^N\bra{\psi_k^{\sigma_\eta^{(k)}}(x_k,t)}\ket{V^{(k)}(x_k,\vec{x}_b^{\sigma_s^{(k)}}(t),t) \psi_k^{\sigma_s^{(k)}}(x_k,t)} \prod_{a=1;a\neq k}^N  \bra{\psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{\psi_a^{\sigma_s^{(a)}}(x_a,t)}  \Bigg]c_s(t)
+$$
+Thus, defining the 2-tensors that we can numerically compute as we have already computed the necessary functions for $\eta,s \in \{1,...,M^N \}$:
+\begin{equation}\label{M}\tag{M}
+\mathbb{M}_{\eta s}:= \prod_{a=1}^N \bra{\psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{\psi_a^{\sigma_s^{(a)}}(x_a,t)}
+\end{equation}
+\begin{equation}\label{W}\tag{WW}
+\mathbb{W}_{\eta s}:=\bra{\prod_{a=1}^N  \psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{U(\vec{x},t)  \prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)}
+\end{equation}
+\begin{equation}\label{PDE.c}\tag{WWk}
+\mathbb{W}_{\eta s}^{(k)} :=\bra{\psi_k^{\sigma_\eta^{(k)}}(x_k,t)}\ket{V^{(k)}(x_k,\vec{x}_b^{\sigma_s^{(k)}}(t),t) \psi_k^{\sigma_s^{(k)}}(x_k,t)} \prod_{a=1;a\neq k}^N  \bra{\psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{\psi_a^{\sigma_s^{(a)}}(x_a,t)}
+\end{equation}
+Then, we see that the ODE system we must solve for the $c_s(t)$ is the set:
+$$
+\sum_{s=1}^{M^N} i\hbar \mathbb{M}_{\eta s} \dv{}{t}c_s(t) = \sum_{s=1}^{M^N} \qty( \mathbb{W}_{\eta s}+\sum_{k=1}^{N} \mathbb{W}^{(k)}_{\eta s})c_s(t) \quad for\ \eta,s \in \{1,...,M^N \}
+$$
+which is equivalent to the matrix-vector equation:
+\begin{equation}\label{M}\tag{M}
+i\hbar \mathbb{M} \dv{}{t}\vec{C}(t) =\qty( \mathbb{W}+\sum_{k=1}^{N} \mathbb{W}^{(k)})\vec{C}(t)
+\end{equation}
+with $\mathbb{M}, \mathbb{W}, \mathbb{W}^{(k)}\in \M_{M^N \times M^N}(\C)$ and $\vec{C}\in \C^{M^N}$.
+
+\section{Suggestion for a self-consistent Composed Algorithm}
+% usar la estrimacion del full wf como approx shape de fuilll wf para obtener nuevas formas de K,A or even G,J. Y asi self-consistently gero ta simualiszño dinamiko hobie lortu! Ta jarri paralelizabliek dien geuzek 1h
+\newpage
+\begin{thebibliography}{1}
+\addcontentsline{toc}{section}{References}
+
+\bibitem{JordiXO}
+	X.Oriols, J.Mompart,{\em Applied Bohmian Mechanics: From Nanoscale Systems to Cosmology} Pan Stanford, Singapore (2012)
+	
+\bibitem{XO}
+	Oriols X. 2007 {\em Quantum-trajectory approach to time-dependent transport in mesoscopic systems with electron-electron interactions} Phys. Rev. Lett. 98 066803
+
+\bibitem{Albareda}
+	Albareda G, Kelly A, Rubio A. {\em Nonadiabatic quantum dynamics without potential energy surfaces.} Phys Rev Materials. 2019; 3: 023803. 
+
+	
+\end{thebibliography}
+
+\end{document}
