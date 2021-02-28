@@ -6,6 +6,10 @@ This is the repository to gather a self-motivated open source Quantum Dynamics S
 
 In order to use the Linux software or the ResearchLab it is necessary to install: g++, Eigen3 and gnuplot.
 
+The installed version of Eigen3 should be at least 3.3.7.
+The installed verion of g++ should be at least 7.5 to support the complex number libraies used.
+The installed version of gnuplot should be at least 5.0 to support special for loops used, and should have "terminal gif" installed.
+
 You can fast forward this by executing the INSTALL_DEPENANCIES.sh bash script using:
 
         bash INSTALL_DEPENANCIES.sh

@@ -1,24 +1,24 @@
-\contentsline {section}{\numberline {1}The Exact Schrödinger-like Equation for Conditional Wave-Functions}{1}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Shape I: The Kinetic and Advective Correlation Potentials}{1}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Shape II: Introducing the Born-Huang ansatz onto the \ref {K},\ref {A} potentials}{2}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Shape III: \\ Rewriting \ref {K} and \ref {A} in terms of the CWF - The Real Potentials \ref {G} and \ref {J}}{4}{subsection.1.3}%
-\contentsline {section}{\numberline {2}The Approximation 1.0}{6}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Algorithm 1.0 - The Hermitian Approximation}{7}{subsection.2.1}%
-\contentsline {subsubsection}{\numberline {2.1.1}Using \ref {CWF.SE.I}: the Raw \ref {K} and \ref {A}}{7}{subsubsection.2.1.1}%
-\contentsline {subsubsection}{\numberline {2.1.2}Using \ref {CWF.SE.II}: the Born-Huang \ref {K.BH} and \ref {A.BH}}{7}{subsubsection.2.1.2}%
-\contentsline {subsubsection}{\numberline {2.1.3}Using \ref {CWF.SE.III}: the Raw \ref {G} and \ref {J}}{9}{subsubsection.2.1.3}%
-\contentsline {section}{\numberline {3}The Approximation 2.0}{10}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Algorithm 2.0 - The Paradoxical Approximation }{10}{subsection.3.1}%
-\contentsline {subsubsection}{\numberline {3.1.1}Using \ref {CWF.SE.II}}{10}{subsubsection.3.1.1}%
-\contentsline {subsubsection}{\numberline {3.1.2}Using \ref {CWF.SE.III}}{11}{subsubsection.3.1.2}%
-\contentsline {subsubsection}{\numberline {3.1.3}Example where the approach works: The Single Slit Transmission}{11}{subsubsection.3.1.3}%
-\contentsline {section}{\numberline {4}Reconstructing the Full Wave-Function from CWF-s}{13}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Using the CWF definition}{13}{subsection.4.1}%
-\contentsline {subsubsection}{\numberline {4.1.1}Use only the trajectories and the values of the CWF-s on them}{14}{subsubsection.4.1.1}%
-\contentsline {subsubsection}{\numberline {4.1.2}Using the whole CWF-s and trajectories}{15}{subsubsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.2}Using the CWF definition+Using the CWF-s as basis functions}{16}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3} Using the CWF-s as basis functions: Fit the best possible Full Wavefunction}{16}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Suggestion for a self-consistent Composed Algorithm}{20}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Algorithm Steps: Draft}{20}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Parallelization Strategy: Draft}{20}{subsection.5.2}%
-\contentsline {section}{References}{21}{section*.28}%
+\contentsline {section}{\numberline {1}The Exact Schr\IeC {\"o}dinger-like Equation for Conditional Wave-Functions}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Shape I: The Kinetic and Advective Correlation Potentials}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Shape II: Introducing the Born-Huang ansatz onto the \ref {K},\ref {A} potentials}{2}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Shape III: \\ Rewriting \ref {K} and \ref {A} in terms of the CWF - The Real Potentials \ref {G} and \ref {J}}{4}{subsection.1.3}
+\contentsline {section}{\numberline {2}The Approximation 1.0: A Spatially Separable Product}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}Algorithm 1.0 - The Hermitian Approximation}{7}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Using \ref {CWF.SE.I}: the Raw \ref {K} and \ref {A}}{7}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}Using \ref {CWF.SE.II}: the Born-Huang \ref {K.BH} and \ref {A.BH}}{7}{subsubsection.2.1.2}
+\contentsline {subsubsection}{\numberline {2.1.3}Using \ref {CWF.SE.III}: the Raw \ref {G} and \ref {J}}{10}{subsubsection.2.1.3}
+\contentsline {section}{\numberline {3}The Approximation 2.0:\\ A Truncated Born-Huang Expansion of the Factorisable Product}{11}{section.3}
+\contentsline {subsection}{\numberline {3.1}Algorithm 2.0 - The Paradoxical Approximation }{11}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Using \ref {CWF.SE.II}}{11}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Using \ref {CWF.SE.III}}{12}{subsubsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.3}Example where the approach works: The Single Slit Transmission}{12}{subsubsection.3.1.3}
+\contentsline {section}{\numberline {4}Reconstructing the Full Wave-Function from CWF-s}{15}{section.4}
+\contentsline {subsection}{\numberline {4.1}Using the CWF definition}{15}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Use only the trajectories and the values of the CWF-s on them}{16}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Using the whole CWF-s and trajectories}{17}{subsubsection.4.1.2}
+\contentsline {subsection}{\numberline {4.2}Using the CWF definition+Using the CWF-s as basis functions}{18}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3} Using the CWF-s as basis functions: Fit the best possible Full Wavefunction}{18}{subsection.4.3}
+\contentsline {section}{\numberline {5}Suggestion for a self-consistent Composed Algorithm}{22}{section.5}
+\contentsline {subsection}{\numberline {5.1}Algorithm Steps: Draft}{22}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Parallelization Strategy: Draft}{22}{subsection.5.2}
+\contentsline {section}{References}{23}{section*.28}

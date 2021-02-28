@@ -140,18 +140,13 @@ $$
 $$
 
 Where we see that all the terms introducing an explicit dependence from the rest of the system ($\vec{x}_b$) on $x_a$ are gathered in the last two terms, let us define them as the Kinetic Correlation Potential (\ref{K}) and the Advective Correlation Potential (\ref{A}):
-
 \begin{equation}\label{K}\tag{K}
 K(x_a, \vec{x}_b^\beta(t), t) = - \ \sum_{\substack{k=1; \\ k\neq a}}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\Psi(\vec{x},t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}
 \end{equation}
 \begin{equation}\label{A}\tag{A}
 A(x_a, \vec{x}_b^\beta(t), t) =  i \hbar  \sum_{\substack{k=1; \\ k\neq a}}^{N} \pdv{\Psi(\vec{x}, t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)
 \end{equation}
-
-They are both complex valued potentials that introduce the correlations (exchange and entanglement) with the rest of the degrees of freedom in the equation (even if $U(x_a, \vec{x}_b^\beta(t), t)$ also introduces some of them).
-
-
-In its terms, the full TDSE can be rewritten as:
+They are both complex valued potentials that introduce the correlations (exchange and entanglement) with the rest of the degrees of freedom in the equation (even if $U(x_a, \vec{x}_b^\beta(t), t)$ also introduces some of them). In their terms, the full TDSE can be rewritten as:
 \begin{equation*}\label{CWF.SE.I}\tag{CWF.SE.I}
 i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)]\psi_a^\beta(x_a t) + K(x_a, \vec{x}_b^\beta(t), t) +A(x_a, \vec{x}_b^\beta(t), t) \quad
 \end{equation*}
@@ -209,7 +204,7 @@ The fact that the \ref{TSEig} are an orthonormal set makes the norm of the expan
 $$
 \sum_{j=0}^\infty \int_{-\infty}^\infty \chi_a^j(x_a,t)^\dagger \chi_a^j(x_a,t) dx_a = \int_{-\infty}^\infty \Psi(\vec{x},t)^\dagger \Psi(\vec{x},t)d\vec{x}
 $$
-the proof is immediate. Thus, the quantity defined by $\lambda:=\sum_{j=0}^\infty \int_{-\infty}^\infty \qty|\chi_a^j(x_a,t)|^2 dx_a$ can be used as an indicator as which $j$ is big enough as for having captured the biggest part of the sum. That is, if we truncate the sum at $j=J$ such that $\lambda\simeq 1$, then the approximation to the full expansion will be good enough. We call each integral $P_j(t):=\int_{-\infty}^\infty \qty|\chi_a^j(x_a,t)|^2 dx_a$ the Population of the $j-th$ adiabatic level.
+the proof is immediate and can be seen to be a consequence of $\sum_{j=0}^\infty|\chi^j_a(x_a,t)|^2$ being equal to the marginalized probability density $\int_{-\infty}^\infty |\Psi(\vec{x},t)|d\vec{x}_b$, meaning $|\chi^j_a(x_a,t)|^2$ may be interpreted as the density of particles in the transversal section $x_a$ that are in the $k$-th eigenenergy state at time $t$ . Thus, the quantity defined by $\lambda:=\sum_{j=0}^\infty \int_{-\infty}^\infty \qty|\chi_a^j(x_a,t)|^2 dx_a$ can be used as an indicator of which $j$ is big enough as for having captured the biggest part of the sum. That is, if we truncate the sum at $j=J$ such that $\lambda\simeq 1$, then the approximation to the full expansion will be good enough. We call each integral $P_j(t):=\int_{-\infty}^\infty \qty|\chi_a^j(x_a,t)|^2 dx_a$ the Population of the $j-th$ adiabatic level.
 \newpage
 \subsection{Shape III: \\ Rewriting \ref{K} and \ref{A} in terms of the CWF - The Real Potentials \ref{G} and \ref{J}}
 % Hemen G eta J definidu biher dire
@@ -307,7 +302,7 @@ i \hbar \pdv{\psi_a^\beta(x_a,t)}{t} = \qty[\frac{\hbar^2}{2m_a} \pdv[2]{}{x_a} 
 \end{equation*}
 
 \newpage
-\section{The Approximation 1.0}
+\section{The Approximation 1.0: The }
 
 Until here everything was theoretically correct, no approximations were assumed at any point. However, we have seen that the exact Schrödinger like equations for the CWF-s (in their three shapes) are not useful to surpass the many-body problem because in all three cases, there were terms that depended on the full wavefunction $\Psi(\vec{x},t)$ instead of only the CWF-s for a given trajectory $\beta$:\vspace{-0.3cm}
 \begin{itemize}
@@ -376,12 +371,12 @@ i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a}
 \subsubsection{Using \ref{CWF.SE.II}: the Born-Huang \ref{K.BH} and \ref{A.BH}}
 If we introduce this approximate shape for $\Psi(\vec{x},t)$ onto the computation of the coefficients $\chi_a^j(x_a,t)$ for the Born-Huang expansion of the approximate shape of the full wave-function:
 $$
-\chi_a^j(x_a,t)= \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \Psi(\vec{x},t) d\vec{x}_b \simeq \qty[\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k ] \psi_a^\beta(x_a t)
+\chi_a^j(x_a,t)= \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \Psi(\vec{x},t) d\vec{x}_b \simeq \qty[\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \prod_{\substack{k=1; \\ k\neq a}}^{N} \psi^\beta_k(x_k,t) dx_k ] \psi_a^\beta(x_a t)
 $$
 
 Where if we define the factors:
 \begin{equation}\label{Uj}\tag{Uj}
-\U^j_a(x_a,t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k 
+\U^j_a(x_a,t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \prod_{\substack{k=1; \\ k\neq a}}^{N}\psi^\beta_k(x_k,t) dx_k \vspace{-0.3cm}
 \end{equation}
 Then, we are left with the $\chi^j_a$ adiabatic coefficients of the expansion for the \ref{CWF.Prod}:
 $$
@@ -389,12 +384,12 @@ $$
 $$
 One could see these $\chi^j_a$ coefficients as an approximation of the $\chi_a^j$ coefficients that the true full wavefunction $\Psi(\vec{x},t)$ would yield. However, even if this is indeed true, it would be an error to forget that they are actually the exact coefficients of the expansion for \ref{CWF.Prod}! If in a second step, this \ref{CWF.Prod} is then a good approximation for the exact full wavefunction or not, then that is another thing. This means that we should never forget that these $\chi_a^j$ mean:
 $$
-\sum_{j=0}^\infty \chi^j_a(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t) = \sum_{j=0}^\infty \Phi_{x_a}^j(\vec{x}_b,t) \qty[\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k ] \psi_a^\beta(x_a t)=
+\sum_{j=0}^\infty \chi^j_a(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t) = \sum_{j=0}^\infty \Phi_{x_a}^j(\vec{x}_b,t) \qty[\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \prod_{\substack{k=1; \\ k\neq a}}^{N} \psi^\beta_k(x_k,t) dx_k ] \psi_a^\beta(x_a t)=
 $$
 $$
 =\sum_{j=0}^\infty \Phi_{x_a}^j(\vec{x}_b,t)\int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \qty[ \frac{\psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t) }{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} ]d\vec{x}=\frac{\psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t) }{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}
 $$
-where we have used that we are adding up all the infinite projections of the factorized product on each orthonormal eigenstate times the same eigenstate. By definition of orthonormal basis, this must add up to the original function: the factorizable product (its the so called {\bf completeness relation}).\\
+where we have used that we are adding up all the infinite projections of the factorized product on each orthonormal eigenstate times the same eigenstate. By definition of orthonormal basis, this must add up to the original function: the factorizable product (its the so called {\bf completeness relation}).
 
 This means that, if we introduce these $\chi^j_a$ into the computation of \ref{K.BH} and \ref{A.BH} for the \ref{CWF.SE.II}, we get the following approximations for them:
 $$
@@ -408,9 +403,9 @@ $$
 i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)+ W^{(a)}_K(x_a,\vec{x}_b^\beta (t),t) +W^{(a)}_A(x_a,\vec{x}_b^\beta (t),t) ]\psi_a^\beta(x_a t)
 $$
 
-Unlike in the previous case, it now looks like the approximation is giving us something additional to the Hermitian Approximation, because now $W^{(a)}_K$ and $W^{(a)}_A$ depend on $x_a$ per each $j-th$ term in the sum. Therefore, it looks like we should be able to obtain some correlation and entanglement we could not observe with the bare Hermitian Approximation.\\
+Unlike in the previous case, it now looks like the approximation is giving us something additional to the Hermitian Approximation, because now $W^{(a)}_K$ and $W^{(a)}_A$ depend on $x_a$ per each $j-th$ term in the sum. Therefore, it looks like we should be able to obtain some correlation and entanglement we could not observe with the bare Hermitian Approximation.
 
-However, this is {\bf not} true. If we really use the infinite $j$ terms in the Born-Huang expansion, we have just seen above that we recover the approximation of the product of CWF-s. Thus, if in the expressions for $W^{(a)}_K$ and $W^{(a)}_A$ we revert the operations, we will get to see that they are exactly the same as the $W^{(a)}_K$ and $W^{(a)}_A$ we got in the previous section, that were purely time dependant. For example:
+However, this is {\bf not} true. If we really use the infinite $j$ terms in the Born-Huang expansion, we have just seen above that we recover the approximation of the product of CWF-s. Thus, if in the expressions for $W^{(a)}_K$ and $W^{(a)}_A$ we revert the operations, we will get to see that they are exactly the same as the $W^{(a)}_K$ and $W^{(a)}_A$ we got in the previous section, that were purely time dependant. For example:\vspace{+0.1cm}
 $$
 W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)=
 $$
@@ -426,8 +421,40 @@ $$
 
 Therefore, we end up in the same  conclusion: purely time dependant complex potentials lead to the Hermitian approximation. So, it looked like we had gained new insight, but we have not. Or have we? Let us emphasize that the recovering of the Hermitian approximation is only true when we use all the necessary $j$ to complete the expansion. However, if we truncate the expansion in a small enough $j$, then we will indeed have that $W^{(a)}_K$ and $W^{(a)}_A$ are dependant on $x_a$ through the parametrization of the eigenstates $\Phi_{x_a}^j(\vec{x}_b^\beta(t),t))$! Paradoxically, using a less precise expansion can lead to something that could capture some entanglement! This will be precisely the approximation we will work with after the next section.
 
+Before continuing let us note an alternative shape for the approximated \ref{CWF.SE.II} we have obtained in this section, which might be insightful for the next algorithm. It turns out that the definition we made of the full wave-fucntion (\ref{CWF.Prod}) and thus the shapes of the resulting  $\chi^j_a$ let us do the following "magic trick":
+$$
+\psi^\beta_a(x_a,t)=\Psi(x_a,\vec{x}_b^\beta(t),t)=\sum_{j=0}^\infty \chi^j_a(x_a,t)\Phi^j_{x_a}(\vec{x}_b^\beta(t),t)=\qty[ \sum_{j=0}^\infty\U^j(x_a,t)\Phi^j_{x_a}(\vec{x}_b^\beta(t),t)]\psi^\beta_a(x_a,t)
+$$
+meaning we can write the CWF-s in terms of the same CWF times adiabatic states and $\U$. This of course can only be correct if $\sum_{j=0}^\infty\U^j(x_a,t)\Phi^j_{x_a}(\vec{x}_b^\beta(t),t)=1$, and it turns out it is:
+$$
+\sum_{j=0}^\infty\U^j(x_a,t)\Phi^j_{x_a}(\vec{x}_b^\beta(t),t) = \frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} \sum_{j=0}^\infty \Phi^j_{x_a}(\vec{x}_b,t)\Big\rvert_{\vec{x}_b^\beta(t)}\int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \prod_{\substack{k=1; \\ k\neq a}}^{N}\psi^\beta_k(x_k,t) dx_k 
+$$
+where using the completeness relation $\sum_{j=0}^\infty \Phi^j_{x_a}(\vec{x}_b,t)\int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger f(\vec{x}_b,t)d\vec{x}_b = f(\vec{x}_b,t)$ and noting that $\psi^\beta(x_a^\beta(t),t)=\Psi(\vec{x}^\beta(t),t)$, the prove is completed as:
+$$
+\sum_{j=0}^\infty\U^j(x_a,t)\Phi^j_{x_a}(\vec{x}_b^\beta(t),t)=\frac{ \prod_{\substack{k=1; \\ k\neq a}}^{N}\psi^\beta_k(x_k^\beta(t),t)}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}=1
+$$
 
-
+Then, if we introduce $\psi^\beta_a(x_a,t)=\qty[ \sum_{j=0}^\infty\U^j(x_a,t)\Phi^j_{x_a}(\vec{x}_b^\beta(t),t)]\psi^\beta_a(x_a,t)$ in the CWF next to the potential $U(x_a,\vec{x}_b^\beta(t),t)$ we discussed in this section and add it with $W^{(a)}_K$:
+$$
+i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \Big[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} +\sum_{j=0}^\infty \U^j_a(x_a,t)\Big\{ U(x_a, \vec{x}_b^\beta(t), t)\Phi_{x_a}^j(\vec{x}_b,t)\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}- \sum_{\substack{k=1; \\ k\neq a}}^{N} \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b,t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}
+$$
+$$  +i\hbar \sum_{\substack{k=1; \\ k\neq a}}^{N}  \pdv{ \Phi_{x_a}^j(\vec{x}_b,t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t) \Big\}\Big]\psi_a^\beta(x_a t)
+$$
+Notice we can simplify terms using the definition of (\ref{TSEig}), leaving the approximated \ref{CWF.SE.II} as:
+$$
+\hspace{-0.2cm} i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \Bigg[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} +\sum_{j=0}^\infty \U^j_a(x_a,t)\Bigg\{ E^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))+i\hbar \sum_{\substack{k=1; \\ k\neq a}}^{N}  \pdv{ \Phi_{x_a}^j(\vec{x}_b,t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t) \Bigg\}\Bigg]\psi_a^\beta(x_a t)
+$$
+We can yet give it a more interpretable shape if we rewrite:
+ %$$I^j(x_a,t):= \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \prod_{\substack{k=1; \\ k\neq a}}^{N}\psi^\beta_k(x_k,t) dx_k$$
+%Thus, leaving for the approximation of $W_A$:
+$$
+\U^j_a(x_a,t)\sum_{\substack{k=1; \\ k\neq a}}^{N} \pdv{ \Phi_{x_a}^j(\vec{x}_b,t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)= \U^j(x_a,t)\Phi^j_{x_a}(\vec{x}_b^\beta(t),t)\dv{}{t}log\qty(\Phi^j_{x_a}(\vec{x}_b(t),t))
+$$
+Leaving an approximation for \ref{CWF.SE.II}:
+$$
+i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \Bigg[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} +\sum_{j=0}^\infty \U^j_a(x_a,t)\Phi_{x_a}^j(\vec{x}_b^\beta(t),t))\Bigg\{ E^j(x_a,t) +i\hbar \dv{}{t}log\qty(\Phi^j_{x_a}(\vec{x}_b(t),t)) \Bigg\}\Bigg]\psi_a^\beta(x_a t)
+$$
+This equation now seems more interpretable, but note that as we are using $j\rightarrow \infty$, the Hermitian approximation will be recovered. It will nonetheless regain appeal in the approximation of Section 3.
 \subsubsection{Using \ref{CWF.SE.III}: the Raw \ref{G} and \ref{J}}
 Looking at the equations \ref{CWF.SE.I} and \ref{CWF.SE.III}, we notice that the relation between the Kinetic and Advective Correlation potentials and the \ref{G},\ref{J} real potentials is that:
 \begin{equation}\label{G(KA)}\tag{G(KA)}
@@ -457,16 +484,17 @@ We have seen that if we use all the $j$ terms (or at least enough of them) in th
 \begin{equation}\label{Aprox.Trunc}\tag{Aprox.Trunc}
 \Psi(\vec{x},t)=\sum_{j=0}^J \chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)
 \end{equation}
-Note that $J$ must be small enough as to avoid the sum being a good enough approximation of the infinite sum. In order to quantify this, we could dynamically choose $J$ to avoid the norm $\lambda$ of the approximation defined in Section 1.2 to be bigger than a certain tolerance. This is because else the truncated sum will end up being a good enough approximation of the product of CWF-s and thus will loose its appeal.\\
+Note that $J$ must be small enough as to avoid the sum being a good enough approximation of the infinite sum. In order to quantify this, we could dynamically choose $J$ to avoid the norm $\lambda$ of the approximation defined in Section 1.2 to be bigger than a certain tolerance. This is because else the truncated sum will end up being a good enough approximation of the product of CWF-s and thus will loose its appeal.
 
 The bad thing about this approximation is that one knows nothing about to which degree the approximation is closer to the true solution CWF than the Hermitian approximation. The idea is that if the \ref{Aprox.Trunc} is close enough to the shape of the true full wavefunction, then it could work. Each particular potential will require to be reviewed in particular, in order to judge if this approximation for the regions where there is non-factorisability really makes sense or not. We will visit an example where it turns out to yield better results than the Hermitian approximation.
+
 
 \subsubsection{Using \ref{CWF.SE.II}}
 %Ekuaziñoa manifiesto itxi. Perhaps nire bisiñoa ipini respecto a las energias y tal. Behintzet ipini para la una energia (aunke iugual en la generalizacion a N ya no es tan simple).
 % Ipini G ta J zer izengo ziren!
 The only difference between using (\ref{Aprox.Trunc}) or (\ref{CWF.Prod}) when it comes to the approximate expression for (\ref{CWF.SE.II}) is that the sum over $j$ will not go until $j=\infty$, but until $j=J$ fixed according to the criterium stated above. Thus, we would have the same definition for (\ref{Uj}):
 $$
-\U^j_a(x_a, t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k 
+\U^j_a(x_a, t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \prod_{\substack{k=1; \\ k\neq a}}^{N} \psi^\beta_k(x_k,t) dx_k 
 $$
 Such that $\chi_a^j(x_a,t)= \U^j_a(t)\psi_a^\beta(x_a t)$ and thus:
 $$
@@ -481,6 +509,7 @@ i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a}
 $$
 Again, this will work as long as $J$ is small enough. However, we do not have still any theoretically reliable proof that the approximations we are using for $W_K$ and $W_A$ are better than simply not using them. If they deviate a lot from the true shape they should have, then we might be making a bigger error than simply neglecting them!
 
+Now, let us see an alternative shape of the resulting approximated differential equation that might be insightful to understand why in the example we will analyze, the truncated Born-Huang expansion approximation works. It turns out that if we used the \ref{CWF.Prod} approximation (that is, instead of using maximum $j=J$, using $j\rightarrow \infty$) allowed us 
 % Introducir aqui la notacion adiabatica y mi desarrollo aquel de energixetan. Ta jarri kasu partikualr modure j=1. 1.5h
 
 \subsubsection{Using \ref{CWF.SE.III}}
@@ -497,41 +526,69 @@ Perhaps one could study the goodness of the approximation by looking at how clos
 
 \subsubsection{Example where the approach works: The Single Slit Transmission}
 % Azaldu eta resultauek jarri.
-The algorithm was implemented in a simple yet interesting 2D system (we will call them $x\equiv x_1$ and $y\equiv x_2$) where the Hermitian approximation fails dramatically to capture the physics: the transmission of a wave-packet through a bottleneck with infinite potential energy walls. This situation could model a sudden narrowing of the electron channel of a 2D electronic device. We will identify the direction $x$ with the {\em transport direction} of the electron and the direction $y$ with the {\em transversal direction}.
+The algorithm was implemented in a simple yet interesting 2D system ($N=2$) where the Hermitian approximation fails dramatically to capture the physics: the transmission of a wave-packet through a bottleneck channel with infinite potential energy walls at the sides. This situation could model a sudden narrowing of the electron channel of a 2D electronic device. We will call the two spatial dimensions $x\equiv x_1$ and $y\equiv x_2$, identifying the direction $x$ with the {\em transport longitudinal direction} of the electron and the direction $y$ with the {\em confinement transversal direction}.
 
 % ipini 2Dko guztixen notaziñoa, azaldu 2Dko problemie ta intuiziñoa citetan euren paper hori. Ta orduen jarri grafikak energuianak kontra k0 eta transmisiñoak kasu bakoitzien j desberdinekaz junto asus errores y la comparacion con el Hermitian. Ta azaldu intuiziñoa de zeba abi fknetandeuen ikusitze j=1egaz ze forma hartuko bien K potenkialak. BEtie aputr bat less interpretable. 1h+2h
 
-Given a zero potential energy in the space taking in the direction $y$ a length $L(x)$ as a function of the position in $x$ and an infinite potential elsewhere:
+Let us define a zero potential energy in the range of width $L(x)$ in $y$ (where the the width depends on $x$) and an infinite potential elsewhere:
 $$
 U(x,y,t)=\begin{cases}
-0\quad  \\
+0\quad  y\in (-L(x)/2, L(x)/2)\\
 -\infty\quad y\notin (-L(x)/2, L(x)/2)
 \end{cases}
 $$
-it is trivial to obtain the \ref{TSEig} set in $y$ for this set-up, because on the one hand, the potential is stationary (the eigenstaes will be time independent). On the other hand, each transversal section is nothing else but the "1d particle in an infinite potential box", confined in a box of length $L(x)$. As the infinite potential means there must not be probability density in those regions, it will be a boundary condition that the wave-function is zero at the edges of the box, which yields sinusoidal transversal eigenstates:
+In this set-up, it is trivial to obtain the (\ref{TSEig}) set in $y$, because on the one hand, the potential is stationary (the eigenstaes will be time independent). On the other hand, each transversal section is nothing else but the "1d particle in an infinite potential box", confined in a box of length $L(x)$. As the infinite potential means there must not be probability density in those regions, it will be a boundary condition that the wave-function is zero at the edges of the box, which yields sinusoidal transversal eigenstates:
 $$
 \Phi^j_{x}(y)=\begin{cases} \sqrt{\frac{2}{L(x)}}sin\qty( \frac{j\pi (y+L(x)/2)}{L(x)} )\quad if\ y\in(-L(x)/2, L(x)/2)\\0\quad else\end{cases}
 $$ 
 with eigenenergies $E^j(x)=\frac{j^2\pi^2 \hbar^2}{2m_y L(x)^2}$ for $j \in\{0,1,2,3..,J\}$.
 
 
-We could make a similar treatment for the other direction, $x$, however, for simplicity in this first example we will consider that in $x$ the particle is "free", even if this is not true, and apply to the evolution of its complementary CWF $\psi^\beta_y(y,t)$ the Hermitian approximation. Only the CWF in $x$, that is $\psi^\beta_x(x,t)$, will be evolved using the approximation of Section 3.1.1.\footnote{Remember that the kinetic and advective correlation potentials depend on the knowledge of the complementary direction, that is why, knowing the \ref{TSEig} in $y$ allows their approximation for the CWF in $x$.}.
+We could make a similar treatment for the other direction, $x$, however, for simplicity, in this first example we will consider that in $x$ the particle is "free", even if this is not true, and apply to the evolution of its complementary CWF $\psi^\beta_y(y,t)$ the Hermitian approximation. Only the CWF in $x$, that is $\psi^\beta_x(x,t)$, will be evolved using the approximation of Section 3.1.1.\footnote{Remember that the kinetic and advective correlation potentials depend on the knowledge of the complementary directions, that is why, knowing the \ref{TSEig} in $y$ allows their approximation for the CWF in $x$. Meanwhile, saying nothing about the \ref{TSEig} in $x$ leaves us with the Hermitian approximation for the CWF in $y$.}
 
-The fun point about this problem is that if both CWF-s are evolved with the Hermitian algorithm, then the CWF in the transport direction $x$ will see no potential energy barrier anywhere while $y^\beta(t)\in(-L(x)/2,L(x)/2)$ because in that case $U(x;y^\beta(t))=0$ and the only possible correlation that  the Hermitian approximation can capture is through the conditioned potential energy. Therefore, the CWF $\psi^\beta_x(x,t)$ will evolve as if it was in a free potential irrespective of the initial momentum and the width of the slit $L_{min}:=min_x(L(x))$. However, this same setting was studied in a recent work by Devashish P. {\em et al} \cite{Dev} using the full Schrödinger Equation \ref{TDSE} and the Born-Huang expansion and found that a "virtual" potential energy barrier emerged from the quantum geometrical correlation between the spatial degrees of freedom. Such that if the initial kinetic energy of the wave-packet transported through the narrowing channel was smaller than the energy eigenstates of the transversal sections \ref{TSEig} then the wavepacket was reflected (only slightly transmitted) as if there was a true potential energy barrier in the slit. Then the rest of eigenenergies of the transversal sections played additonal roles in the dynamics of this transmission. Therefore, it this simple setting seems a perfect benchmark to identify algorithms that perform better than the basic HErmitian approximation. In principle, any improvement approximating the \ref{CWF.SE} beyond the Hermitian approximation should prove to be capable of capturing this "virtual" energy barrier. As we will see soon, Algorithm 2.0 is precisely capable of doing this. 
+The fun point about this problem is that if both CWF-s are evolved with the Hermitian algorithm, then the CWF in the transport direction $x$ will see no potential energy barrier anywhere while $y^\beta(t)\in(-L(x)/2,L(x)/2)$ because in that case $U(x;y^\beta(t))=0$ and the only possible correlation that  the Hermitian approximation can capture is through the conditioned potential energy (which is zero). Therefore, the CWF $\psi^\beta_x(x,t)$ will evolve as if it was in a free potential irrespective of the initial momentum and the width of the slit $L_{min}:=min_x(L(x))$.
 
-Applying these \ref{TSEig} to the potentials $W_K^{(x)}$ and $W_K^{(x)}$, we get:
+Nonetheless, this same setting was studied in a recent work by Devashish P. {\em et al} \cite{Dev} using the full Schrödinger Equation \ref{TDSE} and the Born-Huang expansion and found that a "virtual" potential energy barrier emerged from the quantum geometrical correlation between the spatial degrees of freedom. Such that if the initial kinetic energy of the wave-packet transported through the narrowing channel was smaller than the energy eigenstates of the transversal sections \ref{TSEig} then the wavepacket was reflected (only slightly transmitted) as if there was a true potential energy barrier in the slit. Then the rest of eigenenergies of the transversal sections played additonal roles in the dynamics of this transmission. 
+
+Therefore, this simple setting seems a perfect benchmark to identify algorithms that perform better than the basic Hermitian approximation. In principle, any improvement approximating the \ref{CWF.SE} beyond the Hermitian approximation should prove to be capable of capturing this "virtual" energy barrier. As we will see soon, Algorithm 2.0 is precisely capable of doing this. 
+
+Applying these particular \ref{TSEig} to the potentials $W_K^{(x)}$ and $W_K^{(x)}$ derived in Section 3.1.1, we get:
 $$
-\hspace{-1cm} W_K^{(x)}(x,y^\beta(t),t)= -\sum_{j=0}^J \U^j_x(x,t)\frac{\hbar^2}{2m_y}\pdv[2]{\Phi^j_x(y,y)}{y}\Big\rvert_{y^\beta(t)} = -\sum_{j=0}^J \U^j_x(x,t)\frac{\hbar^2}{2m_y}\qty(\frac{j\pi}{L(x)})^2\qty(- \sqrt{\frac{2}{L}} sin\qty( \frac{j\pi (y+L(x)/2)}{L(x)} ))
+\hspace{-1cm} W_K^{(x)}(x,y^\beta(t),t)= -\sum_{j=0}^J \U^j_x(x,t)\frac{\hbar^2}{2m_y}\pdv[2]{\Phi^j_x(y)}{y}\Big\rvert_{y^\beta(t)} = -\sum_{j=0}^J \U^j_x(x,t)\frac{\hbar^2}{2m_y}\qty(\frac{j\pi}{L(x)})^2\qty(- \sqrt{\frac{2}{L}} sin\qty( \frac{j\pi (y+L(x)/2)}{L(x)} ))
 $$
 $$
-=\sum_{j=0}^J  \U^j_x(x,t)\frac{\hbar^2}{2m_y}\qty(\frac{j\pi}{L(x)})^2 \Phi^j_x(y^\beta(t))
+=\sum_{j=0}^J  \U^j_x(x,t)\frac{\hbar^2}{2m_y}\qty(\frac{j\pi}{L(x)})^2 \Phi^j_x(y^\beta(t))= \sum_{j=0}^J  \U^j_x(x,t)E^j(x) \Phi^j_x(y^\beta(t))
 $$
 $$
-\hspace{-1cm} W_A^{(x)}(x,y^\beta(t),t)=\sum_{j=0}^J \U^j_x(x,t)i\hbar\dot{y}^\beta(t)\pdv{\Phi^j_x(y,y)}{y}\Big\rvert_{y^\beta(t)}= \sum_{j=0}^J \U^j_x(x,t)i\hbar\dot{y}^\beta(t) \frac{j\pi}{L(x)} \sqrt{\frac{2}{L(x)}}cos\qty(\frac{j\pi (y^\beta(t)+L(x)/2}{L(x)})
+\hspace{-1cm} W_A^{(x)}(x,y^\beta(t),t)=i\hbar\sum_{j=0}^J \U^j_x(x,t)\dot{y}^\beta(t)\pdv{\Phi^j_x(y)}{y}\Big\rvert_{y^\beta(t)}= i\hbar\sum_{j=0}^J \U^j_x(x,t)\dot{y}^\beta(t) \frac{j\pi}{L(x)} \sqrt{\frac{2}{L(x)}}cos\qty(\frac{j\pi (y^\beta(t)+L(x)/2}{L(x)})
 $$
-Where the effect of the second potential energy terms are not that clear, but the real part of the first clearly show the introduction of a potential energy in the transport direction that is directly proportional to the narrowness of the slit. Not only that, but it also seems like we could recover the adiabatic coefficient language used in Ref.\cite{Dev}, but now applied to the Bohmian interpretation.
+$$
+=i\hbar \sum_{j=0}^J\U^j_x(x,t) \dv{}{t}log\qty(\Phi^j_x(y^\beta(t))) \Phi^j_x(y^\beta(t))
+$$% no puedes escribir en treminos de la integral de EPhi la del logaritmo?
+Which leaves us with the dynamical equation for $\psi^\beta_x(x,t)$:
+
+$$
+i\hbar \pdv{\psi^\beta_x(x,t)}{t}=\qty[ \frac{-\hbar^2}{2m_x}\pdv[2]{}{x} + U(x;y^\beta(t))+\sum_{j=0}^J \U^j_x(x,t)\Phi^j_x(y^\beta(t))\qty{ E^j(x,t)+i\hbar\dv{}{t}log\qty(\Phi^j_x(y^\beta(t)))} ]\psi^\beta_x(x,t)
+$$
+
+% Ze complex potential geratzen da other than the Hermitian approx
+% Ze ifektu deko termino bakoitzak. Zerba bakarrik itxizgero Kren aproximaziñoa good enough dan
+% Ein explikaziñoa goiko sekziñoan zegaotzik en si ezin dan generalize ah expresiñoa, ze ya trukoa ezta egixe, baia bueno trampa eitzen bazun ba tal.
+% saiatu ondo idazten igual gehitzen ta kentzen potentzixela. Bia bueno argi txi ezin dozun bitartien atara psitik beste psi bat u ta jotakaz U eztala inogaz ikusiko.
+% oin hona buelteta esan zerba hemen kasuen funtzionetan deuen - U=0 dalako hor barruen basikamente
+
+Where the effect of the second potential energy terms are not that clear, but the real part of the first clearly shows the introduction of a potential energy in the transport direction that is directly proportional to the narrowness of the slit. Not only that, but it also seems like we could recover the adiabatic coefficient language used in Ref.\cite{Dev}, but now applied to the Bohmian interpretation.
 %Sartun plota potentzixelana jarritte zelan alzun kontroleu adiabaticidadie ta eigenstatek.
-% Ein tabla bat de wavepacket energy eta tseig energies ta erakutsi transmisiñoa full SEenana against 150 trayektoria con Hermitian eta con el nuestro con j= tal jh
+% Ein tabla bat de wavepacket energy eta tseig energies ta erakutsi transmisiñoa full SEenana against 150 trayektoria con Hermitian eta con el nuestro con j= tal j= cual.
+% ta honen ostien ein desarrollo bat de ekuaziñoak ze forma hartzen dabien j=1egaz eta bestiekaz 
+% Ta falte dan beste gauzie da en generaleko termino haretan lenguaje d elos chiserako bidie pavie holan gero hemen alzu cite direktamente kasu partikular modure.
+
+To prove Algorithm 2.0 is capable of surpassing this benchmark, we prepare the following potential energy profile (which is a particular parametrized case of the previously stated one and also used in Ref.\cite{Dev}):
+$$
+U(x,y,t)=\begin{cases} 3\\3 \end{cases}
+$$
+%g=1.0,a1=0.0,a2=12.0,Lmax=40.0,Lmin=7.0,L1; L1= (Lmax-Lmin)/2.0*(1.0/(1.0+exp((x-a1)/g))+1.0/(1.0+exp((-x+a2)/g)))+Lmin/2.0; if(y>L1 || y<-L1){return 100.0;} else{return 0.0;}
+
 
 \newpage
 \section{Reconstructing the Full Wave-Function from CWF-s}
