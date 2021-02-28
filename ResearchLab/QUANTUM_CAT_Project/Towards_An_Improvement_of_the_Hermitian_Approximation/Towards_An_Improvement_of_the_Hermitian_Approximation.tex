@@ -101,7 +101,7 @@
 \vspace{-0.3 cm}
 \section{The Exact Schrödinger-like Equation for Conditional Wave-Functions}
 
-Given an isolated quantum system with $N$ degrees of freedom described by the spatial variables $\vec{x}=(x_1,...,x_N)\in \R^n$, the sate of which is given by the normalized full $N$ dimensional wavefunction $\Psi(\vec{x},t)$, its dynamics are governed by the time dependent Schrödinger Equation (TDSE):
+Given a closed quantum system with $N$ degrees of freedom described by the spatial variables $\vec{x}=(x_1,...,x_N)\in \R^n$, the sate of which is given by the normalized full $N$ dimensional wavefunction $\Psi(\vec{x},t)$, its dynamics are governed by the time dependent Schrödinger Equation (TDSE):
 \begin{equation}\label{TDSE}\tag{TDSE}
 i\hbar \pdv{\Psi(\vec{x}, t)}{t} = - \sum_{k=1}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\Psi(\vec{x},t)}{x_k} + U(\vec{x},t)\Psi(\vec{x},t)
 \end{equation}
@@ -119,7 +119,7 @@ Given a particular Bohmian Trajectory for the system, that we will label with $\
 \begin{equation}\label{CWF}\tag{CWF}
 \psi_a^\beta(x_a,t) := \Psi(x_a, \vec{x}_b^\beta(t), t)\vspace{-0.05 cm}
 \end{equation}
-In what follows we will show three different ways to exactly arrive to a set of Schrödinger like equations for the conditional wave-functions. We will call them in general "the exact Schrödinger like Equation for Conditional Wave-Functions" and shorten them by \hypertarget{CWF.SE}{(CWF.SE)}. \vspace{-0.3 cm}
+In what follows we will show three different ways to exactly arrive to a set of Schrödinger like equations for the conditional wave-functions. We will call them in general "the exact Schrödinger like Equation for Conditional Wave-Functions" and shorten them by \label{CWF.SE}\hypertarget{CWF.SE}{(CWF.SE)}. \vspace{-0.3 cm}
 
 \subsection{Shape I: The Kinetic and Advective Correlation Potentials}
 
@@ -203,7 +203,7 @@ where we note that unlike the full wave function $\Psi(x_a, \vec{x}_b,t)$, the \
 \begin{equation}\label{CWF.SE.II}\tag{CWF.SE.II}
 i\hbar \pdv{\psi_a^\beta(x_a, t)}{t} = \qty[- \frac{\hbar^2}{2m_a}\pdv[2]{}{x_a} + U(x_a, \vec{x}_b^\beta(t), t)]\psi_a^\beta(x_a t) + K_{BH}(x_a, \vec{x}_b^\beta(t), t) +A_{BH}(x_a, \vec{x}_b^\beta(t), t) 
 \end{equation}
-where by $ K_{BH}$ and $ A_{BH}$ we mean \ref{K} and \ref{A} but in their Born-Huang ansatz denpendence shape given in (\ref{K.BH}) and (\ref{A.BH}).
+where by $ K_{BH}$ and $ A_{BH}$ we mean \ref{K} and \ref{A} but in their Born-Huang ansatz dependence shape given in (\ref{K.BH}) and (\ref{A.BH}).
 
 The fact that the \ref{TSEig} are an orthonormal set makes the norm of the expanded wavefunction to be equal to:
 $$
@@ -320,7 +320,7 @@ Until here everything was theoretically correct, no approximations were assumed 
 \vspace{-0.3cm}
 Therefore, it seems clear that if we want to introduce approximations at the theoretical level that can help us educatedly surpass the many body problem, it is the shape of $\Psi(\vec{x},t)$ used to compute \ref{K} and \ref{A}, the $\chi_a^j$ or \ref{G} and \ref{J}, that should be educatedly guessed.
 
-In particular, if we look back to the (\ref{CWF.SE.I}) and .II we can notice that if we achieve to write $\Psi(\vec{x},t)$ as proportional to the CWF $\psi_a^\beta(x_a,t)$, then the differential equations would take a linear look, which would allow us to use very convenient numerical resolution techniques like the Cranck Nicolson method.
+In particular, if we look back to the (\ref{CWF.SE.I}) and .II we can notice that if we achieve to write $\Psi(\vec{x},t)$ as proportional to the CWF $\psi_a^\beta(x_a,t)$, then the differential equations would take a linear look, which would allow us to use very convenient numerical resolution techniques like the Crank Nicholson method.
 
 The simplest approximation we will use is to assume the full wave-function has the shape of a normalized factorizable product of functions that depend on a single spatial variable:
 $$
@@ -381,11 +381,11 @@ $$
 
 Where if we define the factors:
 \begin{equation}\label{Uj}\tag{Uj}
-\U^j_a(t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k 
+\U^j_a(x_a,t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k 
 \end{equation}
 Then, we are left with the $\chi^j_a$ adiabatic coefficients of the expansion for the \ref{CWF.Prod}:
 $$
-\chi_a^j(x_a,t)= \U^j_a(t)\psi_a^\beta(x_a t)
+\chi_a^j(x_a,t)= \U^j_a(x_a,t)\psi_a^\beta(x_a t)
 $$
 One could see these $\chi^j_a$ coefficients as an approximation of the $\chi_a^j$ coefficients that the true full wavefunction $\Psi(\vec{x},t)$ would yield. However, even if this is indeed true, it would be an error to forget that they are actually the exact coefficients of the expansion for \ref{CWF.Prod}! If in a second step, this \ref{CWF.Prod} is then a good approximation for the exact full wavefunction or not, then that is another thing. This means that we should never forget that these $\chi_a^j$ mean:
 $$
@@ -398,10 +398,10 @@ where we have used that we are adding up all the infinite projections of the fac
 
 This means that, if we introduce these $\chi^j_a$ into the computation of \ref{K.BH} and \ref{A.BH} for the \ref{CWF.SE.II}, we get the following approximations for them:
 $$
-K(x_a, \vec{x}_b^\beta(t), t) \simeq - \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \U^j_a(t)\psi_a^\beta(x_a t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
+K(x_a, \vec{x}_b^\beta(t), t) \simeq - \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \U^j_a(x_a,t)\psi_a^\beta(x_a t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b,t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
 $$
 $$
-A(x_a, \vec{x}_b^\beta(t), t) \simeq i \hbar \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \U^j_a(t)\psi_a^\beta(x_a t) \pdv{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
+A(x_a, \vec{x}_b^\beta(t), t) \simeq i \hbar \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \U^j_a(x_a,t)\psi_a^\beta(x_a t) \pdv{ \Phi_{x_a}^j(\vec{x}_b,t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
 $$
 where we have defined the terms $W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)$ and $W_A^{(a)}(x_a, \vec{x}_b^\beta (t),t)$ by taking out the common factor CWF. We know the eigenstes and we know the terms $\U^j_a$ at each time, becasue we can evolve all the N CWF-s simultaneously. With this, \ref{CWF.SE.II} adopts a linear look:
 $$
@@ -415,7 +415,7 @@ $$
 W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)=
 $$
 $$
-- \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \U^j_a(t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} \psi_a^\beta(x_a t)=- \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{}{x_k}\qty[\sum_{j=0}^\infty  \U^j_a(t)\psi_a^\beta(x_a t) \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)]\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}
+\hspace{-1.1cm}- \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^\infty \U^j_a(x_a,t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b,t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} \psi_a^\beta(x_a t)=- \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{}{x_k}\qty[\sum_{j=0}^\infty  \U^j_a(x_a,t)\psi_a^\beta(x_a t) \Phi_{x_a}^j(\vec{x}_b,t)]\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}
 $$
 $$
 =- \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{}{x_k} \frac{\psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t)}{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} \Big\rvert_{\vec{x}_b^\beta(t)}=- \qty(\ \sum_{\substack{k=1; \\ k\neq a}}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{\psi_k^\beta(x_k,t)}{x_k}\Big\rvert_{x_k^\beta(t)}\frac{\prod_{\substack{s=1\\s\neq a,k}}^{N} \psi_s^\beta(x_s^\beta(t),t) }{\qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} )\psi_a^\beta(x_a,t) 
@@ -466,14 +466,14 @@ The bad thing about this approximation is that one knows nothing about to which 
 % Ipini G ta J zer izengo ziren!
 The only difference between using (\ref{Aprox.Trunc}) or (\ref{CWF.Prod}) when it comes to the approximate expression for (\ref{CWF.SE.II}) is that the sum over $j$ will not go until $j=\infty$, but until $j=J$ fixed according to the criterium stated above. Thus, we would have the same definition for (\ref{Uj}):
 $$
-\U^j_a(t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k 
+\U^j_a(x_a, t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}}\prod_{\substack{k=1; \\ k\neq a}}^{N} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \psi^\beta_k(x_k,t) dx_k 
 $$
 Such that $\chi_a^j(x_a,t)= \U^j_a(t)\psi_a^\beta(x_a t)$ and thus:
 $$
-K(x_a, \vec{x}_b^\beta(t), t) \simeq - \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^J \U^j_a(t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}\psi_a^\beta(x_a t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
+K(x_a, \vec{x}_b^\beta(t), t) \simeq - \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^J \U^j_a(x_a,t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b,t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}\psi_a^\beta(x_a t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
 $$
 $$
-A(x_a, \vec{x}_b^\beta(t), t) \simeq i \hbar \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^J \U^j_a(t) \pdv{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)\psi_a^\beta(x_a t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
+A(x_a, \vec{x}_b^\beta(t), t) \simeq i \hbar \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^J \U^j_a(x_a,t) \pdv{ \Phi_{x_a}^j(\vec{x}_b,t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)\psi_a^\beta(x_a t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
 $$
 where we see the only difference with respecto to the approximations we made for \ref{K} and \ref{A} in the previous algorithm, is that now the sum in $j$ stops at $J$. With this, \ref{CWF.SE.II} adopts a linear look that will now {\bf not} be equivalent to the Hermitian approximation, as $W_K$ and $W_A$ will now be $x_a$ dependent:
 $$
@@ -486,10 +486,10 @@ Again, this will work as long as $J$ is small enough. However, we do not have st
 \subsubsection{Using \ref{CWF.SE.III}}
 When it comes to the \ref{G} and \ref{J} formalism, recalling the relation these real potentials had with the kinetic and advective correlation potentials that we manifested in equations (\ref{G(KA)}) and (\ref{J(KA)}), we can immediately see the approximations we are doing for them:
 $$
-G_a(x_a,\vec{x}_b^\beta(t),t)\simeq \R e \qty{ - \sum_{j=0}^J  \U^j_a(t) \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} +  i \hbar \pdv{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)}
+G_a(x_a,\vec{x}_b^\beta(t),t)\simeq \R e \qty{ - \sum_{j=0}^J  \U^j_a(x_a,t) \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b,t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} +  i \hbar \pdv{ \Phi_{x_a}^j(\vec{x}_b,t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)}
 $$
 $$
-J_a(x_a,\vec{x}_b^\beta(t),t)\simeq \mathbb{I} m \qty{ - \sum_{j=0}^J  \U^j_a(t) \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} +  i \hbar \pdv{ \Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)}
+J_a(x_a,\vec{x}_b^\beta(t),t)\simeq \mathbb{I} m \qty{ - \sum_{j=0}^J  \U^j_a(x_a,t) \sum_{\substack{k=1; \\ k\neq a}}^{N}  \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b,t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)} +  i \hbar \pdv{ \Phi_{x_a}^j(\vec{x}_b,t))}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}(t)_b^\beta} \dot{x}_k^\beta(t)}
 $$
 
 Perhaps one could study the goodness of the approximation by looking at how close these expressions are to what we would expect from first or second order terms in the Taylor expansions around the trajectory that we introduced at the end of Section 2.1.3.
@@ -497,17 +497,52 @@ Perhaps one could study the goodness of the approximation by looking at how clos
 
 \subsubsection{Example where the approach works: The Single Slit Transmission}
 % Azaldu eta resultauek jarri.
-The algorithm was implemented in a simple yet interesting 2D system where the Hermitian approximation fails dramatically to capture the physics: the transmission of a wave-packet through a bottleneck with infinite potential energy walls. This situation could model a sudden narrowing of the electron channel of a 2D electronic device.
+The algorithm was implemented in a simple yet interesting 2D system (we will call them $x\equiv x_1$ and $y\equiv x_2$) where the Hermitian approximation fails dramatically to capture the physics: the transmission of a wave-packet through a bottleneck with infinite potential energy walls. This situation could model a sudden narrowing of the electron channel of a 2D electronic device. We will identify the direction $x$ with the {\em transport direction} of the electron and the direction $y$ with the {\em transversal direction}.
+
 % ipini 2Dko guztixen notaziñoa, azaldu 2Dko problemie ta intuiziñoa citetan euren paper hori. Ta orduen jarri grafikak energuianak kontra k0 eta transmisiñoak kasu bakoitzien j desberdinekaz junto asus errores y la comparacion con el Hermitian. Ta azaldu intuiziñoa de zeba abi fknetandeuen ikusitze j=1egaz ze forma hartuko bien K potenkialak. BEtie aputr bat less interpretable. 1h+2h
+
+Given a zero potential energy in the space taking in the direction $y$ a length $L(x)$ as a function of the position in $x$ and an infinite potential elsewhere:
+$$
+U(x,y,t)=\begin{cases}
+0\quad  \\
+-\infty\quad y\notin (-L(x)/2, L(x)/2)
+\end{cases}
+$$
+it is trivial to obtain the \ref{TSEig} set in $y$ for this set-up, because on the one hand, the potential is stationary (the eigenstaes will be time independent). On the other hand, each transversal section is nothing else but the "1d particle in an infinite potential box", confined in a box of length $L(x)$. As the infinite potential means there must not be probability density in those regions, it will be a boundary condition that the wave-function is zero at the edges of the box, which yields sinusoidal transversal eigenstates:
+$$
+\Phi^j_{x}(y)=\begin{cases} \sqrt{\frac{2}{L(x)}}sin\qty( \frac{j\pi (y+L(x)/2)}{L(x)} )\quad if\ y\in(-L(x)/2, L(x)/2)\\0\quad else\end{cases}
+$$ 
+with eigenenergies $E^j(x)=\frac{j^2\pi^2 \hbar^2}{2m_y L(x)^2}$ for $j \in\{0,1,2,3..,J\}$.
+
+
+We could make a similar treatment for the other direction, $x$, however, for simplicity in this first example we will consider that in $x$ the particle is "free", even if this is not true, and apply to the evolution of its complementary CWF $\psi^\beta_y(y,t)$ the Hermitian approximation. Only the CWF in $x$, that is $\psi^\beta_x(x,t)$, will be evolved using the approximation of Section 3.1.1.\footnote{Remember that the kinetic and advective correlation potentials depend on the knowledge of the complementary direction, that is why, knowing the \ref{TSEig} in $y$ allows their approximation for the CWF in $x$.}.
+
+The fun point about this problem is that if both CWF-s are evolved with the Hermitian algorithm, then the CWF in the transport direction $x$ will see no potential energy barrier anywhere while $y^\beta(t)\in(-L(x)/2,L(x)/2)$ because in that case $U(x;y^\beta(t))=0$ and the only possible correlation that  the Hermitian approximation can capture is through the conditioned potential energy. Therefore, the CWF $\psi^\beta_x(x,t)$ will evolve as if it was in a free potential irrespective of the initial momentum and the width of the slit $L_{min}:=min_x(L(x))$. However, this same setting was studied in a recent work by Devashish P. {\em et al} \cite{Dev} using the full Schrödinger Equation \ref{TDSE} and the Born-Huang expansion and found that a "virtual" potential energy barrier emerged from the quantum geometrical correlation between the spatial degrees of freedom. Such that if the initial kinetic energy of the wave-packet transported through the narrowing channel was smaller than the energy eigenstates of the transversal sections \ref{TSEig} then the wavepacket was reflected (only slightly transmitted) as if there was a true potential energy barrier in the slit. Then the rest of eigenenergies of the transversal sections played additonal roles in the dynamics of this transmission. Therefore, it this simple setting seems a perfect benchmark to identify algorithms that perform better than the basic HErmitian approximation. In principle, any improvement approximating the \ref{CWF.SE} beyond the Hermitian approximation should prove to be capable of capturing this "virtual" energy barrier. As we will see soon, Algorithm 2.0 is precisely capable of doing this. 
+
+Applying these \ref{TSEig} to the potentials $W_K^{(x)}$ and $W_K^{(x)}$, we get:
+$$
+\hspace{-1cm} W_K^{(x)}(x,y^\beta(t),t)= -\sum_{j=0}^J \U^j_x(x,t)\frac{\hbar^2}{2m_y}\pdv[2]{\Phi^j_x(y,y)}{y}\Big\rvert_{y^\beta(t)} = -\sum_{j=0}^J \U^j_x(x,t)\frac{\hbar^2}{2m_y}\qty(\frac{j\pi}{L(x)})^2\qty(- \sqrt{\frac{2}{L}} sin\qty( \frac{j\pi (y+L(x)/2)}{L(x)} ))
+$$
+$$
+=\sum_{j=0}^J  \U^j_x(x,t)\frac{\hbar^2}{2m_y}\qty(\frac{j\pi}{L(x)})^2 \Phi^j_x(y^\beta(t))
+$$
+$$
+\hspace{-1cm} W_A^{(x)}(x,y^\beta(t),t)=\sum_{j=0}^J \U^j_x(x,t)i\hbar\dot{y}^\beta(t)\pdv{\Phi^j_x(y,y)}{y}\Big\rvert_{y^\beta(t)}= \sum_{j=0}^J \U^j_x(x,t)i\hbar\dot{y}^\beta(t) \frac{j\pi}{L(x)} \sqrt{\frac{2}{L(x)}}cos\qty(\frac{j\pi (y^\beta(t)+L(x)/2}{L(x)})
+$$
+Where the effect of the second potential energy terms are not that clear, but the real part of the first clearly show the introduction of a potential energy in the transport direction that is directly proportional to the narrowness of the slit. Not only that, but it also seems like we could recover the adiabatic coefficient language used in Ref.\cite{Dev}, but now applied to the Bohmian interpretation.
+%Sartun plota potentzixelana jarritte zelan alzun kontroleu adiabaticidadie ta eigenstatek.
+% Ein tabla bat de wavepacket energy eta tseig energies ta erakutsi transmisiñoa full SEenana against 150 trayektoria con Hermitian eta con el nuestro con j= tal j= cual.
+% ta honen ostien ein desarrollo bat de ekuaziñoak ze forma hartzen dabien j=1egaz eta bestiekaz 
+% Ta falte dan beste gauzie da en generaleko termino haretan lenguaje d elos chiserako bidie pavie holan gero hemen alzu cite direktamente kasu partikular modure.
 
 \newpage
 \section{Reconstructing the Full Wave-Function from CWF-s}
 % Idatzi algoritmoa baia ipini generiko moduen aprox de G,Jgaz
-Apart from the ontological interest that these algorithms where only one Bohmian trajectory and its associated CWF-s are evolved at each run could have, the observed results in quantum mechanics still are randomly found among the ensemble of possible trajectories. As such, the ensemble measurements are the most interesting for orthodox quantum mentality and perhaps quantum information and computation, as we cannot get rid of the probabilistic nature of the observation. Therefore, it seems clear that if the many-body problem can be educatedly surpassed in the computation of individual Bohmian trajectories and CWF-s as defined in (\ref{CWF}), we should try to take advantage from it to approach an approximate solution ffor the full wavefunction (which in reality contains information about all the possible trajectories and associated CWF-s). But how to do this?
+Apart from the ontological interest that these algorithms could have, where only one Bohmian trajectory and its associated CWF-s are evolved at each run, the observed results in quantum mechanics still are randomly found among the ensemble of possible trajectories. As such, the ensemble measurements are the most interesting for orthodox quantum mentality and perhaps quantum information and computation, as we cannot get rid of the probabilistic nature of the observation. Therefore, it seems clear that if the many-body problem can be educatedly surpassed in the computation of individual Bohmian trajectories and CWF-s as defined in (\ref{CWF}), we should try to take advantage from it to approach an approximate solution for the full wavefunction (which in reality contains information about all the possible trajectories and associated CWF-s). But how to do this?
 
-Let us see what is the information we have once an approximate solution to any of the shapes of the (CWF.SE) is found, and see if we can sew something from there:
+Let us review what is the information we have, once an approximate solution to any of the shapes of the (CWF.SE) is found, and see if we can build something from there:
 \begin{enumerate}
-\item[(a)] Given a bounded time domain $t\in [t_0,t_f]$, we know $\Psi(\vec{x},t=t_0)$ the full wave-function at the first time and $U(\vec{x},t)$ $\forall t[t_0,t_f]$, all of which were given a priori by the user or the problem we are facing.
+\item[(a)] Given a bounded time domain $t\in [t_0,t_f]$, we know $\Psi(\vec{x},t=t_0)$, the full wave-function at the first time, and $U(\vec{x},t)$ $\forall t[t_0,t_f]$, all of which were given a priori by the user or the problem we are facing.
 
 \item[(b)] We can choose $M$ initial positions in configuration space $\{\vec{x}^\beta(t_0)\}_{\beta=1}^M$ sampling them as independent observations from the initial wave-function, using its interpretation as probability density $\rho(\vec{x},t_0)=\Psi(\vec{x},t_0)^\dagger \Psi(\vec{x},t_0)$. Using each of the $M$ trajectories, we can define the set of $N$ conditional wave-functions (CWF) related to each as:
 $$
@@ -516,36 +551,105 @@ $$
 
 \item[(c)] If we are to use the Born-Huang ansatz, we will have calculated numerically or analytically the transversal section eigenstates $\qty{ \qty{ \Phi_a^j(\vec{x}_b,t)}_{j=0}^{J_a}}_{a=1}^N$, following equation (\ref{TSEig}).
 
-All (a), (b) and (c) will be as exact as the computer and numerical eigensolver allow us. In principle no theoretical approximations on them.
+All (a), (b) and (c) will be as exact as finite precision arithmetics and numerical eigensolver allow us. In principle no theoretical approximations on them.
 
 \item[(d)] Using an approximation to one of the shapes of (\hyperlink{CWF.SE}{CWF.SE}), we will have an approximation of the following functions: \begin{itemize}
-\item $\{\vec{x}^\beta(t)\}_{\beta=1}^M \quad t \in [t_0, t_f]$
-\item $\qty{\qty{ \psi^\beta_a(x_a,t)}_{a=1}^N}_{\beta=1}^M \quad t \in [t_0, t_f]$
-\item In case the Born-Huang expansion was used: $\qty{\qty{\qty{ \chi_a^j(x_a,t)}_{a=1}^N}_{j=0}^{J_a}}_{\beta=1}^M \quad t \in [t_0, t_f]$
+\item The $M$ trajectories: $\{\vec{x}^\beta(t)\}_{\beta=1}^M \quad t \in [t_0, t_f]$ 
+\item The $MN$ CWF-s: $\qty{\qty{ \psi^\beta_a(x_a,t)}_{a=1}^N}_{\beta=1}^M \quad t \in [t_0, t_f]$ 
+\item In case the Born-Huang expansion was used, the adiabatic coefficients: $$\qty{\qty{\qty{ \chi_a^j(x_a,t)}_{a=1}^N}_{j=0}^{J_a}}_{\beta=1}^M \quad t \in [t_0, t_f]$$
 \end{itemize}
 \end{enumerate}
 So the question at this point is: isn't there any way to unify all this information that each trajectory provides us? Should we really only use the resulting Bohmian trajectories as source of information, or can we use the information in the approximated CWF-s?
 
 \subsection{Using the CWF definition}
-In reality each conditional wave-function is a slice of the full wavefunction, meaning that if we had enough CWF-s (if $M$ was big enough and the trajectories were evenly enough sampled), we would effectively be also approximating the full wave-function. In fact, it is to expect that given a trajectory $\vec{x}^\beta(t)$. %azaldu zentroa CWfanan aproximaziño bat dala punto horrena ke si G,J aprox local kiza implike ke es lo mas correcto de la aproximacion. Doncs usando una interpolación weighteada perhaps por la probabilidad en ese punto estimada por ella misma klaro. O weightear las slices en si, ke en verdad abarcan mucho espasio. Ta esan orduen energiagaz ba zelan alko zan egin kisas. 0.45h
+In reality, each conditional wave-function is a slice of the full wavefunction, meaning that if we had enough CWF-s (if $M$ was big enough and the trajectories were evenly enough sampled), we would effectively be also approximating the full wave-function. Even if the CWF-s are approximations of the true CWF-s, the value predicted around the trajectory which in theory should be coincident between the CWF-s, that is:
+$$\Psi(\vec{x}^\beta(t),t)=\psi^\beta_1(x_1^\beta (t),t)=\cdots=\psi^\beta_N(x_N^\beta (t),t)$$ 
+may be expected to be one of the most accurate parts of the predicted CWF. This perhaps could be consequence of the fact that for instance the Hermitian approximation is compatible with a zeroth order Taylor expansion around the trajectory for $G$ and $J$. If this assumption was true, then the set of CWF-s and their associated trajectories would provide us with a dynamical grid over which we are evolving the full wavefunction. The problem with this approach would be that the number of grid points in $\R^N$, over which we are evolving the full wave-function would be equal to the number of trajectories evolved $M$, which unfortunately would need to be geometrically bigger to obtain a good enough resolution with increasing dimensions, which would therefore be avoiding us to solve the many body problem anyway. It could be argued that at least this way, the many body problem that scales exponentially in time would be now translated into an exponential scaling only in space (memory), because the evolution of each trajectory is actually independent and thus may be done in parallel.
 
-\subsection{Fitting the best Full wavefunction we can}
+Anyhow, there are several options to directly use the information we have to obtain an approximation of the full wave-function at each point $\vec{x}$
+
+\subsubsection{Use only the trajectories and the values of the CWF-s on them}
+If we considered the trajectories $\{\vec{x}^\beta(t)\}_{\beta=1}^M$ and for each of them, the set of approximations $\{\psi^\beta(x_a^\beta(t),t) \}_{a=1}^{N}$ for $\Psi(\vec{x}^\beta(t),t)$, we could use as a net approximation for it, the average:
+$$
+\Psi_{approx}(\vec{x}^\beta(t),t)=\frac{1}{N}\sum_{a=1}^N \psi^\beta_a(x_a^\beta(t),t)
+$$
+where the CWF-s are approximations too. Thus, the value of the full wavefunction would have been predicted successfully for the moving points $\{ \vec{x}^\beta(t) \}_{\beta=1}^M$. Then if we were interested to know the value of $\Psi(\vec{x},t)$ in any other $(\vec{x},t)$ pair, we could apply a simple $k$-Nearest Neighbourgh (KNN) algorithm:
+\begin{enumerate}
+\item Compute the distance in configuration space between the point of interest $(\vec{x},t)$ and all the points $\{ (\vec{x}^\beta(t),t) \}_{\beta=1}^M$. Order them by distance.
+\item Choose a $k$ (say 7) and assign a value $\Psi(\vec{x},t)$ equal to the average value of $\Psi$ over the $k$ closest points in the known set, weighted by the inverse of the distance from the point of interest to them.
+\end{enumerate}
+
+By an assumption of continuity, the algorithm should work fine with enough points $M$.
+
+An alternative could be to make an interpolation of the points using a polynomial with a sufficient degree $p$: $$f(\vec{x},\vec{w})=w_0+x_1w_{11}+\cdots+x_Nw_{1N}+\cdots+x_1^pw_{p1}+\cdots+x_N^pw_{pN}$$
+where the complex weights $w_{ij}$ would be fitted using a gradient descent with regularization or the normal equations with regularization (to avoid Runge-like phenomena).
+
+
+Yet another alternative would be to build an $\R^N$ histogram to reflect the proportion of trajectories in each bin, which should reflect by definition the probability density $R^2(\vec{x},t)$, the modulous squared of the wavefunction. Then the phase $S(\vec{x},t)$ could be recovered by integrating the velocity fields that the trajectory velocities generate, following their Bohmian interpretation.
+
+
+Still another alternative, conceptually close to the previous option would be to center gaussian functions in each trajectory and sum all the gaussians. Then if normalized, a pretty good approximation for the probability density $R^2$ could be obtained. The same could be done for the velocity fields. For each of the $N$ velocity fields $v_a(\vec{x},t)$, we have the values on the trajectories. Thus, we could also center gaussians on those speeds, add them all and integrate them to approximate the phase $S$.
+
+All of these options relay on the assumption of continuity and none of them would require any heavy additional computation. In fact, even if these approximations might result in a poor approximation for the full wave-function, it could now be used to compute new approximations for the correaltion potentials \ref{K}, \ref{A} and \ref{G}, \ref{J}, which would pressumably yield a better approximation for the trajectories and the CWF-s. 
+
+
+So it is clear that one of the things we are approximating is actually the probability associated with each trajectory in each different time as $|\Psi(\vec{x}^\beta (t),t)|^2:=\Psi(\vec{x}^\beta (t),t)^\dagger \Psi(\vec{x}^\beta (t),t)$ or rather the normalized sum of gaussians or the histogram (note that probability is not conserved along the trajectories due to the shape of the continuity equation). Let us call this probability $\rho(\vec{x},t)$. If we had some time varying (or constant) quantity $E^\beta(t)$ associated with each trajectory, we could try to get its true value by doing an average weighted by the probability of the trajectory:
+$$
+E(t)=\frac{\sum_{\beta=1}^M \rho(\vec{x}^\beta(t),t) E^\beta(t)}{\sum_{\beta=1}^M \rho(\vec{x}^\beta(t),t)}
+$$
+As an example, if we compute the adiabatic coefficients $\chi^j_a(x_a,t)$ per trajectory, we can get an estimation of the marginalized probability density of each variable $\rho_a(x_a,t)$ doing $\sum_{j=0}^{J_a}|\chi^j_a(x_a,t)|^2$. We could unify all the marginalized densities predicted by each trajectory using the weighted sum of their probabilities:
+$$
+\rho(x_a,t)=\frac{\sum_{\beta=1}^M \rho(\vec{x}^\beta(t),t) \rho_a^\beta(x_a,t)(t)}{\sum_{\beta=1}^M \rho(\vec{x}^\beta(t),t)}
+$$
+
+%azaldu zentroa CWfanan aproximaziño bat dala punto horrena ke si G,J aprox local kiza implike ke es lo mas correcto de la aproximacion. Doncs usando una interpolación weighteada perhaps por la probabilidad en ese punto estimada por ella misma klaro. O weightear las slices en si, ke en verdad abarcan mucho espasio. Ta esan orduen energiagaz ba zelan alko zan egin kisas. 0.45h
+
+\subsubsection{Using the whole CWF-s and trajectories}
+In reality, the CWF-s for a single $R^N$ trajectory are not only giving us the value of the full wavefunction over the trajectory, but also along the $N$ orthogonal directions each spatial variable represents, centred in the trajectory. The $N$ CWF-s are by definition the (only) slices of the "pilot-wave" that directly affect the actual piloted $\R^N$ particle(s). That is, as it is shown in Figure \ref{fig:slices}, there are $N$ 1D slices of the full wavefunction that we know per trajectory $\vec{x}^\beta (t)$. Mathematically, knowing the $N$ CWF-s of the $M$ trajectories is the same as knowing $\Psi(\vec{x},t)$ restricted at each time $t$ to the set of $NM$ lines parallel to the axes of $\R^N$:
+$$
+\Gamma:=\bigcup_{\beta=1}^M\qty{\vec{\gamma}_1^\beta(s;t)=\qty(s, x_2^\beta(t) ...,x_N^\beta (t))\bigcup\  ...\ \bigcup\vec{\gamma}_N^\beta(s;t)=\qty(x_1^\beta (t),...,x_{N-1}^\beta (t), s);\quad s\in \R}
+$$
+Therefore, we already know an approximation (as good as the approximation of the CWF-s is) of the set of points $\{\{\Psi(\vec{\gamma}^\beta_a(s;t),t)\}_{a=1}^N\}_{\beta=1}^M$ for $s\in \R$. Therefore, assuming the quality of the approximation does not get worse if we get away from the driven trajectory by the CWF-s, we can apply rather:
+\begin{enumerate}
+\item[\bf Option 1]: The $k$-Nearest Neighbour idea, just that now instead of only having $M$ points in $\R^N$ with known $\Psi$ value at each time, we know the value of $\Psi$ at any point in the 1D affine manifolds $\Gamma=\{\{\vec{\gamma}^\beta_a(s;t)\}_{a=1}^N\}_{\beta=1}^M$ which are certainly way more points than $M$. Thus, in order to get the value of $\Psi$ at any point $(\vec{x},t)$, one could take the $k$ closest points among the 1D affine manifolds to it and compute the average $\Psi$ weighted by the inverse of the distance.
+\item[\bf Option 2]: Following the same idea, now that we have way more than $M$ points with their respective values, we could make a regularized polynomial interpolation of degree $p$ at each time to obtain an approximation of the wavefunciton at any point. Even if it seems like, this would not be that computationally costly thanks to the fact we could use the normal equations instead of a gradient descend.
+\end{enumerate}
+
+The great appeal of these ideas is that they are very computationally cheap compared with the following ones.
+
+\subsection{Using the CWF definition+Using the CWF-s as basis functions}
+
+Additionaly, we could combine the ideas explained in the previous section with the ideas we will discuss in the following to approach a yet even more interesting idea than those in the last section and a computationaly cheaper one than those in the next section. When we said we could make a polynomial interpolation of degree $p$ on the points over the manifold bundle $\Gamma$, we were implicitly trying to write the full wavefunction in atruncated basis of polynomial functions. Why not use the fact that possibly tensor products of the CWF-s will be closer to the full wave-function than polynomials? That is, if we define a linear combination of the tensor products:
+$$
+\Psi(\vec{x},t)\simeq f(\vec{x},t;\vec{C}(t))= \sum_{\beta=1}^{M} C_\beta(t) \psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t)
+$$
+Then we will be able to fit the complex coefficients $C_\beta(t)$ to the value that minimizes at each time the cost:
+$$
+\mathfrak{L}(\vec{C}(t))=\sum_{\vec{x}\in \Gamma} \qty |f(\vec{x},t)-\Psi(\vec{x},t)|^2
+$$
+where we know the approximate values of $\Psi$ over $\Gamma$ from the CWF definition. This minimization could be easily done using a gradient descent algorithm for example.
+
+In fact, as we suggest in the next section, we could not only use the sum of the products o a same trajectory, but also the products of CWF-s of different trajectories in order to have more "basis" functions (even if they will most likely not be orthogonal).
+
+The difference between this approach and the following one is that in this case we are relying on the fact that the approximations of the CWF-s are close enough to the true CWF-s (and thus to the full wave-function's sections). In the case of the next section, we will forget about what the CWF-s are by definition, and just use their product as basis functions hoping they might be closer to the full $\Psi$ than a random set of functions (like we have also assumed here), however, the fitting will be given by the full \ref{TDSE} instead of the already computed CWF-s. Of course, this will require a good deal more of computations.
+
+\subsection{ Using the CWF-s as basis functions: Fit the best possible Full Wavefunction}
 
 In this section we will play with an idea introduced by {\em Albareda G. et al} in Ref \cite{Albareda}.
 
 
 Instead of directly using individual CWF-s, we could gather the information that all of them contain fitting them the best way possible to the exact $N$ dimensional \ref{TDSE}. We dispose per each of the $N$ spatial dimension $x_a$, of $M$ different conditional wave-functions $\psi^\beta_a(x_a,t)$ (due to the $M$ trajectories). Thus, we could consider the linear combination of the tensor products of each trajectory's CWF set as an approximation to the full wavefunction. The obvious case would be to only use products of CWF-s evolved with the same trajectory $\beta$:
 $$
-\Psi(\vec{x},t)\simeq \sum_{\beta=1}^{M} c_\beta(t) \psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t) \quad for\ some\ c_\beta(t)\in \C\ to\ be\ fitted
+\Psi(\vec{x},t)\simeq \sum_{\beta=1}^{M} C_\beta(t) \psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t) \quad for\ some\ C_\beta(t)\in \C\ to\ be\ fitted
 $$
-after all, if these approximate CWF-s were computed using Algorithm 1.0 or 2.0, in both cases the approximation we were using was that the full wave-function was a product of the CWF-s. We would now be extending the capacity of the ansatz to take non-factorizable shapes, as in principle, if we used enough $\R^N \times \R:\rightarrow \C$ linearly independent functions, we could end up approximating any function, even if the basis functions were a simple tensor product. The thing is that, we expect that these $M$ terms will be close enough to the full wavefuncton as to provide a better fit than a random set of $M$ functions of a given basis. Then the question would be, how do we choose the coefficients $c_\beta (t)$?
+after all, if these approximate CWF-s were computed using Algorithm 1.0 or 2.0, in both cases the approximation we were using was that the full wave-function was a product of the CWF-s. We would now be extending the capacity of the ansatz to take non-factorizable shapes, as in principle, if we used enough $\R^N \times \R:\rightarrow \C$ linearly independent functions, we could end up approximating any function, even if the basis functions were a simple tensor product. The thing is that, we expect that these $M$ terms will be close enough to the full wavefuncton as to provide a better fit than a random set of $M$ functions of a given basis. Then the question would be, how do we choose the coefficients $C_\beta (t)$?
 
 Before going there, notice that with only doing this sum we might be wasting resources that we already have in hands: the more functions we use in the expansion, the better it will be, and yes, computing more trajectories (increasing $M$) could do it, but notice that we need not. We could actually use not only the combination $\psi^\beta_1(x_1,t)\cdots \psi^\beta_N(x_N,t)$ but also any $\psi^{\beta_1}_1(x_1,t)\cdots \psi^{\beta_N}_N(x_N,t)$ with any combination $\beta_1,...,\beta_N \in \{1,...,M\}$ (mix CWF-s of different trajectories -CWF of dimension 1 of trajectory 3 times CWF of dimension 2 of trajectory 4 etc.-). Letting:
-%However, as we are not even checking that these functions are orthogonal or form a complete basis, and we just rely on the fact that as they were obtained with an approximation to the exact SE they will be close enough together to the true $\Psi$ as to allow through the correct fitting of the coefficients $c_\beta(t)$ to approach it, then, 
+%However, as we are not even checking that these functions are orthogonal or form a complete basis, and we just rely on the fact that as they were obtained with an approximation to the exact SE they will be close enough together to the true $\Psi$ as to allow through the correct fitting of the coefficients $C_\beta(t)$ to approach it, then, 
 \begin{equation}\label{CWF.LinComb}\tag{CWF.LinComb}
-\Psi(\vec{x},t)\simeq \sum_{s=1}^{M^N} c_s(t) \psi_1^{\sigma^{(1)}_s}(x_1,t)\cdots \psi_N^{\sigma^{(N)}_s}(x_N,t)
+\Psi(\vec{x},t)\simeq \sum_{s=1}^{M^N} C_s(t) \psi_1^{\sigma^{(1)}_s}(x_1,t)\cdots \psi_N^{\sigma^{(N)}_s}(x_N,t)
 \end{equation}
-where the set $\{\sigma^{(1)}_s, ..., \sigma^{(N)}_s\}_{s=1}^{M^N}$ is the set of all possible combinations of N elements that take values in $(1,2,..., M)$. It is true that these tensor products (among which there are also all the previous ones) might now not be that close to the full wave-function individually, but perhaps the extra effort to find more coefficients $c_s(t)$ is worth it. Still, this should be tested. After all, the fun thing about doing this is that thanks to the fact that the tensor products are close to the true TDSE evolution a smaller $M$ can be used providing a better quality than say, a set of $M$ eigenstates of the system Hamiltonian. Thus, if these $M^N$ combinations introduce equally "desviado" terms, then only using the $M$ might be better.
+where the set $\{\sigma^{(1)}_s, ..., \sigma^{(N)}_s\}_{s=1}^{M^N}$ is the set of all possible combinations of N elements that take values in $(1,2,..., M)$. It is true that these tensor products (among which there are also all the previous ones) might now not be that close to the full wave-function individually, but perhaps the extra effort to find more coefficients $C_s(t)$ is worth it. Still, this should be tested. After all, the fun thing about doing this is that thanks to the fact that the tensor products are close to the true TDSE evolution a smaller $M$ can be used providing a better quality than say, a set of $M$ eigenstates of the system Hamiltonian. Thus, if these $M^N$ combinations introduce equally "desviado" terms, then only using the $M$ might be better.
 
 In any of these cases though, how can we find the closest fit for this linear sum to the full wavefunction? Well, the ones that the best fit to the full \ref{TDSE} allow! If we introduce the \ref{CWF.LinComb} in the \ref{TDSE}:
 $$
@@ -553,15 +657,15 @@ i\hbar \pdv{\Psi(\vec{x},t)}{t} = \sum_{k=1}^N \hat{T}_k\Psi(\vec{x},t)+U(\vec{x
 $$
 with $\hat{T}_k\equiv -\frac{\hbar^2}{2m_k}\pdv[2]{}{x_k}$:
 $$
-i\hbar \pdv{}{t} \qty(c_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)) =  \sum_{k=1}^N \hat{T}_k\qty(c_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t))+Uc_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)
+i\hbar \pdv{}{t} \qty(C_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)) =  \sum_{k=1}^N \hat{T}_k\qty(C_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t))+UC_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)
 $$
 where there is an implicit sum of $s\in \{1,...M^N\}$ on both sides. By the Leibiniz rule, the $lhs$ leads to:
 $$
-i\hbar \qty(\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)\dv{}{t}c_s(t)+c_s(t)\sum_{k=1}^N \pdv{}{t}\psi_k^{\sigma_s^{(k)}}(x_k,t)\cdot \prod_{a=1;a\neq k}^N \psi_a^{\sigma_s^{(a)}}(x_a,t) )
+i\hbar \qty(\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)\dv{}{t}C_s(t)+C_s(t)\sum_{k=1}^N \pdv{}{t}\psi_k^{\sigma_s^{(k)}}(x_k,t)\cdot \prod_{a=1;a\neq k}^N \psi_a^{\sigma_s^{(a)}}(x_a,t) )
 $$
 and we see that in the rhs:
 $$
-\hat{T}_k\qty(c_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)) = c_s(t)\sum_{k=1}^N \prod_{a=1;a\neq k}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)  \cdot \hat{T}_k \psi_k^{\sigma_s^{(k)}}(x_k,t) 
+\hat{T}_k\qty(C_s(t)\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)) = C_s(t)\sum_{k=1}^N \prod_{a=1;a\neq k}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)  \cdot \hat{T}_k \psi_k^{\sigma_s^{(k)}}(x_k,t) 
 $$
 Now, as for any of the possible approximations we have suggested, we know that the CWF-s $\psi^\beta_k(x_k,t)$ were obtained as a solution to:
 $$
@@ -569,7 +673,7 @@ i\hbar \pdv{\psi^\beta_k(x_k,t)}{t} = \hat{T}_k\psi^\beta_k(x_k,t) + U(x_k, \vec
 $$
 where $ W^{(k)}(x_k, \vec{x}_{b}(t),t)$ is the approximation of $G_k(x_k,\vec{x}^\beta_b(t),t)+iJ_k(x_k,\vec{x}^\beta_b(t),t)$ or alternatively of $(K_k(x_k,\vec{x}^\beta_b(t),t)+A_k(x_k,\vec{x}^\beta_b(t),t))/\psi^\beta_k(x_k,t)$; a complex potential particular to the $\beta$-th trajectory and the $k$-th degree of freedom. Then, we can evaluate $i\hbar \pdv{\psi^\beta_k(x_k,t)}{t}$ in the $lhs$ of the previous equation and we will see that the terms of $\sum_{k=1}^N \hat{T}_k \psi^{\sigma_s^{(a)}}_k(x_k,t)$ will cancel each other, leaving:
 $$
-\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)] \dv{}{t}c_s(t) = \sum_{s=1}^{M^N}c_s(t) \Bigg[ U(\vec{x},t)\prod_{a=1}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t) 
+\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)] \dv{}{t}C_s(t) = \sum_{s=1}^{M^N}C_s(t) \Bigg[ U(\vec{x},t)\prod_{a=1}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t) 
 $$
 $$
 - \sum_{k=1}^N U(x_k,\vec{x}_b^{\sigma}(t),t)\psi_k^{\sigma_s^{(k)}}(x_k,t) \prod_{a=1; a\neq k}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t) -\sum_{k=1}^N W^{(k)}(x_k,\vec{x}_b^{\sigma}(t),t)\psi_k^{\sigma_s^{(k)}}(x_k,t) \prod_{a=1; a\neq k}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)\Bigg]
@@ -577,34 +681,34 @@ $$
 
 Defining $V^{(k)}(\vec{x},t):=U(\vec{x},t)+W^{(k)}(\vec{x},t)$, then we are left with a rather compact expression ruling the time evolution of the coefficients in the linear expansion:
 \begin{equation}\label{PDE.c}\tag{PDE.c}
-\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)] \dv{}{t}c_s(t) = 
+\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \psi_a^{\sigma_s^{(a)}}(x_a,t)] \dv{}{t}C_s(t) = 
 \end{equation}
 $$
-\sum_{s=1}^{M^N} \qty[\qty( U(\vec{x},t)+\sum_{k=1}^N V^{(k)}(x_k, \vec{x}^{\sigma_s^{(k)}}_b(t),t))\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)]c_s(t)
+\sum_{s=1}^{M^N} \qty[\qty( U(\vec{x},t)+\sum_{k=1}^N V^{(k)}(x_k, \vec{x}^{\sigma_s^{(k)}}_b(t),t))\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)]C_s(t)
 $$
-As all $U, V$ and the CWF-s $\psi_a^{\sigma_s^{(a)}}(x_a,t)$ are known, we just have the coefficients that are unknown. We can get rid of the spatial dependance in $\vec{x}$ and thus be left with simple ordinary differential equations (ODEs) for the $c_s(t)$ if for instance, we multiply the $rhs$ and $lhs$ by $\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)^\dagger$ for any of the $s\in \{1,...,M^N\}$. For each possible $s$ we will get one ODE for the set $\{c_s(t)\}_{s=1}^{M^N}$. As we have $M^N$ coefficients $c_s(t)$ and we can do this trick for that many times, we will get a system of $M^N$ ODEs with $M^N$ unknown functions. Let us see their shape. Let each side of \ref{PDE.c} be multiplied by $\prod_{a=1}^N \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger$ for a certain trajectory combiantion $\eta\in\{1,...,M^N \}$ and integrate each side in the whole domain (which will in principle be $\R^N$):
+As all $U, V$ and the CWF-s $\psi_a^{\sigma_s^{(a)}}(x_a,t)$ are known, we just have the coefficients that are unknown. We can get rid of the spatial dependance in $\vec{x}$ and thus be left with simple ordinary differential equations (ODEs) for the $C_s(t)$ if for instance, we multiply the $rhs$ and $lhs$ by $\prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)^\dagger$ for any of the $s\in \{1,...,M^N\}$. For each possible $s$ we will get one ODE for the set $\{C_s(t)\}_{s=1}^{M^N}$. As we have $M^N$ coefficients $C_s(t)$ and we can do this trick for that many times, we will get a system of $M^N$ ODEs with $M^N$ unknown functions. Let us see their shape. Let each side of \ref{PDE.c} be multiplied by $\prod_{a=1}^N \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger$ for a certain trajectory combiantion $\eta\in\{1,...,M^N \}$ and integrate each side in the whole domain (which will in principle be $\R^N$):
 $$
-\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \int_{-\infty}^\infty \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger \psi_a^{\sigma_s^{(a)}}(x_a,t)dx_a] \dv{}{t}c_s(t) = 
+\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \int_{-\infty}^\infty \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger \psi_a^{\sigma_s^{(a)}}(x_a,t)dx_a] \dv{}{t}C_s(t) = 
 $$
 $$
 \sum_{s=1}^{M^N} \Bigg[ \int_{-\infty}^\infty U(\vec{x},t) \prod_{a=1}^N \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger \psi_a^{\sigma_s^{(a)}}(x_a,t)dx_a+
 $$
 $$
-+\sum_{k=1}^N \int_{-\infty}^\infty V^{(k)}(x_k, \vec{x}^{\sigma_s^{(k)}}_b(t),t) \prod_{a=1}^N \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger \psi_a^{\sigma_s^{(a)}}(x_a,t)dx_a\Bigg]c_s(t)
++\sum_{k=1}^N \int_{-\infty}^\infty V^{(k)}(x_k, \vec{x}^{\sigma_s^{(k)}}_b(t),t) \prod_{a=1}^N \psi_a^{\sigma_\eta^{(a)}}(x_a,t)^\dagger \psi_a^{\sigma_s^{(a)}}(x_a,t)dx_a\Bigg]C_s(t)
 $$
 Now, if we denote:
 $$
-\bra{f(x_1,...,x_r,t)}\ket{g(x_1,...,x_r,t)}:=\int_{-\infty}^\infty f^\dagger g dx_1\cdots dx_r
+\bra{f(x_1,...,x_r,t)}\ket{g(x_1,...,x_r,t)}:=\int_{-\infty}^\infty f^\dagger g\ dx_1\cdots dx_r
 $$
 Then the above expression is equivalent to:
 $$
-\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \bra{\psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{\psi_a^{\sigma_s^{(a)}}(x_a,t)}] \dv{}{t}c_s(t) = 
+\sum_{s=1}^{M^N} \qty[i\hbar \prod_{a=1}^N  \bra{\psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{\psi_a^{\sigma_s^{(a)}}(x_a,t)}] \dv{}{t}C_s(t) = 
 $$
 $$
 \sum_{s=1}^{M^N} \Bigg[\bra{\prod_{a=1}^N  \psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{U(\vec{x},t)  \prod_{a=1}^N \psi_a^{\sigma_s^{(a)}}(x_a,t)}+
 $$
 $$
-+\sum_{k=1}^N\bra{\psi_k^{\sigma_\eta^{(k)}}(x_k,t)}\ket{V^{(k)}(x_k,\vec{x}_b^{\sigma_s^{(k)}}(t),t) \psi_k^{\sigma_s^{(k)}}(x_k,t)} \prod_{a=1;a\neq k}^N  \bra{\psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{\psi_a^{\sigma_s^{(a)}}(x_a,t)}  \Bigg]c_s(t)
++\sum_{k=1}^N\bra{\psi_k^{\sigma_\eta^{(k)}}(x_k,t)}\ket{V^{(k)}(x_k,\vec{x}_b^{\sigma_s^{(k)}}(t),t) \psi_k^{\sigma_s^{(k)}}(x_k,t)} \prod_{a=1;a\neq k}^N  \bra{\psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{\psi_a^{\sigma_s^{(a)}}(x_a,t)}  \Bigg]C_s(t)
 $$
 Thus, defining the 2-tensors that we can numerically compute as we have already computed the necessary functions for $\eta,s \in \{1,...,M^N \}$:
 \begin{equation}\label{M}\tag{M}
@@ -616,28 +720,74 @@ Thus, defining the 2-tensors that we can numerically compute as we have already 
 \begin{equation}\label{PDE.c}\tag{WWk}
 \mathbb{W}_{\eta s}^{(k)} :=\bra{\psi_k^{\sigma_\eta^{(k)}}(x_k,t)}\ket{V^{(k)}(x_k,\vec{x}_b^{\sigma_s^{(k)}}(t),t) \psi_k^{\sigma_s^{(k)}}(x_k,t)} \prod_{a=1;a\neq k}^N  \bra{\psi_a^{\sigma_\eta^{(a)}}(x_a,t)}\ket{\psi_a^{\sigma_s^{(a)}}(x_a,t)}
 \end{equation}
-Then, we see that the ODE system we must solve for the $c_s(t)$ is the set:
+Then, we see that the ODE system we must solve for the $C_s(t)$ is the set:
 $$
-\sum_{s=1}^{M^N} i\hbar \mathbb{M}_{\eta s} \dv{}{t}c_s(t) = \sum_{s=1}^{M^N} \qty( \mathbb{W}_{\eta s}+\sum_{k=1}^{N} \mathbb{W}^{(k)}_{\eta s})c_s(t) \quad for\ \eta,s \in \{1,...,M^N \}
+\sum_{s=1}^{M^N} i\hbar \mathbb{M}_{\eta s} \dv{}{t}C_s(t) = \sum_{s=1}^{M^N} \qty( \mathbb{W}_{\eta s}+\sum_{k=1}^{N} \mathbb{W}^{(k)}_{\eta s})C_s(t) \quad for\ \eta,s \in \{1,...,M^N \}
 $$
 which is equivalent to the matrix-vector equation:
 \begin{equation}\label{M}\tag{M}
-i\hbar \mathbb{M} \dv{}{t}\vec{C}(t) =\qty( \mathbb{W}+\sum_{k=1}^{N} \mathbb{W}^{(k)})\vec{C}(t)
+i\hbar \mathbb{M}(t) \dv{}{t}\vec{C}(t) =\qty( \mathbb{W}(t)+\sum_{k=1}^{N} \mathbb{W}^{(k)}(t))\vec{C}(t)
 \end{equation}
 with $\mathbb{M}, \mathbb{W}, \mathbb{W}^{(k)}\in \M_{M^N \times M^N}(\C)$ and $\vec{C}\in \C^{M^N}$.
 
+Again, note that all the elements of those matrices can readily be computed integrating the results obtained when evolving the CWF-s for the different initial trajectory positions. Then, if per each time step we invert $\mathbb{M}$ or use some sort of LU decomposition, we can integrate the set of ODE-s using a Runge-Kutta4 method or any ODE solver. Once we know the coefficients $\{C_s(t)\}_{s=1}^{M^N}$, we can compute the sum $\Psi(\vec{x},t)\simeq \sum_{s=1}^{M^N} C_s(t) \psi_1^{\sigma^{(1)}_s}(x_1,t)\cdots \psi_N^{\sigma^{(N)}_s}(x_N,t)$ and forget about the CWF-s and the matrices. This approximation of the full wavefunction, could perhaps be now used in order to compute new shapes for \ref{K} and \ref{A} or \ref{G} and \ref{J}, and repeat the whole process, to get presumably a yet more accurate full wavefunction!
+
+\newpage
 \section{Suggestion for a self-consistent Composed Algorithm}
 % usar la estrimacion del full wf como approx shape de fuilll wf para obtener nuevas formas de K,A or even G,J. Y asi self-consistently gero ta simualiszño dinamiko hobie lortu! Ta jarri paralelizabliek dien geuzek 1h
-\newpage
+Given all the present discussion, one could suggest the following idea: the main problem in the various alternative shapes of (\ref{CWF}) is that they depend on our knowledge of the full wave-function. Now, we have seen that, using the Hermitian approximation or the second algorithm (thus assuming the full wave-function is a factorizable product or a gross simplification), we can build approximate CWF-s, with which we can generate the best possible approximation of the full wave-function using \ref{PDE.c} and the \ref{CWF.LinComb}. Sure, if we use more trajectories, the expansion \ref{CWF.LinComb} will give the full wave-function more flexibility in the fit, but: Why not to use this reconstruction as ansatz to approximate the potentials \ref{K} and \ref{A} or \ref{G} and \ref{J}, in order to build new approximations for the CWF-s, and construct presumably an even better approximation for the full wavefunction, and reiterate till we are happy with the result? In principle, as we are introducing information about the exact TDSE each time, the full wavefunction should tend towards the exact solution, as each time the CWF-s will be closer to the true ones. Well, this is still to be proved but as a first thought it makes sense. 
+
+Throughout all the discussion we continuously considered CWF-s of a single free variable, however, we could choose to partition the system in a coarser grain. The only change would be to do $x_a\longrightarrow \vec{x}_a$ in all the developments, where $\vec{x}_a$ would represent a set of degrees of freedom and $a\in \{1,..n\}$, where $n$ would represent the number of partitions of the $N$ degrees of freedom.
+
+\subsection{Algorithm Steps: Draft}
+\begin{enumerate}
+\item[{\bf Step 0}] Ask the user $\Psi(\vec{x},t=t_0)$, $U(\vec{x},t)$ and other simulation parameters like $M$ (number of trajectories to compute), $j-tolerances$ or $\{J_a\}_{a=1}^N$, last time iteration $t_f$ etc.
+
+\item[{\bf Step 1}] If necessary, compute the transversal section eigenstates (\ref{TSEig}) of $U(\vec{x},t)$ given by $\{\{ \Phi_{x_a}^j(x_a,t)\}_{j=1}^{J_a}\}_{a=1}^N$. \textit{Massively parallelizable}.
+
+\item[{\bf Step 2}] Sample $M$ initial points $\{\vec{x}^\beta(t_0)\}_{\beta=1}^M$ from $|\Psi(\vec{x},t_0)|$. Evolve the set of N CWF-s for each $\beta$-th trajectory \textit{in parallel}, using any of the approximations to \hyperlink{CWF.SE}{(CWF.SE)}. In each time iteration of each trajectory, the $N$ dimension CWF-s can be independently computed {\em in parallel}. There is only a Barrier there to make the cross talk through the configuration space trajectory.
+
+We get $M$ sets of $N$ CWF-s: $\{\{\psi^\beta_a(x_a,t)\}_{a=1}^N\}_{\beta=1}^M$ together with the trajectiories $\{ \vec{x}^\beta(t)\}_{\beta=1}^M$.
+
+
+\item[{\bf Step 3}] Once we have the $M$ sets of $N$ CWF-s and the approximated correlation potentials $W^{k}$ for each of the CWF-s saved in memory, we can compute the overlap integrals {\em in parallel} $\mathbb{M}_{\eta s}, \mathbb{W}_{\eta s}, \mathbb{W}^{(k)}_{\eta s}$.
+
+
+\item[{\bf Step 4}] Invert $\mathbb{M}$ and evolve the $\vec{C}(t)$. It is readily thought to be vectorized and thus {\em parallelized}.
+
+
+\item[{\bf Step 5}] Once obtained the full wavefunciton approximation $\Psi(\vec{x},t)= \sum_{s=1}^{M^N} C_s(t) \prod_{a=1}^N \psi_a^{\sigma^{(a)}_s}(x_a,t)$. Clean all the memory buffers and compute using the reconstructed full wavefunction better approximations for the correlation potentials \ref{K} and \ref{A} or \ref{G} and \ref{J}.
+
+\item[{\bf Step 6}] If tolerance achieved then finish. Else go back to Step 2.
+\end{enumerate}
+\subsection{Parallelization Strategy: Draft}
+If we ignore message pass overheads and memory latencies and we had as many processing units as necessary, the whole computation (Step 2-5) would require in sequential time:
+\begin{enumerate}
+\item[(1)] The time a single (worst case) solution finding of $\qty(- \sum_{k=1; k\neq a}^{N} \frac{\hbar^2}{2m_k}\pdv[2]{}{x_k}+U(x_a,\vec{x}_b,t) )\Phi_{x_a}^j(\vec{x}_b,t) = E_{x_a}^j(t)\Phi_{x_a}^j(\vec{x}_b,t)$ could take for a single $j$ and single $x_a$. The rest could be computed in parallel (perhaps not the $j$-s, that will depend on the eigensolver employed). Ofcourse the computation time of a single one is at least proportional to $N$.
+
+\item[(2)] The time a single CWF evolution in one dimension takes. In principle step 2 does not depend on the dimension $N$. One should add perhaps a sm,all overhead for the cross talk between the CWF-s of a same trajectory after each time iteration.
+\item[(3)] The time to compute all the overlap integrals $\mathbb{M}_{\eta s}, \mathbb{W}_{\eta s}, \mathbb{W}^{(k)}_{\eta s}$. They can all be computed in parallel. Actually they could be computed while the CWF-s and the correlation potentials are outputted, in a second thread. In principle this should not depend on $M$.
+
+\item[(4)] The time to invert $\mathbb{M}$ and to evolve the ODE system for the $C_s(t)$.
+
+It looks like overall it does not scale that much with $N$.
+
+
+
+\end{enumerate}
+
 \begin{thebibliography}{1}
 \addcontentsline{toc}{section}{References}
 
 \bibitem{JordiXO}
-	X.Oriols, J.Mompart,{\em Applied Bohmian Mechanics: From Nanoscale Systems to Cosmology} Pan Stanford, Singapore (2012)
+	Oriols X, Mompart J,{\em Applied Bohmian Mechanics: From Nanoscale Systems to Cosmology} Pan Stanford, Singapore (2012)
 	
 \bibitem{XO}
 	Oriols X. 2007 {\em Quantum-trajectory approach to time-dependent transport in mesoscopic systems with electron-electron interactions} Phys. Rev. Lett. 98 066803
 
+\bibitem{Dev}
+	Devashish Pandey, Xavier Oriols, and Guillermo Albareda. {\em Effective 1D Time-Dependent Schrödinger Equations for 3D Geometrically Correlated Systems.} Materials 13.13 (2020): 3033.
+	
 \bibitem{Albareda}
 	Albareda G, Kelly A, Rubio A. {\em Nonadiabatic quantum dynamics without potential energy surfaces.} Phys Rev Materials. 2019; 3: 023803. 
 
