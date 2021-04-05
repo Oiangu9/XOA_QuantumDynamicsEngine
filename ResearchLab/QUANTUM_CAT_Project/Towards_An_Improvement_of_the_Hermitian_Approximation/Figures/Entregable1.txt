@@ -1,0 +1,109 @@
+{
+	"Music": {
+		"Bands": [{
+			"Name": "Pink Floyd",
+			"Members": {
+				"Singer 1": "Syd Barrett",
+				"Singer 2": "Roger Waters",
+				"Guitar": "David Gilmour",
+				"Bass": "Roger Waters"
+			},
+			"Foundation Year": 1965,
+			"Albums": [{
+					"Name": "The Dark Side of the Moon",
+					"Author": "Roger Waters",
+					"Release Year": 1973,
+					"Awards": [{
+							"Award Name": "Surround Music Awards",
+							"Year": 2003
+						},
+						{
+							"Award Name": "Grammy Award"
+						}
+					],
+					"Genre": "Progressive Rock",
+					"Comments": [{
+						"Comment": "My favourite Album of theirs",
+						"Date": "08 / 09 / 2020",
+						"Rating out of 5": 5
+					}, {
+						"Comment": "Pretty good",
+						"Date": "07 / 06 / 2019",
+						"Rating out of 5": 4
+					}]
+				},
+				{
+					"Name": "Wish You Were Here",
+					"Author": "David Gilmour",
+					"Release Year": 1975,
+					"Awards": {
+						"Award Name": "Gold Sales Award"
+					},
+					"Genres": ["Progressive Rock", "Art Rock", "Experimental Rock"],
+					"Comments": [{
+						"Comment": "You all know my story with this album haha",
+						"Date": "12 / 09 / 2020",
+						"Rating out of 5": 5
+					}]
+				}
+			]
+		}]
+	},
+	"Films": [{
+		"Title": "Jurassic Park",
+		"Release Year": 1993,
+		"Producer": "Amblin Entertainment",
+		"Director": "Steven Spielberg",
+		"Main Cast": ["Sam Neill", "Laura Dern", "Jeff Goldblum", "Richard Attenborough", "Joseph Mazzello"],
+		"Oscars": [{
+			"Name": "Best Sound Edition",
+			"Nominated": true,
+			"Awarded": true
+		}, {
+			"Name": "Best Sound",
+			"Nominated": true,
+			"Awarded": true
+		}, {
+			"Name": "Best Visual Effects",
+			"Nominated": true,
+			"Awarded": true
+		}],
+		"Comments": [{
+			"Comment": "My very favourite film by Spielberg!",
+			"Date": "29/ 01 / 2020",
+			"Rating out of 5": 5
+		}]
+	}, {
+		"Title": "2001: A Space Odyssey",
+		"Release Year": 1968,
+		"Producer": "Stanley Kubrick",
+		"Director": "Stanley Kubrick",
+		"Main Cast": ["Keir Dullea", "Gary Lockwood", "William Sylvester", "Daniel Richter"],
+		"Oscars": [{
+			"Name": "Best Visual Effects",
+			"Nominated": true,
+			"Awarded": true
+		}, {
+			"Name": "Best Director",
+			"Nominated": true,
+			"Awarded": false
+		}, {
+			"Name": "Best Writing, Story and Screenplay ",
+			"Nominated": true,
+			"Awarded": false
+		}],
+		"Comments": [{
+			"Comment": "I really did not understand the plot.",
+			"Date": "18 / 10 / 2020",
+			"Rating out of 5": 2
+		}, {
+			"Comment": "The book by Arthur C. Clarke was way way better, but still it was good.",
+			"Date": "27 / 06 / 2019",
+			"Rating out of 5": 4
+		}]
+	}]
+}
+
+En este caso, utilizar una base de datos no relacional parece muy adecuado, dado que una entrada puede tener un número dispar de
+comentarios o incluso los atributos tipo "Members" de un grupo de música pueden haberlos de diferentes tipos según el
+gúnero etc. Asú, una base de datos relacional tendrúa muchas entradas null en cada registro, lo que no es muy conveniente.
