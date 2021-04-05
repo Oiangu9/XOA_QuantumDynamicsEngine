@@ -71,7 +71,7 @@
 \usepackage{imakeidx} % make index
 \makeindex[columns=3, title=Alphabetical Index, intoc]
 
-\title{\vspace{-2.0cm} {\bf Towards an Improvement of the \\ Hermitian Approximation:\\ \vspace{+0.3cm}{\small Evolving Conditional Wave-Functions\\ without the Full Wave-Function} \vspace{-0.5cm}} \vspace{0.2cm} \\ }
+\title{\vspace{-2.5cm} {\bf Towards an Improvement of the \\ Hermitian Approximation:\\ \vspace{-0.05cm}{\small Evolving Conditional Wave-Functions without the Full Wave-Function} \vspace{-0.4cm}}  \\ }
 \date{\vspace{-11ex}}
 \let\clipbox\relax
 \usepackage{adjustbox}
@@ -93,7 +93,9 @@
 }
 
 \begin{document}
+
 \maketitle
+
 \tableofcontents
 \pagenumbering{gobble}
 \clearpage
@@ -482,15 +484,15 @@ J(x_a, \vec{x}_b^\beta(t), t) = J(x_a^\beta(t), \vec{x}_b^\beta(t), t) + \pdv{J(
 \end{cases}
 $$ 
 \newpage
-\section{The Approximation 2.0:\\ A Truncated Born-Huang Expansion of the Factorized Product}
-
-We have seen that if we use all the $j$ terms (or at least enough of them) in the Born-Huang expansion of the CWF product (\ref{CWF.Prod}), then the (\ref{CWF.Prod}) approximation of the full wave-function is trivially recovered. This led to the Hermitian approximation and failed to capture entanglement between the dimensions. We then realized that even if all the terms added together $\sum_{j=0}^\infty \chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)$ resulted in the factorized product of CWF-s, each term in the Born-Huang expansion, each $\chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)$, in itself was not factorisable in separate spatial variables (at least for a general potential)! That is: even if each adiabatic coefficient of the expansion, $\chi_a^j(x_a,t)$, is computed with the product (\ref{CWF.Prod}) shape, we get an entangled term in the expansion. Again, it was the fact that we were imposing the shape of the full wavefunction $\Psi(\vec{x},t)$ to be factorisable that resulted in the approximated Advective and Kinetic correlation potentials to be purely time dependent. Therefore, if paradoxically, we use less adiabatic terms than those necessary to complete the expansion of (\ref{CWF.Prod}), say $J<\infty$, then the effective approximation we will be using on the full-wavefunction will be non-factorisable and thus will generate an approximation for the correlation potentials that will depend on space. We will call this the truncated Born-Huang expansion (TBH) approximation:
+\section{The Approximation 2.0:\\ A Truncated Born-Huang Expansion of the CWF Product}
+\vspace{-0.3cm}
+We have seen that if we use all the $j$ terms (or at least enough of them) in the Born-Huang expansion of the CWF product (\ref{CWF.Prod}), then the (\ref{CWF.Prod}) approximation of the full wave-function is trivially recovered. This led to the Hermitian approximation and failed to capture entanglement between the dimensions. We then realized that even if all the terms added together $\sum_{j=0}^\infty \chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)$ resulted in the factorized product of CWF-s, each term in the Born-Huang expansion, each $\chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)$, in itself was not factorisable in separate spatial variables (at least for a general potential)! That is: even if each adiabatic coefficient of the expansion, $\chi_a^j(x_a,t)$, is computed with the product (\ref{CWF.Prod}) shape, we get an entangled term in the expansion. Again, it was the fact that we were imposing the shape of the full wavefunction $\Psi(\vec{x},t)$ to be factorisable that resulted in the approximated Advective and Kinetic correlation potentials to be purely time dependent. Therefore, if paradoxically, we use less adiabatic terms than those necessary to complete the expansion of (\ref{CWF.Prod}), say $J<\infty$, then the effective approximation we will be using on the full-wavefunction will be non-factorisable and thus will generate an approximation for the correlation potentials that will depend on space. We will call this the truncated Born-Huang expansion (TBH) approximation:\vspace{-0.3cm}
 \begin{equation}\label{Aprox.Trunc}\tag{Aprox.Trunc}
 \Psi(\vec{x},t)\simeq\sum_{j=0}^J \chi_a^j(x_a,t) \Phi_{x_a}^j(\vec{x}_b,t)
 \end{equation}
 Note that $J$ must be small enough to avoid the sum to be a good enough approximation of the infinite sum, which converges to (\ref{CWF.Prod}) (the product of CWF-s), that we saw leads to the Hermitian algorithm. In order to quantify this similarity, we can use the norm $\lambda$ of the approximation defined in Section 1.2.. We could then dynamically choose $J$ to avoid $\lambda$ getting bigger than a certain tolerance.
 
-The main weakness of this approximation though, is that a priori we know nothing about the degree to which the truncated approximation is closer to the true solution than the product of CWF-s. Only if the (\ref{Aprox.Trunc}) is close enough to the shape of the true full wavefunction will work to introduce the correct entanglement. Therefore, the algorithm will require us to review each potential in particular, in order to judge whether the approximation is theoretically consistent replicating the expected correlations. An example of such a procedure will be reviewed in Section 3.2, where we will indeed find that under the theoretical approval the truncated expansion of the CWF product yields a better results than the Hermitian method.\vspace{-0.3cm}
+The main weakness of this approximation though, is that a priori we know nothing about the degree to which the truncated approximation is closer to the true solution than the product of CWF-s. Only if the (\ref{Aprox.Trunc}) is close enough to the shape of the true full wavefunction will work to introduce the correct entanglement. Therefore, the algorithm will require us to review each potential in particular, in order to judge whether the approximation can consistently replicating the theoretically expected correlations. An example of such a procedure will be reviewed in Section 3.2, where we will indeed find that under the theoretical approval the truncated expansion of the CWF product yields a better results than the Hermitian method.\vspace{-0.3cm}
 
 \subsection{Algorithm 2.0 - The Paradoxical Approximation }
 \subsubsection{Using \ref{CWF.SE.II} or \ref{CWF.SE.I}}
@@ -498,11 +500,11 @@ The main weakness of this approximation though, is that a priori we know nothing
 % Ipini G ta J zer izengo ziren!
 Note that due to the fact that (\ref{Aprox.Trunc}) has the shape of a Born-Huang like expansion, the approximate shape for (\ref{CWF.SE.I}) will be the same as for (\ref{CWF.SE.II}).
 
-The only difference between using (\ref{Aprox.Trunc}) or (\ref{CWF.Prod}) when it comes to the approximate equation for (\ref{CWF.SE.II}) is that the sum over $j$ will not go until $j=\infty$, but until $j=J$ (fixed according to the criterion stated above). As such, the same definition for (\ref{Uj}) would yield:
+The only difference between using (\ref{Aprox.Trunc}) or (\ref{CWF.Prod}) when it comes to the approximate equation for (\ref{CWF.SE.II}) is that the sum over $j$ will not go until $j=\infty$, but until $j=J$ (fixed according to the criterion stated above). As such, the same definition for (\ref{Uj}) would yield:\vspace{-0.1cm}
 $$
-\U^j_a(x_a, t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \prod_{\substack{k=1; \\ k\neq a}}^{N} \psi^\beta_k(x_k,t) dx_k 
+\U^j_a(x_a, t):=\frac{1}{ \qty(\Psi(\vec{x}^\beta(t),t))^{N-1}} \int_{-\infty}^\infty \Phi_{x_a}^j(\vec{x}_b,t)^\dagger \prod_{\substack{k=1; \\ k\neq a}}^{N} \psi^\beta_k(x_k,t) dx_k \vspace{-0.1cm}
 $$
-Such that $\chi_a^j(x_a,t)= \U^j_a(t)\psi_a^\beta(x_a t)$ will be the expansion coefficients for the factorized product (\ref{CWF.Prod}). These will leave:
+Such that $\chi_a^j(x_a,t)= \U^j_a(t)\psi_a^\beta(x_a t)$ will be the expansion coefficients for the CWF product (\ref{CWF.Prod}). These will leave:
 $$
 K(x_a, \vec{x}_b^\beta(t), t) \simeq - \sum_{\substack{k=1; \\ k\neq a}}^{N} \sum_{j=0}^J \U^j_a(x_a,t) \frac{\hbar^2}{2m_k} \pdv[2]{ \Phi_{x_a}^j(\vec{x}_b,t)}{x_k}\Big\rvert_{\vec{x}_b=\vec{x}_b^\beta(t)}\psi_a^\beta(x_a t)=:W_K^{(a)}(x_a, \vec{x}_b^\beta (t),t)\psi_a^\beta(x_a t)
 $$
@@ -576,15 +578,15 @@ $$
 $$ 
 with eigenenergies $E^j(x)=\frac{j^2\pi^2 \hbar^2}{2m_y L(x)^2}$ for $j \in\{0,1,2,3..,J\}$.
 
-We could make a similar treatment for the other direction, $x$, however, for simplicity, in this first example we will consider that in $x$ the particle is "free", even if this is not true. We will apply the Hermitian approximation to the evolution of the complementary CWF $\psi^\beta_y(y,t)$. Only the CWF in $x$, $\psi^\beta_x(x,t)$, will be evolved using the approximation of Section 3\footnote{Remember that the kinetic and advective correlation potentials depend on the knowledge of the complementary directions, that is why, knowing the (\ref{TSEig}) in $y$ allows their approximation for the CWF in $x$. Meanwhile, saying nothing about the (\ref{TSEig}) in $x$ leaves us with the Hermitian approximation for the CWF in $y$.}
+We could make a similar treatment for the other direction, $x$, however, for simplicity, in this first example we will apply the Hermitian approximation to the evolution of the complementary CWF $\psi^\beta_y(y,t)$. Only the CWF in $x$, $\psi^\beta_x(x,t)$, will be evolved using the Truncated Born-Huang (TBH) approximation of Section 3.\footnote{Remember that the kinetic and advective correlation potentials depend on the knowledge of the complementary directions, that is why, knowing the (\ref{TSEig}) in $y$ allows approximating the correlation potentials for the CWF in $x$. Meanwhile, saying nothing about the (\ref{TSEig}) in $x$ leaves us with the Hermitian approximation for the CWF in $y$.}
 
-The fun point about this problem is that if both CWF-s are evolved with the Hermitian algorithm, then the CWF in the transport direction $x$ will see no potential energy barrier anywhere while $y^\beta(t)\in(-L(x)/2,L(x)/2)$. This is because the only possible correlation that the Hermitian approximation can capture is through the conditional potential energy, which in that case is null $U(x;y^\beta(t))=0$. Therefore, the CWF $\psi^\beta_x(x,t)$ will evolve as if it was in a free potential irrespective of the initial momentum and the width of the slit $L_{min}:=min_x(L(x))$.
+The fun point about this potential energy setting is that if both CWF-s are evolved with the Hermitian algorithm, then the CWF in the transport direction $x$ will see no potential energy barrier anywhere while $y^\beta(t)\in(-L(x)/2,L(x)/2)$, following our classical intuition. This is because the only possible correlation that the Hermitian approximation can capture is through the conditional potential energy, which in that case is null $U(x;y^\beta(t))=0$. Therefore, in this region, the CWF $\psi^\beta_x(x,t)$ will evolve as if it was in a free potential irrespective of the initial momentum and the width of the slit $L_{min}:=min_x(L(x))$.
 
-Nonetheless, this same setting was studied in a recent work by Devashish P. {\em et al} \cite{Dev} using the full Schrödinger Equation \ref{TDSE} and the Born-Huang expansion and found that a "virtual" potential energy barrier emerged from the quantum geometrical correlation between the spatial degrees of freedom. Such that if the initial energy of the wave-packet, transported through the narrowing channel, was smaller than the energy eigenstates of the transversal sections (\ref{TSEig}), then the wavepacket was mostly reflected as if there was a physical potential barrier in the entrance to the slit. Then these eigenenergies played additonal roles in the dynamics of the transmission as a function of the projection of the wavepacket on them. 
+The key is to notice what Devashish P. {\em et al} \cite{Dev} found using the full Schrödinger Equation \ref{TDSE} and the Born-Huang expansion: there is a "virtual" potential energy barrier for the $x$ direction due to the confinement of the wavepacket in $y$. That is, there is a quantum geometrical correlation between the spatial degrees of freedom, such that if the initial energy of the wave-packet, transported through the narrowing channel, is smaller than the energy eigenstates of the transversal sections (\ref{TSEig}), then the wavepacket is mostly reflected as if there was a physical potential barrier in the entrance to the slit. These eigenenergies play additional roles in the dynamics of the transmission as a function of the projection of the wavepacket on them, but we will not care for them here.
 
-Therefore, this simple setting seems a perfect benchmark to identify algorithms that perform better than the basic Hermitian approximation. In principle, any improvement approximating the (\hyperref[CWF.SE]{CWF.SE}) beyond the Hermitian approximation should prove to be capable of capturing this "virtual" energy barrier for which the Hermitian one is blind. As we will see soon, Algorithm 2.0 is precisely capable of doing this, which helps assert its validity.
+Therefore, this simple setting seems a perfect benchmark to identify algorithms that perform better than the basic Hermitian approximation. In principle, any improvement approximating the (\hyperref[CWF.SE]{CWF.SE}) beyond the Hermitian approximation should prove to be capable of capturing this "virtual" energy barrier for which the Hermitian one is blind. As we will see soon, Algorithm 2.0 is precisely capable of doing this, which will help to assert its validity.
 
-Evaluating the particular (\ref{TSEig}) expressed above in the potentials $W_K^{(x)}$ and $W_K^{(x)}$ derived in Section 3.1.1, we get:
+Let us understand theoretically why the TBH algorithm should "see" the virtual barrier. Evaluating the particular (\ref{TSEig}) expressed above in the potentials $W_K^{(x)}$ and $W_K^{(x)}$ derived in Section 3.1.1, we get:
 $$
 \hspace{-1cm} W_K^{(x)}(x,y^\beta(t),t)= -\sum_{j=0}^J \U^j_x(x,t)\frac{\hbar^2}{2m_y}\pdv[2]{\Phi^j_x(y)}{y}\Big\rvert_{y^\beta(t)} = -\sum_{j=0}^J \U^j_x(x,t)\frac{\hbar^2}{2m_y}\qty(\frac{j\pi}{L(x)})^2\qty(- \sqrt{\frac{2}{L}} sin\qty( \frac{j\pi (y+L(x)/2)}{L(x)} ))
 $$
@@ -603,14 +605,14 @@ i\hbar \pdv{\psi^\beta_x(x,t)}{t}=\qty[ \frac{-\hbar^2}{2m_x}\pdv[2]{}{x} + U(x;
 $$
 This expression has a little difference with that predicted in general at the end of Section 3.1.1., in that there is no subtracting $U(x,y^\beta(t),t)$ to $E^j(x_a,t)$. This seems strange as for $y^\beta(t)\in [-max\{L(x)\},$ $max\{L(x)\}]$, yes, $U$ is zero at some places of the transport direction $x$. However, it gets to infinity abruptly at some other $x$, and this seems to have disappeared. This apparent problem is solved though, realizing the fact that when we obtained the transversal section eigenstates, we assumed that wherever the potential energy was infinite, the (\ref{TSEig}) would be zero. Therefore, in the places where we should have an inifnite potential subtracting the $E^j$, instead we will have that $\Phi^j_x(y)=0$.
 
-We will see that the difference with the Hermitian approximation is that in addition to the classical potential $U$ evaluated in the trajectory $y^\beta(t)$, we here introduce a complex spatially varying potential that for a given $x$:
+Let us see where exactly this TBH equation "feels" the virtual barrier. Unlike the Hermitian approximation, in this equation, in addition to the conditional classical potential $U(x;y^\beta(t))$, there is a complex spatially varying potential. This extra potential term, given a certain $x$:
 \begin{itemize}
-\item Is proportional to the energies $E^j(x)$ of each transversal section, which in turn are proportional to the narrowness of the slit and inversely proportional to the mass of the particle in $y$.
-\item Proportional to the value of the transversal eigenstates in the trajectory $\Phi^j_x(y^\beta(t))$ and the logarithm of its rate of change in time. Meaning that if the Bohmian trajectory in $y$ is displaced towards positions with lower eigenstate this second term will be negative and else positive.
-\item Proportional to the projection of the other CWF-s to each eigenstate $\U^j_x(x,t)$ and inversely proportional to the value of the complex full wave-function on the trajectory $\Psi(\vec{x}^\beta(t),t)$.
+\item Is proportional to the energies $E^j(x)$ of each transversal section, which in turn are proportional to the narrowness of the slit and inversely proportional to the mass of the particle in $y$. It is this that will mimic the virtual barrier!
+\item Is proportional to the value of the transversal eigenstates in the trajectory $\Phi^j_x(y^\beta(t))$ and the logarithm of its rate of change in time. Meaning that if the Bohmian trajectory in $y$ is displaced towards positions with lower eigenstate this second term will be negative and else positive.
+\item Is proportional to the projection of the other CWF-s to each eigenstate $\U^j_x(x,t)$ and inversely proportional to the value of the complex full wave-function on the trajectory $\Psi(\vec{x}^\beta(t),t)$.
 \end{itemize}
-
-This complex potential has two terms: one coming from the kinetic correlation potential, $\sum_{j=0}^J $ $\U^j_x(x,t)\Phi^j_x(y^\beta(t)) E^j(x,t)$,  and one from the advective correlation (the rest). It is the kinetic part that is most interpretable and seemingly a potential source for the virtual barrier we are looking to reproduce, as is proportional to the transversal section eigenstates and inversely proportional to the width of the slit. The other part will in principle not provide as much theoretical insight into the dynamics. Therefore, in the present analysis we will only leave the kinetic terms in an attempt to study if the effect of this truncated potential is really helpful.
+\vspace{-0.2cm}
+The complex potential can be divided into two terms: one coming from the kinetic correlation potential, $\sum_{j=0}^J $ $\U^j_x(x,t)\Phi^j_x(y^\beta(t)) E^j(x,t)$,  and one from the advective correlation (the rest). It is the kinetic part that is most interpretable and seemingly a potential source for the virtual barrier we are looking to reproduce, as is proportional to the transversal section eigenstates and inversely proportional to the width of the slit. The other part will in principle not provide as much theoretical insight into the dynamics. Therefore, in the present analysis we will only leave the kinetic terms in an attempt to study if the effect of this truncated potential is really helpful.
 
 %Interpete zeba hemen kasuen bai al dozun erabili energixe U zero dalako d ala kasualidad Aunke kalro, ya diskutidu badoten zerba ezin dan egin tranpa barik interpretaziñoa while J sea finito ba igual ezta larrei esan biher bez.
 
@@ -618,7 +620,7 @@ To prove Algorithm 2.0 is capable of surpassing the benchmark, we parametrize th
 $$
 L(x)=(L_{max}-L_{min})\qty[\qty(1+exp\qty(\frac{x-a_1}{g}))^{-1}+\qty(1+exp\qty(\frac{-x+a_2}{g}))^{-1}]+L_{min}
 $$
-where $L_{min}, L_{max}$ are constants fixing the minimum and maximum width of the channel, $g$ fixes the abruptness or adiabaticity of the width change in the channel (the higher the more adiabatic or softer the change) and $a_2-a_1$ defines the length of the constriction. In particular we will study two settings: $[a_1,a_2,g,L_{max},L_{min}]=[5,40,3,40,5]$ and $[a_1,a_2,g,L_{max},L_{min}]=[5,40,3,40,8.5]$. The only difference relies on the narrowness of the slit. In Figure \ref{fig:pot} the potential energy profile and adiabatic states for the first case are shown as an example.
+where $L_{min}, L_{max}$ are constants fixing the minimum and maximum width of the channel, $g$ fixes the abruptness or adiabaticity of the width change in the channel (the higher the more adiabatic or softer the change) and $a_2-a_1$ defines the length of the constriction. In particular we will study two settings: $[a_1,a_2,g,L_{max},L_{min}]=[5,40,3,40,5]$ and $[a_1,a_2,g,L_{max},L_{min}]=[5,40,3,40,8.5]$. The only difference relies on the narrowness of the slit. In Figure \ref{fig:pot} the potential energy profile and adiabatic states for the first case are shown as an example. Note that all the numerical results hereafter are in atomic units (using particle effective masses $m_x=1.0,\ m_y=0.5$ simulating an electron).
 
 \begin{figure}[h!]
   \centering
@@ -631,7 +633,7 @@ where $L_{min}, L_{max}$ are constants fixing the minimum and maximum width of t
     \begin{subfigure}[b]{0.15\linewidth}
     \includegraphics[width=\linewidth]{Eig2.png}
   \end{subfigure}
-  \caption{Potential energy profile heatmap in the left and in the center and right respectively, the first non-zero transversal section eigenstates in the broadest and narrowest parts of the set-up.}
+  \caption{Potential energy profile heatmap in the left. In the center and right respectively, the first non-zero transversal section eigenstates in the broadest and narrowest parts of the set-up.}
   \label{fig:pot}
 \end{figure}
 
@@ -639,7 +641,7 @@ The two initial full-wavefunctions we will try are $\Psi(\vec{x},t_0)=GS:=Gauss(
 $$
 Gauss(x,\mu,\sigma,k_0)=\sqrt[4]{\frac{1}{2\pi \sigma_x^2}}\ exp\qty(ik_0x-\frac{(x-\mu)^2}{4\sigma^2})
 $$
-That is, we will analyse the behaviour of: the product of a Gaussian times the first non-zero transversal eigenstate (GS), and the tensor product of two Gaussians (GG), as done in Ref.\cite{Dev}. 
+That is, we will analyse the behaviour of: the product of a Gaussian times the first non-zero transversal eigenstate (GS), and the tensor product of two Gaussians (GG), following Ref.\cite{Dev}. 
 
 Before jumping to test the approximations, we perform a full wavefunction evolution using no theoretical approximation on the \ref{TDSE}, by employing a 2D Crank Nicolson (CN) method as suggested in Ref.\cite{nireTFGie}. In Figure \ref{fig:population} we can see a heatmap plot of the probability density of both initial conditions, together with the exact adiabatic coefficients for them. Packet (GS) has got exclusive projection on the first transversal eigenstate, which is expected from its definition, while the (GG) requires several odd eigenstates to be expanded (about 3 or 4). Note that by symmetry, the projections on even states are zero.\vspace{-0.3cm}
 
@@ -654,46 +656,52 @@ Before jumping to test the approximations, we perform a full wavefunction evolut
     \caption{'GG'}
   \end{subfigure}
 
-  \caption{ In the right, the adiabatic state profiles at the initial time and in the left the probability density profile for $GS:=Gauss(x;\mu_x=-14, \sigma_x=2, k_x)\Phi^1_x(y)$ in the left and  $GG:=Gauss(x;\mu_x=-9.5, \sigma_x=2, k_x)Gauss(x;\mu_y=0, \sigma_y=3, k_y)$ in the right. Computed using the full wavefunction evolver CN method.}
+  \caption{ In the right, the adiabatic state profiles at the initial time and in the left the probability density profile for $GS:=Gauss(x;\mu_x=-14, \sigma_x=2, k_x)\Phi^1_x(y)$ in (a) and  $GG:=Gauss(x;\mu_x=-9.5, \sigma_x=2, k_x)Gauss(x;\mu_y=0, \sigma_y=3, k_y)$ in (b). Computed using the full wavefunction evolver CN method. In atomic units.}\vspace{-0.3cm}
   \label{fig:population}
 \end{figure}
 
-In Figure \ref{fig:energies} we show the set of initial energies of these wavepackets as a function of their initial momentum, together with the energies of the transversal section eigenstates for $L_{min}=5$ and $L_{min}=8.5$. We see that the (GG) packet has always a higher initial energy (due to the bigger curvature causing a higher quantum potential). Observe that  we can choose a wide range of possibilities, from packets with less energy than the ground transversal state to higher than the second transversal eigenstate. 
+In Figure \ref{fig:energies} we show the set of initial energies of these wavepackets as a function of their initial momentum, together with the energies of the transversal section eigenstates for $L_{min}=5$ and $L_{min}=8.5$. We see that the (GG) packet has always a higher initial energy (due to the bigger curvature causing a higher quantum potential). Observe that  we can choose a wide range of possibilities, from packets with less energy than the ground transversal state to higher than the second transversal eigenstate. \vspace{-0.3cm}
 
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.7\linewidth]{Evsk_GS_GG_L8_5.png}
-  \caption{Average energy in atomic units of $Gauss(x;\mu_x=-14, \sigma_x=2, k_x)\Phi^1_x(y)$ in red and $Gauss(x;\mu_x=-9.5, \sigma_x=2, k_x)Gauss(x;\mu_y=0, \sigma_y=3, k_y)$ in blue as a function of the initial wavepacket momentum for a particle with $m_x=1.0$ and $m_y=0.5$. We can also see in other colours, following the legend, the energy levels of the transversal eigenstates at the narrowest point of the channel, for $L=5$ and $L=8.5$.}
+  \caption{Average energy in atomic units of $Gauss(x;\mu_x=-14, \sigma_x=2, k_x)\Phi^1_x(y)$ in red and $Gauss(x;\mu_x=-9.5, \sigma_x=2, k_x)Gauss(x;\mu_y=0, \sigma_y=3, k_y)$ in blue, as a function of the initial wavepacket momentum for a particle with $m_x=1.0$ and $m_y=0.5$. We can also see in other colours, following the legend, the energy levels of the transversal eigenstates at the narrowest point of the channel, for $L=5$ and $L=8.5$.}
   \label{fig:energies}
 \end{figure}
 
 
-We then choose the range of initial momentums $ k_0 \in [ 0,1 ]$ for both wavepackets as representative enough for the analysis we want to perform. In Figure \ref{fig:popsInTime} we can find the time evolution of the total population of each transversal eigenstate as a function of the initial momentum $k_0$ and for the two different slit widths $L_{min}\in\{5, 8.5\}$. For these same settings, in Figure \ref{fig:CNTransm}, we can find the transmission of the probability density of the full wave-function through the slit in time as a function of the initial momentum $k_0$.\vspace{-0.3cm}
+We then choose the range of initial momenta $ k_0 \in [ 0,1 ]$ for both wavepackets to be representative enough for the analysis we want to perform.  We can see in Figure \ref{fig:CNTransm} the transmission of the probability density of the full wave-function through the slit in time as a function of the initial momentum $k_0$ for each of the wavepackets for two different slit narrowness $L_{min}\in\{5, 8.5\}$.
 
 \begin{figure}[h!]
   \centering
-  \begin{subfigure}[b]{0.25\linewidth}
+  \begin{subfigure}[b]{0.5\linewidth}
     \includegraphics[width=\linewidth]{Transmission_GS_CN_L5.png}
     \caption{GS L=5}
   \end{subfigure}
-  \begin{subfigure}[b]{0.24\linewidth}
+  \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{Transmission_GS_CN_L8.5.png}
     \caption{GS L=8.5}
   \end{subfigure}
-    \begin{subfigure}[b]{0.25\linewidth}
+    \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{Transmission_GG_CN_L5.png}
     \caption{GG L=5}
   \end{subfigure}
-    \begin{subfigure}[b]{0.24\linewidth}
+    \begin{subfigure}[b]{0.5\linewidth}
     \includegraphics[width=\linewidth]{Transmission_GG_CN_L8.5.png}
     \caption{GG L=8.5}
   \end{subfigure}
 
-  \caption{ Transmission of the full wavefunction probability density through the slit as a function of time. Computed using the CN method. $GS:=Gauss(x;\mu_x, \sigma_x, k_x)\Phi^1_x(y)$, while $GG:=Gauss(x;\mu_x, \sigma_x, k_x)Gauss(x;\mu_y, \sigma_y, k_y)$.\vspace{-0.25cm}}
+  \caption{ Transmission of the full wavefunction probability density through the slit as a function of time. Computed using the CN method. $GS:=Gauss(x;\mu_x, \sigma_x, k_x)\Phi^1_x(y)$, while $GG:=Gauss(x;\mu_x, \sigma_x, k_x)Gauss(x;\mu_y, \sigma_y, k_y)$. In atomic units.}
   \label{fig:CNTransm}
 \end{figure}
 
-\begin{figure}[h!]
+Observe how the transmission for small $k_0$ is very small. This is presumably due to the virtual barrier we mentioned. It can already be seen that the effect of the virtual barrier is weaken for wider slits. We chose these two widths as they seemed to present two different adiabaticity regimes.
+
+In Figure \ref{fig:popsInTime} on the other hand, we can find the time evolution of the total population of each transversal eigenstate as a function of the initial momentum $k_0$, for both slit widths $L_{min}\in\{5, 8.5\}$. This figure justifies why we chose these two initial packets, as they show different population evolutions that include both the influence of $j=1$ alone (e.g. $GS$ $L=5$ $k_0=0.1$) or the interplay of until three different states $j=1,3,5$ together (e.g. $GG$ $L=5$ $k_0=0.1$).
+
+Overall, the array of scenarios seems legitimate enough as to test the new truncated Born-Huang expansion algorithm against the Hermitian one.
+
+\begin{figure}[p]
   \centering
   \begin{subfigure}[b]{0.36\linewidth}
     \includegraphics[width=\linewidth]{Population_GS_L5_k0_0.1.png}
@@ -745,29 +753,29 @@ We then choose the range of initial momentums $ k_0 \in [ 0,1 ]$ for both wavepa
     \caption{GG L=8.5 k=0.1}
   \end{subfigure}
   
-  \caption{ Population of the $j-th$ adiabatic state as a function of time $P_j(t)=\int_{-\infty}^\infty |\chi^j_x(x,t)|^2dx $. Note $GS:=Gauss(x;\mu_x, \sigma_x, k_x)\Phi^1_x(y)$, and $GG:=Gauss(x;\mu_x, \sigma_x, k_x)Gauss(x;\mu_y, \sigma_y, k_y)$. Computed using the full wavefunction got with the CN method. Note that there is only population in odd states due to the symmetry of the problem.}
+  \caption{ Population of the $j-th$ adiabatic state as a function of time $P_j(t)=\int_{-\infty}^\infty |\chi^j_x(x,t)|^2dx $. Note $GS:=Gauss(x;\mu_x, \sigma_x, k_x)\Phi^1_x(y)$, and $GG:=Gauss(x;\mu_x, \sigma_x, k_x)Gauss(x;\mu_y, \sigma_y, k_y)$. Computed with the 2D Crank Nicolson full wavefunction. Note that there is only population in odd states due to the symmetry of the problem. In atomic units.}
   \label{fig:popsInTime}
 \end{figure}
 \newpage
 
-It is for these two settings of slit width, that we will apply the two approximating algorithms suggested so far: the Hermitian approach and the truncated Born-Huang expansion (for several different $J$). 
-\subsubsection{Results}
-An ensemble of $M$ Bohmian trajectories, sampled at the initial time according to the initial full wavefunction's probability density, should replicate the probability density of the full wave-function at all times. Thus, we can assert the methods by comparing the transmission of the full wave-function through the narrowest part of the channel integrated using CN, and the proportion of Bohmian trajectories transmitted using each of the approximate algorithms. In Figures \ref{fig:transm_GS_L5} and \ref{fig:transm_GS_L85} one can find the transmission study as a function of the initial momenta range described earlier for the initial wavepacket (GS) and narrowness $L_{min}=5$ and $8.5$, respectively. We see the same but for the wave-packet (GG) in Figures \ref{fig:transm_GG_L5} and \ref{fig:transm_GG_L85}. All of them were carried using $M=170$ trajectories.
+
+\subsubsection{Results}\vspace{-0.3cm}
+An ensemble of $M$ Bohmian trajectories, sampled at the initial time according to the initial full wavefunction's probability density, should replicate the probability density of the full wave-function at all times. Thus, we can assert the methods by comparing the transmission of the full wave-function through the narrowest part of the channel integrated using the 2D CN, and the proportion of Bohmian trajectories transmitted using each of the approximate algorithms. In Figures \ref{fig:transm_GS_L5} and \ref{fig:transm_GS_L85} one can find the transmission study as a function of the initial momenta range described earlier for the initial wavepacket (GS) and narrowness $L_{min}=5$ and $8.5$, respectively. We see the same but for the wave-packet (GG) in Figures \ref{fig:transm_GG_L5} and \ref{fig:transm_GG_L85}. All of them were carried using $M=170$ trajectories.
 
 
-\begin{figure}[p]
+\begin{figure}[h!]
   \centering
-  \begin{subfigure}[b]{1.1\linewidth}
+  \begin{subfigure}[b]{1.0\linewidth}
     \includegraphics[width=\linewidth]{Example_Results/GS_L_5_transmission.png}
     %\caption{GS J=5 L=5}
   \end{subfigure}
-  \begin{subfigure}[b]{1.1\linewidth}
+  \begin{subfigure}[b]{1.0\linewidth}
     \includegraphics[width=\linewidth]{Example_Results/GS_L_5_errors.png}
     %\caption{GS J=5 L=5}
   \end{subfigure}
 
   
-  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GS initial wave-function using $J\in\{1,3,5\}$ and $L=5$. }
+  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GS initial wave-function using $J\in\{1,3,5\}$ and $L=5$. The 4 plots above compare the raw transmission probabilities while the 4 plots bellow show the absolute transmission difference between the full wavefunction transmission and the approximated ones.}
   \label{fig:transm_GS_L5}
 \end{figure}
 
@@ -783,7 +791,7 @@ An ensemble of $M$ Bohmian trajectories, sampled at the initial time according t
   \end{subfigure}
 
   
-  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GS initial wave-function using $J\in\{1,3\}$ and $L=8.5$. }
+  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GS initial wave-function using $J\in\{1,3\}$ and $L=8.5$. The 4 plots above compare the raw transmission probabilities while the 4 plots bellow show the absolute transmission difference between the full wavefunction transmission and the approximated ones. }
   \label{fig:transm_GS_L85}
 \end{figure}
 
@@ -799,71 +807,72 @@ An ensemble of $M$ Bohmian trajectories, sampled at the initial time according t
   \end{subfigure}
 
   
-  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GG initial wave-function using $J\in\{1,3,5\}$ and $L=5$. }
+  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GG initial wave-function using $J\in\{1,3,5\}$ and $L=5$. The 4 plots above compare the raw transmission probabilities while the 4 plots bellow show the absolute transmission difference between the full wavefunction transmission and the approximated ones.}
   \label{fig:transm_GG_L5}
 \end{figure}
 
-\begin{figure}[p]
-  \centering
-  \begin{subfigure}[b]{1.1\linewidth}
+
+%\begin{figure}[p]
+ % \centering
+  %\begin{subfigure}[b]{1.1\linewidth}
     %\includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_transmission.png}
     %\caption{GS J=5 L=5}
-  \end{subfigure}
-  \begin{subfigure}[b]{1.1\linewidth}
+  %\end{subfigure}
+ % \begin{subfigure}[b]{1.1\linewidth}
     %\includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_errors.png}
     %\caption{GS J=5 L=5}
-  \end{subfigure}
+%  \end{subfigure}
 
   
-  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GG initial wave-function using $J\in\{1,3\}$ and $L=8.5$. }
-  \label{fig:transm_GG_L85}
-\end{figure}
+  %\caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GG initial wave-function using $J\in\{1,3\}$ and $L=8.5$. The 4 plots above compare the raw transmission probabilities while the 4 plots bellow show the absolute transmission difference between the full wavefunction transmission and the approximated ones.}
+ % \label{fig:transm_GG_L85}
+% \end{figure}
+
 \newpage
 \subsubsection{Discussion and Conclusions}
-The first pattern we can find throughout all the studied cases from Figure \ref{fig:transm_GS_L5} to \ref{fig:transm_GG_L85} is that using the Truncated Born-Huang approximation (TBH) with $J=1$ yields a considerably smaller absolute error than the Hermitian approximation. This readily suggests the success of the new algorithm: as we already predicted in theoretical grounds, the virtual barrier for wave-packets with smaller initial energy than the transversal confinement energies should barely be transmitted. TBH captures the hindrance correctly, while the Hermitian approach is completely blind to any sort of barrier. Even at a momentum as low as $k_0=0.1$ there is an appreciable transmission.
+The first pattern we can find throughout all the studied cases from Figure \ref{fig:transm_GS_L5} to \ref{fig:transm_GG_L85} is that using the Truncated Born-Huang approximation (TBH) with $J=1$ yields a considerably smaller absolute error than the Hermitian approximation. This readily suggests the success of the new algorithm: as we already predicted in theoretical grounds, the virtual barrier for wave-packets with smaller initial energy than the transversal confinement energies should barely be transmitted. TBH captures the hindrance correctly, while the Hermitian approach is completely blind to any sort of barrier. Even at a momentum as low as $k_0=0.1$ there is an appreciable transmission. You can find in Figure \ref{fig:trajs} the trajectories for this particular case (and $GS, L=5$).
 
-Regarding higher $J$ like $J=3$ or $5$, that is, truncating the Born-Huang expansion of the factorized product at a higher order, the new approach appears to be worst than the Hermitian approximation for $k_0>0.5$. Errors are bigger. Regarding $k_0\leq0.5$ however (the most sensitive interval with respect to the virtual barrier), TBH still beats the Hermitian algorithm. Nonetheless, the results are way worse than using $J=1$ for any $k_0$. Looking at the plots, one can readily notice that the problem is that more terms in the Born-Huang series seem to introduce an approximation for the virtual barrier that overestimates the barrier. This behavior was not expected a priori, as the more terms in the expansion we consider, the closer we should be to the Hermitian approximation. The trend actually seems quite the opposite. Two possibilities seem to be causing this. On the one hand, the problem might be that way more terms in the Born-Huang expansion should be considered to see the expected convergence to the Hermitian "blindness" (there might be some sort of barrier cancellation due to higher terms). On the other hand, the problem might have to do with the fact that we only considered the potential $W_K^(x)$ and neglected $W_A^(x)$, arguing this to the lack of theoretical intuition for $W_A^(x)$. Actually trying the potential $W_A^(x)$ led to singularities in the velocity field of the trajectories, generating some "crazy" trajectories that were clearly wrong.
+Regarding higher $J$ like $J=3$ or $5$, that is, truncating the Born-Huang expansion of the factorized product at a higher order, the new approach appears to be worst than the Hermitian approximation for $k_0>0.5$. Errors are bigger. Regarding $k_0\leq0.5$ however (the most sensitive interval with respect to the virtual barrier), TBH still beats the Hermitian algorithm. Nonetheless, the results are way worse than using $J=1$ for any $k_0$. Looking at the plots, one can readily notice that the problem is that more terms in the Born-Huang series seem to introduce an approximation for the virtual barrier that overestimates the barrier. This behaviour was not expected a priori, as the more terms in the expansion we consider, the closer we should be to the Hermitian approximation. The trend actually seems quite the opposite. Two possibilities seem to be causing this. On the one hand, the problem might be that way more terms in the Born-Huang expansion should be considered to see the expected convergence to the Hermitian "blindness" (there might be some sort of barrier cancellation due to higher terms). On the other hand, the problem might have to do with the fact that we only considered the potential $W_K^{(x)}$ and neglected $W_A^{(x)}$, arguing this to the lack of theoretical intuition for $W_A^{(x)}$. Actually trying the potential $W_A^{(x)}$ led to singularities in the velocity field of the trajectories, generating some "crazy" trajectories that were clearly wrong. However, using big $J$ together with $W_A^{(x)}$ might end up recovering the Hermitian "blindness" with respect to the virtual wall.
 
-One can argue that the introduction of $J=3$ should benefit the settings where the full wave-function showed the adiabatic state $j=3$ had non-negligible population, like the ($GG$) initial package evolution (see Figure \ref{fig:popsInTime}). However, the results show that even for the smallest $k_0$, where there is less population transfer, only considering $J=1$ overcomes the case where we also use $J=3$.
+One can argue that the introduction of $J=3$ should benefit the settings where the full wave-function showed the adiabatic state $j=3$ had non-negligible population, like the ($GG$) initial package evolution (see Figure \ref{fig:popsInTime}). However, the results show that even for the smallest $k_0$, where there is negligible population transfer, only considering $J=1$ overcomes the case where we also use $J=3$.
 
 Regarding the most adiabatic case, $L=8.5$, we already find that the TBH algorithm with $J=1$ performs better than the Hermitian algorithm. Still, the true advantage of the TBH algorithm can mainly be noted in the more demanding (less adiabatic) case of $L=5$, where the virtual barrier plays a major role in the considered range of energies. The TBH with $J=1$ provides a very neat fit to the benchmark transmission profile, while the Hermitian is completely blind to the geometrical correlation.
 
-In the process of generating these transmission plots, $M=170$ trajectories were evolved per initial condition ($\Psi(x,y,t_0)$, $L$, $k_0$). For each of them a whole set of dynamical variables  were monitored in dynamic animations like the one screen-shot in Figure \ref{fig:screenshoot}, among them, the approximated $G_x,J_x$ potentials, the exact and approximated CWF-s in $x$ and $y$, the approximated adiabatic populations $P^j(t)$ and approximated adiabatic coefficient profiles $\chi^j(x,t)$, together with the full wavefunction ones. At the individual trajectory level, these magnitudes were not expected to satisfy all the information on the full wave-function. However, a similar overall behavior was observed in all of them compared with the full wavefunction results, except in the magnitude squared of the CWF-s, which in the TBH algorithm fluctuated (unlike the Hermitian approximation) due to the division of the correlation potential by $\Psi(x^\beta(t), y^\beta(t),t)$, that could get small if the trajectory moved to regions with CWF close to zero. With respect to using the approximated CWF-s to reproduce the full-wavefunction as suggested in the coming sections, these fluctuations might impede a correct reconstruction if not bounded correctly, even if the ensemble effect might relax the divergence, as happened with the ensemble transmission study. Nonetheless, the individual evolution of the trajectories seemed to provide a way better fit to the exact evolution than the Hermitian approximation. Some examples of this are given in Figure\ref{fig:trajs}. All this dynamical data can be found in the link at Ref.\cite{DATA}.
+In the process of generating these transmission plots, $M=170$ trajectories were evolved per initial condition ($\Psi(x,y,t_0)$, $L$, $k_0$). For each of them a whole set of dynamical variables  were monitored in dynamic animations like the one screen-shot in Figure \ref{fig:screenshoot}, among them, the approximated $G_x,J_x$ potentials, the exact and approximated CWF-s in $x$ and $y$, the approximated adiabatic populations $P^j(t)$ and approximated adiabatic coefficient profiles $\chi^j(x,t)$, together with the full wavefunction ones. At the individual trajectory level, these magnitudes were not expected to satisfy all the information on the full wave-function. However, a similar overall behavior was observed in all of them compared with the full wavefunction results, except in the magnitude squared of the CWF-s, which in the TBH algorithm fluctuated (unlike the Hermitian approximation) due to the division of the correlation potential by $\Psi(x^\beta(t), y^\beta(t),t)$, that could get small if the trajectory moved to regions with CWF close to zero. Interesting enough, this did not seem to deteriorate the evolution of the trajectories. 
+
+Regrading the use of the approximated CWF-s to reproduce the full-wavefunction as suggested in the coming sections, these fluctuations might impede a correct reconstruction if not bounded correctly, even if the ensemble effect might relax the divergence, as happened with the ensemble transmission study. Nonetheless, the individual evolution of the trajectories seemed to provide a way better fit to the exact evolution than the Hermitian approximation. Some examples of this are given in Figure \ref{fig:trajs}. All this dynamical data and animations can be found in the link at Ref. \cite{DATA}.
 
 
-\begin{figure}[p]
+ \begin{figure}[h!]
   \centering
-  \begin{subfigure}[b]{1.1\linewidth}
-    %\includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_transmission.png}
-    %\caption{GS J=5 L=5}
+  \begin{subfigure}[b]{0.7\linewidth}
+    \includegraphics[width=\linewidth]{k0_0.1_CN_GS.png}
+    \caption{Full wavefunction 2D Crank Nicolson. Left heat-map is the probability density $|\psi(x,y,t)|^2$ with Bohmian trajectories (dots). Right heat-map is the potential energy, black rays are the Bohmian trajectories.}
   \end{subfigure}
-  \begin{subfigure}[b]{1.1\linewidth}
-    %\includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_errors.png}
-    %\caption{GS J=5 L=5}
+  \begin{subfigure}[b]{0.7\linewidth}
+    \includegraphics[width=\linewidth]{k0_0.1_TBH_GS.png}
+    \caption{Truncated Born-Huang Approximation J=1. Heat-map is the potential energy.}
   \end{subfigure}
-
+  \begin{subfigure}[b]{0.7\linewidth}
+    \includegraphics[width=\linewidth]{k0_0.1_XO_GS.png}
+    \caption{Hermitian Approximation. Heat-map is the potential energy.}
+  \end{subfigure}
   
-  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GG initial wave-function using $J\in\{1,3\}$ and $L=8.5$. }
-  \label{fig:screenshoot}
-\end{figure}
-
- \begin{figure}[p]
-  \centering
-  \begin{subfigure}[b]{1.1\linewidth}
-    %\includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_transmission.png}
-    %\caption{GS J=5 L=5}
-  \end{subfigure}
-  \begin{subfigure}[b]{1.1\linewidth}
-    %\includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_errors.png}
-    %\caption{GS J=5 L=5}
-  \end{subfigure}
-
-  
-  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GG initial wave-function using $J\in\{1,3\}$ and $L=8.5$. }
+  \caption{ Snapshots of the animations of the time evolution for Bohmian Trajectories in the (GS) setting with $k_0=1$ for the full wavefunction, the TBH approximation and the Hermitian approximation. The black lines are the full trajectory, while the red dots indicate the position of the particles in that time frame. Note how trajectories are blind to the virtual barrier in the Hermitian approximation, while they are reflected in both the full wave-function and the TBH. Animated samples of all the tested cases can be found in Ref. \cite{DATA}.}
   \label{fig:trajs}
 \end{figure}
 
-As a concluding remark, it  is worth to  note again that even if the TBH approximation seems to be able to provide quantum correlations or entanglement effects that the Hermitian Approximation is blind to, the correctness of the approximated correlations will be very situation specific and should be first theoretically accepted. This calls for further study in more complex systems. The slit setting seems very useful for quantum electronics devices, but a generalized algorithm should regard other particular cases too. This is left for future work.
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[b]{1.0\linewidth}
+    \includegraphics[width=\linewidth]{screenshoot.png}
+    %\caption{GS J=5 L=5}
+  \end{subfigure}  
+  \caption{ Snapshot of the animations that were used to check the dynamic variables predicted by the TBH algorithm. Animated samples can be found in Ref. \cite{DATA}. }
+  \label{fig:screenshoot}
+\end{figure}
+\vspace{+0.4cm}
+As a concluding remark, it is worth to note again that even if the TBH approximation seems to be able to provide quantum correlations or entanglement effects that the Hermitian Approximation is blind to, the correctness of the approximated correlations will be situation specific. They should be first theoretically accepted using the approximated equations, as we exemplified at the beginning of Section 3.2. Only after the theoretically expected correlations are found to be mimicked by the approximated correlation potentials, one can expect the algorithm to outperform the Hermitian one. This calls for further study in more complex systems. The slit setting seems very useful for quantum electronics devices, but a generalized algorithm should regard other particular cases too. This is left for future work.
 
 
 % explike konceptoa transmisiñoa neurtzie dala traiektorixek erabilitte ta kompare exkatoagaz eta bi aproximaziñoak. 
@@ -1159,9 +1168,13 @@ It looks like in the end, it would not scale that much with $N$.
 	Oyanguren Xabier, {\em The Quantum Many Body Problem}, Bachelor's Thesis (2020) for the Nanoscience and Nanotechnology Degree (UAB).
 
 \href{https://github.com/Oiangu9/The\_Quantum\_Many\_Body\_Problem\_-Bachellors\_Thesis-/blob/master/TheQuantumManyBodyProblem\_\_BachelorsThesis\_XabierOyangurenAsua.pdf}{https://github.com/Oiangu9/The\_Quantum\_Many\_Body\_Problem\_-Bachellors\_Thesis-/blob/master/TheQuantumManyBodyProblem\_\_BachelorsThesis\_XabierOyangurenAsua.pdf}
+
 \bibitem{Albareda}
 	Albareda G, Kelly A, Rubio A. {\em Nonadiabatic quantum dynamics without potential energy surfaces.} Phys Rev Materials. 2019; 3: 023803. 
 
+\bibitem{DATA}
+	All the animations employed for the analysis of Section 3.2 can be found in the following link:\\
+	\href{https://drive.google.com/drive/folders/1vnNDZrIYDlAhd-kVmmnVJgXmcdE2gxAV?usp=sharing}{https://drive.google.com/drive/folders/1vnNDZrIYDlAhd-kVmmnVJgXmcdE2gxAV?usp=sharing}
 	
 \end{thebibliography}
 
