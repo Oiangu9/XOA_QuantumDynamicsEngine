@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.12.4)  5 APR 2021 20:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.12.4)  12 APR 2021 10:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2127,29 +2127,49 @@ L8.5_k0_1.0.png> <./Figures/Population_GG_L5_k0_0.1.png> <./Figures/Population_
 GG_L5_k0_0.5.png> <./Figures/Population_GG_L5_k0_1.0.png> <./Figures/Population
 _GG_L8.5_k0_0.1.png> <./Figures/Population_GG_L8.5_k0_0.5.png> <./Figures/Popul
 ation_GG_L8.5_k0_1.0.png>]
-
-LaTeX Warning: Reference `fig:transm_GG_L85' on page 19 undefined on input line
- 763.
-
-<Figures/Example_Results/GS_L_5_transmission.png, id=481, 2890.8pt x 1445.4pt>
+<Figures/Example_Results/GS_L_5_transmission.png, id=482, 2890.8pt x 1445.4pt>
 File: Figures/Example_Results/GS_L_5_transmission.png Graphic file (type png)
 <use Figures/Example_Results/GS_L_5_transmission.png>
 Package pdftex.def Info: Figures/Example_Results/GS_L_5_transmission.png  used 
 on input line 769.
 (pdftex.def)             Requested size: 483.69687pt x 241.83307pt.
-<Figures/Example_Results/GS_L_5_errors.png, id=482, 2890.8pt x 1445.4pt>
+<Figures/Example_Results/GS_L_5_errors.png, id=483, 2890.8pt x 1445.4pt>
 File: Figures/Example_Results/GS_L_5_errors.png Graphic file (type png)
 <use Figures/Example_Results/GS_L_5_errors.png>
 Package pdftex.def Info: Figures/Example_Results/GS_L_5_errors.png  used on inp
 ut line 773.
 (pdftex.def)             Requested size: 483.69687pt x 241.83307pt.
-<Figures/Example_Results/GG_L_5_transmission.png, id=487, 2890.8pt x 1445.4pt>
+<Figures/Example_Results/GS_L_8.5_transmission.png, id=486, 2890.8pt x 1445.4pt
+>
+File: Figures/Example_Results/GS_L_8.5_transmission.png Graphic file (type png)
+
+<use Figures/Example_Results/GS_L_8.5_transmission.png>
+Package pdftex.def Info: Figures/Example_Results/GS_L_8.5_transmission.png  use
+d on input line 785.
+(pdftex.def)             Requested size: 532.0695pt x 266.0274pt.
+<Figures/Example_Results/GS_L_8.5_errors.png, id=487, 2890.8pt x 1445.4pt>
+File: Figures/Example_Results/GS_L_8.5_errors.png Graphic file (type png)
+<use Figures/Example_Results/GS_L_8.5_errors.png>
+Package pdftex.def Info: Figures/Example_Results/GS_L_8.5_errors.png  used on i
+nput line 789.
+(pdftex.def)             Requested size: 532.0695pt x 266.0274pt.
+
+Overfull \hbox (48.37263pt too wide) in paragraph at lines 784--792
+ [][] 
+ []
+
+
+Overfull \hbox (48.37263pt too wide) in paragraph at lines 784--792
+ [] 
+ []
+
+<Figures/Example_Results/GG_L_5_transmission.png, id=490, 2890.8pt x 1445.4pt>
 File: Figures/Example_Results/GG_L_5_transmission.png Graphic file (type png)
 <use Figures/Example_Results/GG_L_5_transmission.png>
 Package pdftex.def Info: Figures/Example_Results/GG_L_5_transmission.png  used 
 on input line 801.
 (pdftex.def)             Requested size: 532.0695pt x 266.0274pt.
-<Figures/Example_Results/GG_L_5_errors.png, id=488, 2890.8pt x 1445.4pt>
+<Figures/Example_Results/GG_L_5_errors.png, id=491, 2890.8pt x 1445.4pt>
 File: Figures/Example_Results/GG_L_5_errors.png Graphic file (type png)
 <use Figures/Example_Results/GG_L_5_errors.png>
 Package pdftex.def Info: Figures/Example_Results/GG_L_5_errors.png  used on inp
@@ -2165,48 +2185,70 @@ Overfull \hbox (48.37263pt too wide) in paragraph at lines 800--808
  [] 
  []
 
+<Figures/Example_Results/GG_L_8.5_transmission.png, id=494, 2890.8pt x 1445.4pt
+>
+File: Figures/Example_Results/GG_L_8.5_transmission.png Graphic file (type png)
+
+<use Figures/Example_Results/GG_L_8.5_transmission.png>
+Package pdftex.def Info: Figures/Example_Results/GG_L_8.5_transmission.png  use
+d on input line 818.
+(pdftex.def)             Requested size: 532.0695pt x 266.0274pt.
+<Figures/Example_Results/GG_L_8.5_errors.png, id=495, 2890.8pt x 1445.4pt>
+File: Figures/Example_Results/GG_L_8.5_errors.png Graphic file (type png)
+<use Figures/Example_Results/GG_L_8.5_errors.png>
+Package pdftex.def Info: Figures/Example_Results/GG_L_8.5_errors.png  used on i
+nput line 822.
+(pdftex.def)             Requested size: 532.0695pt x 266.0274pt.
+
+Overfull \hbox (48.37263pt too wide) in paragraph at lines 817--825
+ [][] 
+ []
+
+
+Overfull \hbox (48.37263pt too wide) in paragraph at lines 817--825
+ [] 
+ []
+
 [19 <./Figures/Example_Results/GS_L_5_transmission.png> <./Figures/Example_Resu
-lts/GS_L_5_errors.png>] [20 <./Figures/Example_Results/GG_L_5_transmission.png>
- <./Figures/Example_Results/GG_L_5_errors.png>]
-
-LaTeX Warning: Reference `fig:transm_GG_L85' on page 21 undefined on input line
- 833.
-
-[21]
-<Figures/k0_0.1_CN_GS.png, id=518, 1349.04pt x 670.00313pt>
+lts/GS_L_5_errors.png>] [20 <./Figures/Example_Results/GS_L_8.5_transmission.pn
+g> <./Figures/Example_Results/GS_L_8.5_errors.png>] [21 <./Figures/Example_Resu
+lts/GG_L_5_transmission.png> <./Figures/Example_Results/GG_L_5_errors.png>]
+[22 <./Figures/Example_Results/GG_L_8.5_transmission.png> <./Figures/Example_Re
+sults/GG_L_8.5_errors.png>] [23]
+<Figures/k0_0.1_CN_GS.png, id=539, 1349.04pt x 670.00313pt>
 File: Figures/k0_0.1_CN_GS.png Graphic file (type png)
 <use Figures/k0_0.1_CN_GS.png>
-Package pdftex.def Info: Figures/k0_0.1_CN_GS.png  used on input line 849.
+Package pdftex.def Info: Figures/k0_0.1_CN_GS.png  used on input line 850.
 (pdftex.def)             Requested size: 338.58632pt x 168.15466pt.
-<Figures/k0_0.1_TBH_GS.png, id=519, 1349.04pt x 670.00313pt>
+<Figures/k0_0.1_TBH_GS.png, id=540, 1349.04pt x 670.00313pt>
 File: Figures/k0_0.1_TBH_GS.png Graphic file (type png)
 <use Figures/k0_0.1_TBH_GS.png>
-Package pdftex.def Info: Figures/k0_0.1_TBH_GS.png  used on input line 853.
+Package pdftex.def Info: Figures/k0_0.1_TBH_GS.png  used on input line 854.
 (pdftex.def)             Requested size: 338.58632pt x 168.15466pt.
-<Figures/k0_0.1_XO_GS.png, id=520, 1349.04pt x 670.00313pt>
+<Figures/k0_0.1_XO_GS.png, id=541, 1349.04pt x 670.00313pt>
 File: Figures/k0_0.1_XO_GS.png Graphic file (type png)
 <use Figures/k0_0.1_XO_GS.png>
-Package pdftex.def Info: Figures/k0_0.1_XO_GS.png  used on input line 857.
+Package pdftex.def Info: Figures/k0_0.1_XO_GS.png  used on input line 858.
 (pdftex.def)             Requested size: 338.58632pt x 168.15466pt.
-<Figures/screenshoot.png, id=523, 982.42032pt x 678.28406pt>
+<Figures/screenshoot.png, id=544, 982.42032pt x 678.28406pt>
 File: Figures/screenshoot.png Graphic file (type png)
 <use Figures/screenshoot.png>
-Package pdftex.def Info: Figures/screenshoot.png  used on input line 868.
+Package pdftex.def Info: Figures/screenshoot.png  used on input line 870.
 (pdftex.def)             Requested size: 483.69687pt x 333.95596pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[22 <./Figures/k0_0.1_CN_GS.png (PNG copy)> <./Figures/k0_0.1_TBH_GS.png (PNG c
-opy)> <./Figures/k0_0.1_XO_GS.png (PNG copy)>] [23 <./Figures/screenshoot.png>]
-[24]
-<Figures/slices.jpg, id=546, 764.8575pt x 532.23843pt>
+[24 <./Figures/k0_0.1_CN_GS.png (PNG copy)> <./Figures/k0_0.1_TBH_GS.png (PNG c
+opy)> <./Figures/k0_0.1_XO_GS.png (PNG copy)>] [25 <./Figures/screenshoot.png>]
+[26]
+<Figures/slices.jpg, id=567, 764.8575pt x 532.23843pt>
 File: Figures/slices.jpg Graphic file (type jpg)
 <use Figures/slices.jpg>
-Package pdftex.def Info: Figures/slices.jpg  used on input line 935.
+Package pdftex.def Info: Figures/slices.jpg  used on input line 938.
 (pdftex.def)             Requested size: 314.40001pt x 218.77953pt.
 
-Overfull \hbox (24.74846pt too wide) in paragraph at lines 947--948
+Overfull \hbox (24.74846pt too wide) in paragraph at lines 950--951
 \OT1/cmr/m/n/10.95 If we con-sid-ered the tra-jec-to-ries $\OMS/cmsy/m/n/10.95 
 f[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/1
 0.95 g[]$ \OT1/cmr/m/n/10.95 and for each of them, the set of ap-prox-i-ma-tion
@@ -2215,14 +2257,14 @@ t/10.95 x[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 )\OML/cm
 m/m/it/10.95 ; t\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g[]$
  []
 
-[25 <./Figures/slices.jpg>] [26]
+[27 <./Figures/slices.jpg>] [28]
 LaTeX Font Info:    Trying to load font information for U+euf on input line 100
-2.
+5.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-) [27] [28]
-Overfull \hbox (14.21724pt too wide) in paragraph at lines 1047--1049
+) [29] [30]
+Overfull \hbox (14.21724pt too wide) in paragraph at lines 1050--1052
 \OT1/cmr/m/n/10.95 where $\OML/cmm/m/it/10.95 W[]\OT1/cmr/m/n/10.95 (\OML/cmm/m
 /it/10.95 x[]; []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 )\
 OML/cmm/m/it/10.95 ; t\OT1/cmr/m/n/10.95 )$ rep-re-sents the ap-prox-i-ma-tion 
@@ -2234,7 +2276,7 @@ L/cmm/m/it/10.95 ; t\OT1/cmr/m/n/10.95 )$ of ([][]CWF.SE.III[][])
  []
 
 
-Overfull \hbox (8.13058pt too wide) detected at line 1054
+Overfull \hbox (8.13058pt too wide) detected at line 1057
 \OMS/cmsy/m/n/10.95 ^^@ [] \OML/cmm/m/it/10.95 U\OT1/cmr/m/n/10.95 (\OML/cmm/m/
 it/10.95 x[]; []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 )\O
 ML/cmm/m/it/10.95 ; t\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95  []\OT1/cmr/m/n/10
@@ -2251,123 +2293,123 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.4.1}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1057 \begin{equation}
+l.1060 \begin{equation}
                        \label{PDE.c}\tag{PDE.c}pdfTeX warning (ext4): destinati
 on with the same identifier (name{equation.4.1}) has been already used, duplica
 te ignored
 <to be read again> 
                    \relax 
-l.1057 \begin{equation}
+l.1060 \begin{equation}
                        \label{PDE.c}\tag{PDE.c}pdfTeX warning (ext4): destinati
 on with the same identifier (name{equation.4.1}) has been already used, duplica
 te ignored
 <to be read again> 
                    \relax 
-l.1057 \begin{equation}
+l.1060 \begin{equation}
                        \label{PDE.c}\tag{PDE.c}pdfTeX warning (ext4): destinati
 on with the same identifier (name{equation.4.1}) has been already used, duplica
 te ignored
 <to be read again> 
                    \relax 
-l.1057 \begin{equation}
-                       \label{PDE.c}\tag{PDE.c} [29]pdfTeX warning (ext4): dest
+l.1060 \begin{equation}
+                       \label{PDE.c}\tag{PDE.c} [31]pdfTeX warning (ext4): dest
 ination with the same identifier (name{equation.4.1}) has been already used, du
 plicate ignored
 <to be read again> 
                    \relax 
-l.1090 \begin{equation}
-                       \label{M}\tag{M}pdfTeX warning (ext4): destination with 
-the same identifier (name{equation.4.1}) has been already used, duplicate ignor
-ed
-<to be read again> 
-                   \relax 
-l.1090 \begin{equation}
-                       \label{M}\tag{M}pdfTeX warning (ext4): destination with 
-the same identifier (name{equation.4.1}) has been already used, duplicate ignor
-ed
-<to be read again> 
-                   \relax 
-l.1090 \begin{equation}
-                       \label{M}\tag{M}pdfTeX warning (ext4): destination with 
-the same identifier (name{equation.4.1}) has been already used, duplicate ignor
-ed
-<to be read again> 
-                   \relax 
-l.1090 \begin{equation}
+l.1093 \begin{equation}
                        \label{M}\tag{M}pdfTeX warning (ext4): destination with 
 the same identifier (name{equation.4.1}) has been already used, duplicate ignor
 ed
 <to be read again> 
                    \relax 
 l.1093 \begin{equation}
-                       \label{W}\tag{WW}pdfTeX warning (ext4): destination with
- the same identifier (name{equation.4.1}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.1093 \begin{equation}
-                       \label{W}\tag{WW}pdfTeX warning (ext4): destination with
- the same identifier (name{equation.4.1}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.1093 \begin{equation}
-                       \label{W}\tag{WW}pdfTeX warning (ext4): destination with
- the same identifier (name{equation.4.1}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.1093 \begin{equation}
-                       \label{W}\tag{WW}pdfTeX warning (ext4): destination with
- the same identifier (name{equation.4.1}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.1096 \begin{equation}
-                       \label{PDE.c}\tag{WWk}pdfTeX warning (ext4): destination
- with the same identifier (name{equation.4.1}) has been already used, duplicate
- ignored
-<to be read again> 
-                   \relax 
-l.1096 \begin{equation}
-                       \label{PDE.c}\tag{WWk}pdfTeX warning (ext4): destination
- with the same identifier (name{equation.4.1}) has been already used, duplicate
- ignored
-<to be read again> 
-                   \relax 
-l.1096 \begin{equation}
-                       \label{PDE.c}\tag{WWk}pdfTeX warning (ext4): destination
- with the same identifier (name{equation.4.1}) has been already used, duplicate
- ignored
-<to be read again> 
-                   \relax 
-l.1096 \begin{equation}
-                       \label{PDE.c}\tag{WWk}pdfTeX warning (ext4): destination
- with the same identifier (name{equation.4.1}) has been already used, duplicate
- ignored
-<to be read again> 
-                   \relax 
-l.1104 \begin{equation}
                        \label{M}\tag{M}pdfTeX warning (ext4): destination with 
 the same identifier (name{equation.4.1}) has been already used, duplicate ignor
 ed
 <to be read again> 
                    \relax 
-l.1104 \begin{equation}
+l.1093 \begin{equation}
                        \label{M}\tag{M}pdfTeX warning (ext4): destination with 
 the same identifier (name{equation.4.1}) has been already used, duplicate ignor
 ed
 <to be read again> 
                    \relax 
-l.1104 \begin{equation}
+l.1093 \begin{equation}
                        \label{M}\tag{M}pdfTeX warning (ext4): destination with 
 the same identifier (name{equation.4.1}) has been already used, duplicate ignor
 ed
 <to be read again> 
                    \relax 
-l.1104 \begin{equation}
-                       \label{M}\tag{M} [30]
-Overfull \hbox (38.50865pt too wide) in paragraph at lines 1121--1122
+l.1096 \begin{equation}
+                       \label{W}\tag{WW}pdfTeX warning (ext4): destination with
+ the same identifier (name{equation.4.1}) has been already used, duplicate igno
+red
+<to be read again> 
+                   \relax 
+l.1096 \begin{equation}
+                       \label{W}\tag{WW}pdfTeX warning (ext4): destination with
+ the same identifier (name{equation.4.1}) has been already used, duplicate igno
+red
+<to be read again> 
+                   \relax 
+l.1096 \begin{equation}
+                       \label{W}\tag{WW}pdfTeX warning (ext4): destination with
+ the same identifier (name{equation.4.1}) has been already used, duplicate igno
+red
+<to be read again> 
+                   \relax 
+l.1096 \begin{equation}
+                       \label{W}\tag{WW}pdfTeX warning (ext4): destination with
+ the same identifier (name{equation.4.1}) has been already used, duplicate igno
+red
+<to be read again> 
+                   \relax 
+l.1099 \begin{equation}
+                       \label{PDE.c}\tag{WWk}pdfTeX warning (ext4): destination
+ with the same identifier (name{equation.4.1}) has been already used, duplicate
+ ignored
+<to be read again> 
+                   \relax 
+l.1099 \begin{equation}
+                       \label{PDE.c}\tag{WWk}pdfTeX warning (ext4): destination
+ with the same identifier (name{equation.4.1}) has been already used, duplicate
+ ignored
+<to be read again> 
+                   \relax 
+l.1099 \begin{equation}
+                       \label{PDE.c}\tag{WWk}pdfTeX warning (ext4): destination
+ with the same identifier (name{equation.4.1}) has been already used, duplicate
+ ignored
+<to be read again> 
+                   \relax 
+l.1099 \begin{equation}
+                       \label{PDE.c}\tag{WWk}pdfTeX warning (ext4): destination
+ with the same identifier (name{equation.4.1}) has been already used, duplicate
+ ignored
+<to be read again> 
+                   \relax 
+l.1107 \begin{equation}
+                       \label{M}\tag{M}pdfTeX warning (ext4): destination with 
+the same identifier (name{equation.4.1}) has been already used, duplicate ignor
+ed
+<to be read again> 
+                   \relax 
+l.1107 \begin{equation}
+                       \label{M}\tag{M}pdfTeX warning (ext4): destination with 
+the same identifier (name{equation.4.1}) has been already used, duplicate ignor
+ed
+<to be read again> 
+                   \relax 
+l.1107 \begin{equation}
+                       \label{M}\tag{M}pdfTeX warning (ext4): destination with 
+the same identifier (name{equation.4.1}) has been already used, duplicate ignor
+ed
+<to be read again> 
+                   \relax 
+l.1107 \begin{equation}
+                       \label{M}\tag{M} [32]
+Overfull \hbox (38.50865pt too wide) in paragraph at lines 1124--1125
 []\OT1/cmr/m/n/10.95 If nec-es-sary, com-pute the transver-sal sec-tion eigen-s
 tates ([][]TSEig[][]) of $\OML/cmm/m/it/10.95 U\OT1/cmr/m/n/10.95 ([]\OML/cmm/m
 /it/10.95 ; t\OT1/cmr/m/n/10.95 )$ given by $\OMS/cmsy/m/n/10.95 ff\OT1/cmr/m/n
@@ -2375,32 +2417,32 @@ tates ([][]TSEig[][]) of $\OML/cmm/m/it/10.95 U\OT1/cmr/m/n/10.95 ([]\OML/cmm/m
 g[]g[]$\OT1/cmr/m/n/10.95 .
  []
 
-[31]
-Overfull \hbox (0.84122pt too wide) in paragraph at lines 1141--1142
+[33]
+Overfull \hbox (0.84122pt too wide) in paragraph at lines 1144--1145
 []\OT1/cmr/m/n/10.95 The time a sin-gle (worst case) so-lu-tion find-ing of $[]
 ^^H[]([]\OML/cmm/m/it/10.95 ; t\OT1/cmr/m/n/10.95 ) =
  []
 
 
-Underfull \hbox (badness 1242) in paragraph at lines 1165--1166
+Underfull \hbox (badness 1242) in paragraph at lines 1168--1169
 []\OT1/cmr/m/n/10.95 Devashish Pandey, Xavier Ori-ols, and Guillermo Al-bareda.
  \OT1/cmr/m/it/10.95 Ef-fec-tive 1D Time-Dependent
  []
 
 
-Underfull \hbox (badness 1028) in paragraph at lines 1168--1169
+Underfull \hbox (badness 1028) in paragraph at lines 1171--1172
 []\OT1/cmr/m/n/10.95 Oyanguren Xa-bier, \OT1/cmr/m/it/10.95 The Quan-tum Many B
 ody Prob-lem\OT1/cmr/m/n/10.95 , Bach-e-lor's The-sis (2020) for the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1170--1171
+Underfull \hbox (badness 10000) in paragraph at lines 1173--1174
 [][][]\OT1/cmr/m/n/10.95 https://github.com/Oiangu9/The[]Quantum[]Many[]Body[]P
 roblem[]-Bachellors[]Thesis-
  []
 
 
-Overfull \hbox (5.79922pt too wide) in paragraph at lines 1176--1178
+Overfull \hbox (5.79922pt too wide) in paragraph at lines 1179--1181
 [][]\OT1/cmr/m/n/10.95 https://drive.google.com/drive/folders/1vnNDZrIYDlAhd-kV
 mmnVJgXmcdE2gxAV?usp=sharing[][] 
  []
@@ -2409,32 +2451,29 @@ mmnVJgXmcdE2gxAV?usp=sharing[][]
 Package caption Warning: Unused \captionsetup[table] on input line 43.
 See the caption package documentation for explanation.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1181.
-[32]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1181.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1184.
+[34]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1184.
  (./Towards_An_Improvement_of_the_Hermitian_Approximation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1181.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1181.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1184.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1184.
 
 Package rerunfilecheck Info: File `Towards_An_Improvement_of_the_Hermitian_Appr
 oximation.out' has not changed.
-(rerunfilecheck)             Checksum: 46103538451DC13F0786EB49B52A60CB;2529.
-
-
-LaTeX Warning: There were undefined references.
+(rerunfilecheck)             Checksum: D7701E086EB02BF29B1EC0EE849D3BA7;2529.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 25168 strings out of 483107
- 446820 string characters out of 5964630
+ 25195 strings out of 483107
+ 447903 string characters out of 5964630
  908778 words of memory out of 5000000
- 39613 multiletter control sequences out of 15000+600000
+ 39633 multiletter control sequences out of 15000+600000
  552973 words of font info for 96 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 62i,23n,100p,1703b,860s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,23n,100p,1701b,860s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{CWF.SE} has been referenced but does not exist, r
 eplaced by a fixed one
 
@@ -2461,11 +2500,11 @@ msfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /eufm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
 msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
-Output written on Towards_An_Improvement_of_the_Hermitian_Approximation.pdf (33
- pages, 4634087 bytes).
+Output written on Towards_An_Improvement_of_the_Hermitian_Approximation.pdf (35
+ pages, 5750007 bytes).
 PDF statistics:
- 735 PDF objects out of 1000 (max. 8388607)
- 611 compressed objects within 7 object streams
- 112 named destinations out of 1000 (max. 500000)
- 364 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 757 PDF objects out of 1000 (max. 8388607)
+ 622 compressed objects within 7 object streams
+ 115 named destinations out of 1000 (max. 500000)
+ 384 words of extra memory for PDF output out of 10000 (max. 10000000)
 

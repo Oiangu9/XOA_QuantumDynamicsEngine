@@ -492,7 +492,7 @@ We have seen that if we use all the $j$ terms (or at least enough of them) in th
 \end{equation}
 Note that $J$ must be small enough to avoid the sum to be a good enough approximation of the infinite sum, which converges to (\ref{CWF.Prod}) (the product of CWF-s), that we saw leads to the Hermitian algorithm. In order to quantify this similarity, we can use the norm $\lambda$ of the approximation defined in Section 1.2.. We could then dynamically choose $J$ to avoid $\lambda$ getting bigger than a certain tolerance.
 
-The main weakness of this approximation though, is that a priori we know nothing about the degree to which the truncated approximation is closer to the true solution than the product of CWF-s. Only if the (\ref{Aprox.Trunc}) is close enough to the shape of the true full wavefunction will work to introduce the correct entanglement. Therefore, the algorithm will require us to review each potential in particular, in order to judge whether the approximation can consistently replicating the theoretically expected correlations. An example of such a procedure will be reviewed in Section 3.2, where we will indeed find that under the theoretical approval the truncated expansion of the CWF product yields a better results than the Hermitian method.\vspace{-0.3cm}
+The main weakness of this approximation though, is that a priori we know nothing about the degree to which the truncated approximation is closer to the true solution than the product of CWF-s. Only if the (\ref{Aprox.Trunc}) is close enough to the shape of the true full wavefunction will it work to introduce the correct entanglement. Therefore, the algorithm will require us to review each potential in particular, in order to judge whether the approximation can consistently replicate the theoretically expected correlations. An example of such a procedure will be reviewed in Section 3.2, where we will indeed find that under the theoretical approval the truncated expansion of the CWF product yields a better results than the Hermitian method.\vspace{-0.3cm}
 
 \subsection{Algorithm 2.0 - The Paradoxical Approximation }
 \subsubsection{Using \ref{CWF.SE.II} or \ref{CWF.SE.I}}
@@ -544,7 +544,7 @@ $$
 $$
 \sum_{j=0}^J \U^j_a(x_a,t)\Phi^j_{x_a}(\vec{x}_b^\beta(t),t)\qty{ E^j(x_a,t)+i\hbar\dv{}{t}log\qty(\Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}  \Bigg]\psi_a^\beta(x_a t)
 $$
-All these alternative shapes might give the method a broader possibility to be interpreted and the ability to assert {\em a priori} the correctness of the approximation for a given potential, as we will exemplify in Section 3.2.
+All these alternative shapes should give the approximated potentials the possibility to be interpreted and should provide us the ability to assert their suitability for a given potential. As we will exemplify in Section 3.2, it is necessary for the TBH to work, to have a prior theoretical knowledge of the correlations we would like to approximate. Whether TBH will mimic them or not could be asserted {\em a priori} using these last equations.
 % Introducir aqui la notacion adiabatica y mi desarrollo aquel de energixetan. Ta jarri kasu partikualr modure j=1. Baia esan zelan benetan trampa eitzie izengo zan 1.5h
 \newpage
 \subsubsection{Using \ref{CWF.SE.III}}
@@ -584,7 +584,7 @@ The fun point about this potential energy setting is that if both CWF-s are evol
 
 The key is to notice what Devashish P. {\em et al} \cite{Dev} found using the full Schrödinger Equation \ref{TDSE} and the Born-Huang expansion: there is a "virtual" potential energy barrier for the $x$ direction due to the confinement of the wavepacket in $y$. That is, there is a quantum geometrical correlation between the spatial degrees of freedom, such that if the initial energy of the wave-packet, transported through the narrowing channel, is smaller than the energy eigenstates of the transversal sections (\ref{TSEig}), then the wavepacket is mostly reflected as if there was a physical potential barrier in the entrance to the slit. These eigenenergies play additional roles in the dynamics of the transmission as a function of the projection of the wavepacket on them, but we will not care for them here.
 
-Therefore, this simple setting seems a perfect benchmark to identify algorithms that perform better than the basic Hermitian approximation. In principle, any improvement approximating the (\hyperref[CWF.SE]{CWF.SE}) beyond the Hermitian approximation should prove to be capable of capturing this "virtual" energy barrier for which the Hermitian one is blind. As we will see soon, Algorithm 2.0 is precisely capable of doing this, which will help to assert its validity.
+Therefore, this simple setting seems a perfect benchmark to identify algorithms that perform better than the basic Hermitian approximation. In principle, a good enough improvement, approximating the (\hyperref[CWF.SE]{CWF.SE}) beyond the Hermitian approximation, should prove to be capable of capturing this "virtual" energy barrier for which the Hermitian one is blind. As we will see soon, Algorithm 2.0 is precisely capable of doing this, which will help to assert its validity.
 
 Let us understand theoretically why the TBH algorithm should "see" the virtual barrier. Evaluating the particular (\ref{TSEig}) expressed above in the potentials $W_K^{(x)}$ and $W_K^{(x)}$ derived in Section 3.1.1, we get:
 $$
@@ -760,7 +760,7 @@ Overall, the array of scenarios seems legitimate enough as to test the new trunc
 
 
 \subsubsection{Results}\vspace{-0.3cm}
-An ensemble of $M$ Bohmian trajectories, sampled at the initial time according to the initial full wavefunction's probability density, should replicate the probability density of the full wave-function at all times. Thus, we can assert the methods by comparing the transmission of the full wave-function through the narrowest part of the channel integrated using the 2D CN, and the proportion of Bohmian trajectories transmitted using each of the approximate algorithms. In Figures \ref{fig:transm_GS_L5} and \ref{fig:transm_GS_L85} one can find the transmission study as a function of the initial momenta range described earlier for the initial wavepacket (GS) and narrowness $L_{min}=5$ and $8.5$, respectively. We see the same but for the wave-packet (GG) in Figures \ref{fig:transm_GG_L5} and \ref{fig:transm_GG_L85}. All of them were carried using $M=170$ trajectories.
+An ensemble of $M$ Bohmian trajectories, sampled at the initial time according to the initial full wavefunction's probability density, should replicate the probability density of the full wave-function at all times. Thus, we can assert the methods by comparing the transmission of the full wave-function through the narrowest part of the channel integrated using the 2D CN, and the proportion of Bohmian trajectories transmitted using each of the approximate algorithms. In Figures \ref{fig:transm_GS_L5} and \ref{fig:transm_GS_L85} one can find the transmission study as a function of the initial momenta range described earlier for the initial wavepacket (GS) and narrowness $L_{min}=5$ and $8.5$, respectively. We see the same but for the wave-packet (GG) in Figures \ref{fig:transm_GG_L5} and \ref{fig:transm_GG_L85}. All of them were carried out using $M=170$ trajectories.
 
 
 \begin{figure}[h!]
@@ -782,11 +782,11 @@ An ensemble of $M$ Bohmian trajectories, sampled at the initial time according t
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{1.1\linewidth}
-    %\includegraphics[width=\linewidth]{Example_Results/GS_L_8.5_transmission.png}
+    \includegraphics[width=\linewidth]{Example_Results/GS_L_8.5_transmission.png}
     %\caption{GS J=5 L=5}
   \end{subfigure}
   \begin{subfigure}[b]{1.1\linewidth}
-    %\includegraphics[width=\linewidth]{Example_Results/GS_L_8.5_errors.png}
+    \includegraphics[width=\linewidth]{Example_Results/GS_L_8.5_errors.png}
     %\caption{GS J=5 L=5}
   \end{subfigure}
 
@@ -812,42 +812,43 @@ An ensemble of $M$ Bohmian trajectories, sampled at the initial time according t
 \end{figure}
 
 
-%\begin{figure}[p]
- % \centering
-  %\begin{subfigure}[b]{1.1\linewidth}
-    %\includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_transmission.png}
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{1.1\linewidth}
+    \includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_transmission.png}
     %\caption{GS J=5 L=5}
-  %\end{subfigure}
- % \begin{subfigure}[b]{1.1\linewidth}
-    %\includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_errors.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{1.1\linewidth}
+    \includegraphics[width=\linewidth]{Example_Results/GG_L_8.5_errors.png}
     %\caption{GS J=5 L=5}
-%  \end{subfigure}
+     \end{subfigure}
 
   
-  %\caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GG initial wave-function using $J\in\{1,3\}$ and $L=8.5$. The 4 plots above compare the raw transmission probabilities while the 4 plots bellow show the absolute transmission difference between the full wavefunction transmission and the approximated ones.}
- % \label{fig:transm_GG_L85}
-% \end{figure}
+  \caption{ Transmission of the probability density computed using the full \ref{TDSE} solver Crank Nicolson compared with the transmitted trajectory proportions obtained with the Hermitian Algorithm (HA) and the Truncated Born Huang expansion algorithm (TBA), for the GG initial wave-function using $J\in\{1,3\}$ and $L=8.5$. The 4 plots above compare the raw transmission probabilities while the 4 plots bellow show the absolute transmission difference between the full wavefunction transmission and the approximated ones.}
+ \label{fig:transm_GG_L85}
+ \end{figure}
 
 \newpage
-\subsubsection{Discussion and Conclusions}
-The first pattern we can find throughout all the studied cases from Figure \ref{fig:transm_GS_L5} to \ref{fig:transm_GG_L85} is that using the Truncated Born-Huang approximation (TBH) with $J=1$ yields a considerably smaller absolute error than the Hermitian approximation. This readily suggests the success of the new algorithm: as we already predicted in theoretical grounds, the virtual barrier for wave-packets with smaller initial energy than the transversal confinement energies should barely be transmitted. TBH captures the hindrance correctly, while the Hermitian approach is completely blind to any sort of barrier. Even at a momentum as low as $k_0=0.1$ there is an appreciable transmission. You can find in Figure \ref{fig:trajs} the trajectories for this particular case (and $GS, L=5$).
 
-Regarding higher $J$ like $J=3$ or $5$, that is, truncating the Born-Huang expansion of the factorized product at a higher order, the new approach appears to be worst than the Hermitian approximation for $k_0>0.5$. Errors are bigger. Regarding $k_0\leq0.5$ however (the most sensitive interval with respect to the virtual barrier), TBH still beats the Hermitian algorithm. Nonetheless, the results are way worse than using $J=1$ for any $k_0$. Looking at the plots, one can readily notice that the problem is that more terms in the Born-Huang series seem to introduce an approximation for the virtual barrier that overestimates the barrier. This behaviour was not expected a priori, as the more terms in the expansion we consider, the closer we should be to the Hermitian approximation. The trend actually seems quite the opposite. Two possibilities seem to be causing this. On the one hand, the problem might be that way more terms in the Born-Huang expansion should be considered to see the expected convergence to the Hermitian "blindness" (there might be some sort of barrier cancellation due to higher terms). On the other hand, the problem might have to do with the fact that we only considered the potential $W_K^{(x)}$ and neglected $W_A^{(x)}$, arguing this to the lack of theoretical intuition for $W_A^{(x)}$. Actually trying the potential $W_A^{(x)}$ led to singularities in the velocity field of the trajectories, generating some "crazy" trajectories that were clearly wrong. However, using big $J$ together with $W_A^{(x)}$ might end up recovering the Hermitian "blindness" with respect to the virtual wall.
+\subsubsection{Discussion and Conclusions}\vspace{-0.3cm}
+The first pattern we can find throughout all the studied cases from Figure \ref{fig:transm_GS_L5} to \ref{fig:transm_GG_L85} is that using the Truncated Born-Huang approximation (TBH) with $J=1$ yields a considerably smaller absolute error than the Hermitian approximation. This readily suggests the success of the new algorithm: as we already predicted in theoretical grounds, the virtual barrier for wave-packets with smaller initial energy than the transversal confinement energies should barely be transmitted. TBH captures the hindrance correctly, while the Hermitian approach is completely blind to any sort of barrier: even at a momentum as low as $k_0=0.1$ there is an appreciable transmission. You can find in Figure \ref{fig:trajs} the trajectories for this particular case (and $GS, L=5$).
 
-One can argue that the introduction of $J=3$ should benefit the settings where the full wave-function showed the adiabatic state $j=3$ had non-negligible population, like the ($GG$) initial package evolution (see Figure \ref{fig:popsInTime}). However, the results show that even for the smallest $k_0$, where there is negligible population transfer, only considering $J=1$ overcomes the case where we also use $J=3$.
+Regarding higher $J$ like $J=3$ or $5$, that is, truncating the Born-Huang expansion of the factorized product at a higher order, the new approach appears to be worst than the Hermitian approximation for $k_0>0.5$. Errors are bigger. Regarding $k_0\leq0.5$ however (the most sensitive interval with respect to the virtual barrier), TBH still beats the Hermitian algorithm. Nonetheless, the results are way worse than using $J=1$ for any $k_0$. Looking at the plots, one can readily notice that the problem is that more terms in the Born-Huang series seem to introduce an approximation for the virtual barrier that overestimates the barrier. This behaviour was not expected a priori, as the more terms in the expansion we consider, the closer we should be to the Hermitian approximation. The trend actually seems quite the opposite. Two possibilities seem to be causing this. On the one hand, the problem might be that way more terms in the Born-Huang expansion should be considered to see the expected convergence to the Hermitian "blindness" (there might be some sort of barrier cancellation due to higher terms). On the other hand, the problem might have to do with the fact that we only considered the potential $W_K^{(x)}$ and neglected $W_A^{(x)}$, arguing this to the lack of theoretical intuition for $W_A^{(x)}$. Actually trying the potential $W_A^{(x)}$ led to singularities in the velocity field of the trajectories, generating some "crazy" trajectories that were clearly wrong. Still, using big $J$ together with $W_A^{(x)}$ might end up recovering the Hermitian "blindness" with respect to the virtual wall.
 
-Regarding the most adiabatic case, $L=8.5$, we already find that the TBH algorithm with $J=1$ performs better than the Hermitian algorithm. Still, the true advantage of the TBH algorithm can mainly be noted in the more demanding (less adiabatic) case of $L=5$, where the virtual barrier plays a major role in the considered range of energies. The TBH with $J=1$ provides a very neat fit to the benchmark transmission profile, while the Hermitian is completely blind to the geometrical correlation.
+One can argue that the introduction of $J=3$ should benefit the settings where the full wave-function showed the adiabatic state $j=3$ had non-negligible population, like the ($GG$) initial package evolution (see Figure \ref{fig:popsInTime}). However, the results show that even for the smallest $k_0$, where there is negligible population transfer, only considering $J=1$ overcomes the case where we also use $J=3$. In fact, it is interesting to note that introducing $J=3$ performs better in the most adiabatic case $L=8.5$ than in the $L=5$, even if the performance with $J=3$ is still overall worse than the Hermitian. If introducing more $J$ was to be correlated with a requirement by less adiabatic scenarios, this does not seem the case. Much the other way around in fact. Its interpretation seems straight-forward from the fact that more $J$ should make the approximation closer to a separable ansatz and further away from an entangled wavefunction, typical in a non adiabatic scenario.\vspace{-0.1cm}
+
+In this line, it must be noted that even if the TBH algorithm with $J=1$ performs the best in all studied cases, its true advantage can mostly be noted in the more demanding (less adiabatic) case of $L=5$, where the virtual barrier plays a major role in the considered range of energies (and where a separable state is an unacceptable ansatz).\vspace{-0.1cm}
 
 In the process of generating these transmission plots, $M=170$ trajectories were evolved per initial condition ($\Psi(x,y,t_0)$, $L$, $k_0$). For each of them a whole set of dynamical variables  were monitored in dynamic animations like the one screen-shot in Figure \ref{fig:screenshoot}, among them, the approximated $G_x,J_x$ potentials, the exact and approximated CWF-s in $x$ and $y$, the approximated adiabatic populations $P^j(t)$ and approximated adiabatic coefficient profiles $\chi^j(x,t)$, together with the full wavefunction ones. At the individual trajectory level, these magnitudes were not expected to satisfy all the information on the full wave-function. However, a similar overall behavior was observed in all of them compared with the full wavefunction results, except in the magnitude squared of the CWF-s, which in the TBH algorithm fluctuated (unlike the Hermitian approximation) due to the division of the correlation potential by $\Psi(x^\beta(t), y^\beta(t),t)$, that could get small if the trajectory moved to regions with CWF close to zero. Interesting enough, this did not seem to deteriorate the evolution of the trajectories. 
 
-Regrading the use of the approximated CWF-s to reproduce the full-wavefunction as suggested in the coming sections, these fluctuations might impede a correct reconstruction if not bounded correctly, even if the ensemble effect might relax the divergence, as happened with the ensemble transmission study. Nonetheless, the individual evolution of the trajectories seemed to provide a way better fit to the exact evolution than the Hermitian approximation. Some examples of this are given in Figure \ref{fig:trajs}. All this dynamical data and animations can be found in the link at Ref. \cite{DATA}.
+Regrading the use of the approximated CWF-s to reproduce the full-wavefunction as suggested in the coming sections, these fluctuations might impede a correct reconstruction if not bounded correctly, even if the ensemble effect might relax the divergence, as happened with the ensemble transmission study. Nonetheless, the individual evolution of the trajectories seemed to provide a way better fit to the exact evolution than the Hermitian approximation. Some examples of this are given in Figure \ref{fig:trajs}. All this dynamical data and animations can be found in the link at Ref. \cite{DATA}.\vspace{-0.2cm}
 
 
  \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.7\linewidth}
     \includegraphics[width=\linewidth]{k0_0.1_CN_GS.png}
-    \caption{Full wavefunction 2D Crank Nicolson. Left heat-map is the probability density $|\psi(x,y,t)|^2$ with Bohmian trajectories (dots). Right heat-map is the potential energy, black rays are the Bohmian trajectories.}
+    \caption{Full wavefunction 2D Crank Nicolson. Left heat-map: probability density $|\psi(x,y,t)|^2$ under Bohmian trajectories (dots). Right heat-map: potential energy over Bohmian trajectories (black beams).}
   \end{subfigure}
   \begin{subfigure}[b]{0.7\linewidth}
     \includegraphics[width=\linewidth]{k0_0.1_TBH_GS.png}
@@ -862,6 +863,7 @@ Regrading the use of the approximated CWF-s to reproduce the full-wavefunction a
   \label{fig:trajs}
 \end{figure}
 
+
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{1.0\linewidth}
@@ -871,7 +873,8 @@ Regrading the use of the approximated CWF-s to reproduce the full-wavefunction a
   \caption{ Snapshot of the animations that were used to check the dynamic variables predicted by the TBH algorithm. Animated samples can be found in Ref. \cite{DATA}. }
   \label{fig:screenshoot}
 \end{figure}
-\vspace{+0.4cm}
+
+\vspace{+0.5cm}
 As a concluding remark, it is worth to note again that even if the TBH approximation seems to be able to provide quantum correlations or entanglement effects that the Hermitian Approximation is blind to, the correctness of the approximated correlations will be situation specific. They should be first theoretically accepted using the approximated equations, as we exemplified at the beginning of Section 3.2. Only after the theoretically expected correlations are found to be mimicked by the approximated correlation potentials, one can expect the algorithm to outperform the Hermitian one. This calls for further study in more complex systems. The slit setting seems very useful for quantum electronics devices, but a generalized algorithm should regard other particular cases too. This is left for future work.
 
 
@@ -957,7 +960,7 @@ where the CWF-s are approximations too. Thus, the value of the full wavefunction
 By an assumption of continuity, the algorithm should work fine with enough points $M$.
 
 An alternative could be to make an interpolation of the points using a polynomial with a sufficient degree $p$: $$f(\vec{x},\vec{w})=w_0+x_1w_{11}+\cdots+x_Nw_{1N}+\cdots+x_1^pw_{p1}+\cdots+x_N^pw_{pN}$$
-where the complex weights $w_{ij}$ would be fitted using a gradient descent with regularization or the normal equations with regularization (to avoid Runge-like phenomena).
+where the complex weights $w_{ij}$ would be fitted using a gradient descent with regularization or the normal equations with regularization (to avoid Runge-like phenomena). This same regression could easily be handled by a multi-layer perceptron too, instead of the straight polynomial function.
 
 
 Yet another alternative would be to build an $\R^N$ histogram to reflect the proportion of trajectories in each bin, which should reflect by definition the probability density $R^2(\vec{x},t)$, the modulous squared of the wavefunction. Then the phase $S(\vec{x},t)$ could be recovered by integrating the velocity fields that the trajectory velocities generate, following their Bohmian interpretation.
