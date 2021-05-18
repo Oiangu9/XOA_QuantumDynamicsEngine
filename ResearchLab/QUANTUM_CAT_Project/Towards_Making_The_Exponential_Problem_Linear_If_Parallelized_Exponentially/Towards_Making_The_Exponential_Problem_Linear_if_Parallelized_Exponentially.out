@@ -14,11 +14,9 @@
 \BOOKMARK [1][-]{section.5}{Expanding the Wavefunction in 1D Eigenstates}{}% 14
 \BOOKMARK [2][-]{subsection.5.1}{Adiabatic \(or constant\) coupling potential with y for x and t}{section.5}% 15
 \BOOKMARK [1][-]{section.6}{Expanding the Wavefunction in 1D Section Eigenstates 2.0}{}% 16
-\BOOKMARK [2][-]{subsection.6.1}{Variant 1}{section.6}% 17
-\BOOKMARK [2][-]{subsection.6.2}{Variant 2}{section.6}% 18
-\BOOKMARK [2][-]{subsection.6.3}{Generalization}{section.6}% 19
-\BOOKMARK [1][-]{section.7}{What if we used any other \(known\) Orthonormal Basis for the Sections}{}% 20
-\BOOKMARK [2][-]{subsection.7.1}{If we knew an orthonormal basis for N}{section.7}% 21
-\BOOKMARK [2][-]{subsection.7.2}{If we knew an orthonormal basis for N-m}{section.7}% 22
-\BOOKMARK [2][-]{subsection.7.3}{If we only knew an orthonormal basis for each of the dimensions independently}{section.7}% 23
-\BOOKMARK [1][-]{section*.2}{References}{}% 24
+\BOOKMARK [1][-]{section.7}{Expanding the Wavefunction in any arbitrary Orthonormal Basis}{}% 17
+\BOOKMARK [2][-]{subsection.7.1}{If we knew an orthonormal basis for N}{section.7}% 18
+\BOOKMARK [2][-]{subsection.7.2}{If we knew an orthonormal basis for N-m}{section.7}% 19
+\BOOKMARK [2][-]{subsection.7.3}{If we only knew an orthonormal basis for each of the axes independently}{section.7}% 20
+\BOOKMARK [3][-]{subsubsection.7.3.1}{Generalization}{subsection.7.3}% 21
+\BOOKMARK [1][-]{section*.2}{References}{}% 22

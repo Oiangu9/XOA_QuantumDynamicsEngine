@@ -401,6 +401,8 @@ Therefore, this algorithm might be specially useful to reduce the complexity of 
 
 Now, in the eyes of the "inception" like approach we suggested two subsections ago, it is a natural question whether we can iteratively apply the algorithm for the simplest case in order to solve it everything with rather a series of 1D Schrödinger like Equations and one 1D eigenvalue problem or a series of 1D eigenvalue problems and a 1D Schrödinger like Equation. If yes, any of those two approaches would have a linear complexity in $N$. Of course it is not possible to do it for the general non-adiabatic case. But it turns out it is indeed possible for the adiabatic case! Let us try the $m=N-1$ case!
 
+\newpage
+
 \section{Expanding the Wavefunction in 1D Eigenstates}
 If we apply the generalized algorithm \eqref{XabEq} for the case in which $x=(x_1,...,x_{N-1})$ and $y=x_N$, we will have that :
 \begin{equation}
@@ -450,8 +452,11 @@ We would have that there exist some coefficients $\Lambda^{j2}(x^{(2)},t)$ such 
 \end{equation}
 which would follow the dynamical equation:
 \begin{equation}
-i\hbar \pdv{}{t}\Lambda^{k2}(x^{(2)},t)  = \qty( \varepsilon^{j2}(x^{(2)},t) + \sum_{s=1}^{N-2}\hat{T}_{x_s} +V^{(2)}(x^{(2)},t))\Lambda^{k2}(x^{(2)},t)+\sum_j \qty{ W^{kj2}(x^{(2)},t) + \sum_{s=1}^{N-1} S^{kj2}_s(x^{(2)},t)+F^{kj2}_s(x^{(2)},t)\pdv{}{x_s} } \Lambda^{j2}(x^{(2)},t) 
+i\hbar \pdv{}{t}\Lambda^{k2}(x^{(2)},t)  = \qty( \varepsilon^{j2}(x^{(2)},t) + \sum_{s=1}^{N-2}\hat{T}_{x_s} +V^{(2)}(x^{(2)},t))\Lambda^{k2}(x^{(2)},t)
 \end{equation}
+$$
++\sum_j \qty{ W^{kj2}(x^{(2)},t) + \sum_{s=1}^{N-1} S^{kj2}_s(x^{(2)},t)+F^{kj2}_s(x^{(2)},t)\pdv{}{x_s} } \Lambda^{j2}(x^{(2)},t) 
+$$
 Which again if we had that the coupling potential $U^{(2)}(x^{(2)}, y^{(2)},t)$ was adiabatic in $x^{(2)}$ and $t$, $W^{kj2}(x^{(2)},t),S^{kj2}_s(x^{(2)},t),F^{kj2}_s(x^{(2)},t)\simeq 0$ would mean that the coefficients would obey a Schrödinger Equation:
 \begin{equation}\label{incept2}
 i\hbar \pdv{}{t}\Lambda^{k2}(x^{(2)},t)  = \qty( \varepsilon^{j2}(x^{(2)},t) + \sum_{s=1}^{N-2}\hat{T}_{x_s} +V^{(2)}(x^{(2)},t))\Lambda^{k2}(x^{(2)},t)
@@ -460,7 +465,10 @@ Where we could repeat the process of "marginalising" one spatial variable iterat
 
 The fun point of such a procedure would be that computing the eigenstates of 1D Hamiltonians has a complexity $O(Jd)$ so doing the process for each of the $N$ stages of inception would require $O(NJd)$ operations, together with the overlap integrals to get the initial coefficients, which would now be 1D integrals of complexity $O(n_y)$ and the resolution of the last $J$ 1d Schrödinger like equations (where we could compute the coupling terms without neglecting them), that would take $O(Jn_x)$ operations: overall the complexity would be $O(NJn_x)$, which scales linearly with dimensions! Well, that is not completely honest... It will be true as long as parametrically computing the eigenstates can be done in one step. That is, if in order to compute the eigenstates of the section for $(x_1,x_2,...x_m)$ requires computing the eigenstates for each possible value of $(x_1,...,x_m)$ in a given grid of size $n_x^m$, then computing the eigenstates at the first inception step would require $O(Jdn_x^{N-1})$ operations, which still scales exponentially in space! But we were pretty close this time!
 
+If this iterative approach to obtain the 1D eigenstates of each time 
+
 In fact, if it really was as simple to compute the section eigenstates with a parametric dependence, at least as simple as (or lienarly more complex than) computing them for a single section, then we could achieve a linear algorithm inspired by this inception as shown in the following section. The good point about the one shown in the following section is that we will not require to approximate the adiabaticity and still we will convert the Schrödinger Equation into a set of 1D eigenstate problems and 1D Schrödinger Equations or ordinary differential equations.
+\newpage
 
 \section{Expanding the Wavefunction in 1D Section Eigenstates 2.0}
 Following the idea seeded in the previous section of only needing to solve 1D eigenstate problems, we could try the following: given we can iteratively isolate the interaction Hamiltonians of one degree of freedom with the rest:
@@ -494,14 +502,13 @@ We arrive at the decomposition of the full hamiltonian:
 \hat{H}(x_1,...,x_N)=\hat{H}_{x_1,...,x_{N-1}}(x_N,t)+\cdots+\hat{H}_{x_1}(x_2,t)+ \hat{H}(x_1,t)
 \end{equation}
 
-Where we see that $\hat{H}_{x_1,...,x_{m}}(x_{m+1})$ is the coupling hamiltonian between the degree of freedom $x_{m+1}$ and the first $m$.
+Where we see that $\hat{H}_{x_1,...,x_{m}}(x_{m+1},t)$ is the coupling hamiltonian between the degree of freedom $x_{m+1}$ and the first $m$.
 
-Then, we could find the parametric 1D eigenstates for each $m\in\{1,...N-1\}$ $\{\Phi^j_{x_1,...x_m}(x_{m+1},t)\}_j$ with eigenvalues $\{ \varepsilon^j_{x_1,...x_m}(t) \}_j$ to be the solutions of:
+Then, we could find the parametric 1D eigenstates for each $m\in\{1,...N-1\}$: $\{\Phi^j_{x_1,...x_m}(x_{m+1},t)\}_j$ with eigenvalues $\{ \varepsilon^j_{x_1,...x_m}(t) \}_j$ to be the solutions of:
 \begin{equation}
 \hat{H}_{x_1,...,x_m}(x_{m+1},t)\Phi^j_{x_1,...x_m}(x_{m+1},t) =  \varepsilon^j_{x_1,...x_m}(t) \Phi^j_{x_1,...x_m}(x_{m+1},t)
 \end{equation}
 
-\subsection{Variant 1}
 We could then expand the wavefuntion in those eigenstates iteratively to get:
 \begin{equation}
 \psi(x_1,...,x_N,t)=\sum_{j_N,...,j_2} \chi^{j_N,...,j_2}(x_1,t) \Phi^{j_2}_{x_1}(x_2,t) \Phi^{j_3}_{x_1,x_2}(x_3,t) \Phi^{j_4}_{x_1, x_2, x_3}(x_4,t)\cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N, t)
@@ -522,21 +529,36 @@ $$
 $$
 + \chi^{j_N,...,j_2}(x_1,t)\hat{H}(x_1,t)\Phi^{j_2}_{x_1}(x_2)\cdots \Phi^{j_{N-1}}_{x_1,... ,x_{N-2}}(x_{N-1})+ \hat{H}(x_1,t)\Phi^{j_2}_{x_1}(x_2)\cdots \Phi^{j_{N-1}}_{x_1,... ,x_{N-2}}(x_{N-1})\chi^{j_N,...,j_2}(x_1,t)\Big)
 $$
+Where if we multiply by $\Phi^{j_2}_{x_1}(x_2,t) \Phi^{j_3}_{x_1,x_2}(x_3,t) \Phi^{j_4}_{x_1, x_2, x_3}(x_4,t)\cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N, t)$ and integrate over $dx_2\cdots dx_N$ we get the coupled system of equations:
+\begin{equation}
+i\hbar \pdv{}{t}\chi^{k_N,...,k_2}(x_1,t) = \qty(\hat{T}_{x_1}, V(x_1,t)) \chi^{k_N,...,k_2}(x_1,t)+
+\end{equation}
+$$
+\sum_{j_N,...,j_2} \qty(W^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)+S^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)+F^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)\pdv{}{x_1} ) \chi^{j_N,...,j_2}(x_1,t)
+$$
+\begin{equation}
+W^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)=\int \Phi^{k_2}_{x_1}(x_2) \cdots \Phi^{k_N}_{x_1,... ,x_{N-1}}(x_N) \pdv{}{t}\qty[\Phi^{j_2}_{x_1}(x_2) \cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N)]dx
+\end{equation}
+\begin{equation}
+S^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)=\int \Phi^{k_2}_{x_1}(x_2) \cdots \Phi^{k_N}_{x_1,... ,x_{N-1}}(x_N) \hat{T_{x_1}}\qty[\Phi^{j_2}_{x_1}(x_2) \cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N)]dx
+\end{equation}
+\begin{equation}
+F^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)=2C_1\int \Phi^{k_2}_{x_1}(x_2) \cdots \Phi^{k_N}_{x_1,... ,x_{N-1}}(x_N) \pdv{}{x_1}\qty[\Phi^{j_2}_{x_1}(x_2) \cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N)]dx
+\end{equation}
+Which clearly was a very bad idea. It turns out that the fact that every eigenstate depends on the "outer" degrees of freedom impedes us to further develop correctly the coupling integrals, and thus they are left to be $O(n_x^{N-1})$.
 
+I was then going to suggest using also the eigenstates of $x_1$ and then generalize it to using $m$ free degrees of freedom...but the problem will persist. 
 
+However, the present idea has suggested the last algorithm of the document, which might be one of the most interesting ones here.
 
-
-\subsection{Variant 2}
-
-\subsection{Generalization}
 
 \newpage
-\section{What if we used any other (known) Orthonormal Basis for the Sections}
+\section{Expanding the Wavefunction in any arbitrary Orthonormal Basis}
 We have clearly seen that there were three bottlenecks with which we could play and swing from side to side were: the obtention of more or less complicated eigenstate problems, the resolution of more or less complicated systems of partial differential equations and the computations of more or less complicated integrals of variations of the eigenstates. We found a method to transfer all the complexity we wanted into the eigenstate problem from the differential equations. Then the obvious idea here is, how can we avoid needing to compute the eigenstates, where all the exponential problem may be placed? Would we have enough with using a general orthonormal basis of functions? If yes, then we could have solved the millenia problem. The answer most likely will be not, else it would have already been found. Still, lets see what we can get.
 \subsection{If we knew an orthonormal basis for $N$}
 This is the analogous case of using the full hamiltonian eigenstates. Representing by $x=(x_1,...,x_N)$, if we knew a set of orthonormal functions $\{f^j(x,t)\}_j$ spanning the whole Hilbert space of the system, then by the completeness of the basis we know that there should exist some coefficients $c_j(t)\in \C$ such that any arbitrary wavefunction should be expansible as a linear combination at any time (note that the basis functions need not be time dependent, but for the sake of generality we will consider so):
 \begin{equation}
-\psi(x,y,t)=\sum_j c_j(t) f^j(x,t)
+\psi(x,t)=\sum_j c_j(t) f^j(x,t)
 \end{equation}
 Introducing it into the TDSE, we would obtain the dynamical equations for the coefficients $c_j(t)$:
 \begin{equation}
@@ -556,20 +578,20 @@ S^{j,k}_s(t):=\int f^{j\dagger}(x,t) T_{x_j}[f^k(x,t)] dx
 \begin{equation}
 D^{j,k}(t):=\int f^{j\dagger}(x,t) U(x,t)f^k(x,t) dx
 \end{equation}
-Where as we already knew the basis functions, presumably in their analytic shape, we would be left with a computation of the coupling integrals (which could perhaps be evaluated symbolically) and the resolution of the linear coupled ordinary differential equation for the coefficients $c_j(t)$.
+Where as we already knew the basis functions, presumably in their analytic shape, we would be left with a computation of the coupling integrals (which could perhaps be evaluated symbolically), together with the resolution of the linear coupled ordinary differential equation system for the coefficients $c_j(t)$.
 
-If we only knew the basis functions numerically then the integrals would have a complexity $O(n_x^N)$ which scales exponentially. However, if we were able to have the coupling terms computed symbolically, then we would only need to simulate the system for the coefficients. This has a complexity of about $O(Jn_t)$, meaning the problem would be at most linearly scaling with dimensions! Now all the complexity has been transferred into computing integrals instead of eigenstates. In fact, because the coupling terms $S^{j,k}_s, W^{j,k}(t)$ are system independent they could be pre-computed for any $N$ dimensional system. Only the term $D^{j,k}(t)$ which does depend on the particular system would need to be computed!
+If we only knew the basis functions numerically then the integrals would have a complexity $O(n_x^N)$ which scales exponentially. However, if we were able to have the coupling terms computed symbolically, then we would only need to simulate the system for the coefficients. This has a complexity of about $O(Jn_t)$, meaning the problem would be at most linearly scaling with dimensions! Now all the complexity has been transferred into computing integrals instead of eigenstates. In fact, because the coupling terms $S^{j,k}_s, W^{j,k}(t)$ are system independent they could be pre-computed for any $N$ dimensional system. Only the term $D^{j,k}(t)$, which does depend on the particular system (the potential energy), would need to be computed!
 
 On the bad side, using generic orthonormal functions we would have lost the ability to approximate the coupling terms due to the adiabaticity of the potential.
 
 \subsection{If we knew an orthonormal basis for $N-m$}
-We will build here the analogue of the generalized method \eqref{XabEq}. Using the notation $x=(x_1,..,x_m)$ and $y=(x_{m+1},...,x_N)$, we will assume we know an arbitrary orthonormal set of functions $\{ f^j(y,t) \}_j$ spanning the space $y$. Once again, they need not depend on time, but for generality we will consider so (the difference will be that the coupling terms will simplify. For the completeness of the basis for the subspace, we could find coefficients $\Lambda^j(x,t)$ such that:
+We will build here the analogue of the generalized method \eqref{XabEq}. Using the notation $x=(x_1,..,x_m)$ and $y=(x_{m+1},...,x_N)$, we will assume we know an arbitrary orthonormal set of functions $\{ f^j(y,t) \}_j$ spanning the space $y$. Once again, they need not depend on time, but for generality we will consider so (the difference will be that the coupling terms would simplify). For the completeness of the basis for the subspace, we could find coefficients $\Lambda^j(x,t)$ such that:
 \begin{equation}
 \psi(x,y,t)=\sum_j \Lambda^j(x,t) f^j(y,t)
 \end{equation}
 Note that unlike the transversal section eigenstates, these do not depend on $x$! (SHOULD THEY?)
 
-Then introducing this ansatz into the full TDSE, we can get the dynamic equations for the coefficients $\Lambda^j(x,t)$, by using again the orthonormality condition $\int f^{k\dagger}(y,t)f^k(y,t)dy=1$ we can get:
+Then introducing this ansatz into the full TDSE, we can get the dynamic equations for the coefficients $\Lambda^j(x,t)$. By using again the orthonormality condition $\int f^{k\dagger}(y,t)f^k(y,t)dy=1$ we can get:
 \begin{equation}
 i\hbar \pdv{}{t}\Lambda^j(x,t)= \sum_{s=1}^m \hat{T}_m \Lambda^j(x,t) + \sum_k \qty( W^{jk}(t)+\sum_{r=m}^NS^{jk}_r(t)+D^{jk}(x,t) )\Lambda^k(x,t)
 \end{equation}
@@ -587,9 +609,54 @@ Again, we achieve a similar equation, where the only task we would need would be
 
 Once again though, we will have lost the possibility to study the adiabaticity and approximate the coupling terms in consequence.
 
-\subsection{If we only knew an orthonormal basis for each of the dimensions independently}
-Finally, in the spirit of the previous developments, if we knew an orthonormal set of functions spanning each of the spatial axes $\{ f^j_r(x_r,t) \}_j$
+\subsection{If we only knew an orthonormal basis for each of the axes independently}
+Finally, in the spirit of the previous section's development, if we knew an orthonormal set of functions spanning each of the spatial axes $\{ f^j_r(x_r,t) \}_j$ for $r\in\{1,...,N \}$\footnote{Again, they need not depend on time, but for generality we consider so.} we could then build an orthonormal basis for the full Hilbert space of the system by taking into account all the possible tensor products of the states $\{f^{j_1}(x_1,t)\cdots f^{j_N}(x_N,t) \}_{j_1,...,j_N}$. By the completeness of this basis, any wavefunction of the system will be expansible for some coefficients as:
+\begin{equation}
+\psi(x,t)=\sum_{j_1,...,j_N} c_{j_1,...,j_N} f^{j_1}(x_1,t)\cdots f^{j_N}(x_N,t)
+\end{equation}
+Introducing it in the Schrödinger Equation we get a dynamical set of equations for the coefficients:
+\begin{equation}
+i\hbar \dv{}{t} c_{j_1,...,j_N}(t) = \sum_{k1,...,k_N} \qty(W^{j_1,...,j_N}_{k_1,...,k_N}(t)+S^{j_1,...,j_N}_{k_1,...,k_N}(t)+D^{j_1,...,j_N}_{k_1,...,k_N}(t))c_{k_1,...,k_N}(t)
+\end{equation}
+with:
+\begin{equation}
+W^{j_1,...,j_N}_{k_1,...,k_N}(t)=-i\hbar \sum_{s=1}^N \int f^{j_s\dagger}(x_s,t)\pdv{}{t}[f^{j_s}(x_s,t)]dx_s
+\end{equation}
+\begin{equation}
+S^{j_1,...,j_N}_{k_1,...,k_N}(t)=\sum_{s=1}^N \int f^{j_s\dagger}(x_s,t)\hat{T}_{x_s}[f^{j_s}(x_s,t)]dx_s
+\end{equation}
+\begin{equation}
+D^{j_1,...,j_N}_{k_1,...,k_N}(t)=\int f^{j_1\dagger}(x_1,t)\cdots f^{j_N\dagger}(x_N,t)\ U(x,t)\ f^{k_1}(x_1,t)\cdots f^{k_N}(x_N,t) dx
+\end{equation}
 
+Note again that if the orthonormal vectors were chosen to be time independent then $W^{j_1,...,j_N}_{k_1,...,k_N}(t)=0$ and $S^{j_1,...,j_N}_{k_1,...,k_N}(t)$ would be time independent. 
+
+Now, in this occasion, we have achieved to reduce the complexity of each integral to the maximum (now they are single dimensional integrals $O(n_x)$ that can in fact be done in parallel). However, the number of coefficients necessary to achieve an interesting level of entanglement might be proportional to $J^N$ (at least $J$ basis vectors per dimension), which would mean that the exponential problem would be translated back into the resolution of the coefficient differential equations. The good point would be that they would be ordinary differential equations, but still the complexity would be about $O(J^Nn_t)$.
+
+\subsubsection{Generalization}
+We could try to generalize this approach to expanding only some degrees of freedom in terms of their 1D orthonormal vectors and leaving the rest to be solved by a dynamical motion equation. If we consider $x:=(x_1,...,x_m)$ and $y:=(x_{m+1},...,x_N)$, we could then take orthonormal bases for the axes in $y$ $\{ f^j_r(x_r,t) \}_j$ for $r\in\{m+1,...,N\}$ and get a complete basis set for $y$ using their tensor products $\{f^{j_{m+1}}(x_{m+1},t)\cdots f^{j_N}(x_N,t) \}_{j_{m+1},...,j_N}$. Then any wavefunction would be expandible in this basis as:
+\begin{equation}
+\psi(x,t)=\sum_{j_{m+1},...,j_N} \Lambda^{j_{m+1},...,j_N}(x,t) f^{j_{m+1}}(x_{m+1},t)\cdots f^{j_N}(x_N,t)
+\end{equation}
+Introducing it in the Schrödinger Equation we get a dynamical set of equations for the coefficients $\Lambda$
+\begin{equation}
+i\hbar \pdv{}{t} \Lambda^{j_{m+1},...,j_N}(x,t) = \qty(\sum_{s=1}^N\hat{T_{x_j}}+V(x,t) )\Lambda^{j_{m+1},...,j_N}(x,t)+
+\end{equation}
+$$
+ +\sum_{k1,...,k_N} \qty(W^{j_1,...,j_N}_{k_1,...,k_N}(t)+S^{j_1,...,j_N}_{k_1,...,k_N}(t)+D^{j_1,...,j_N}_{k_1,...,k_N}(x,t))\Lambda^{k_{m+1},...,k_N}(x,t)
+$$
+with:
+\begin{equation}
+W^{j_1,...,j_N}_{k_1,...,k_N}(t)=-i\hbar \sum_{s=m+1}^N \int f^{j_s\dagger}(x_s,t)\pdv{}{t}[f^{j_s}(x_s,t)]dx_s
+\end{equation}
+\begin{equation}
+S^{j_1,...,j_N}_{k_1,...,k_N}(t)=\sum_{s=m+1}^N \int f^{j_s\dagger}(x_s,t)\hat{T}_{x_s}[f^{j_s}(x_s,t)]dx_s
+\end{equation}
+\begin{equation}
+D^{j_1,...,j_N}_{k_1,...,k_N}(x,t)=\int f^{j_{m+1}\dagger}(x_{m+1},t)\cdots f^{j_N\dagger}(x_N,t)\ U(x,t,t)\ f^{k_{m+1}}(x_{m+1},t)\cdots f^{k_N}(x_N,t) dx
+\end{equation}
+
+Where we would now balance the complexity the following way: the hardest coupling integrals, those for $D^{j_1,...,j_N}_{k_1,...,k_N}$ would have a complexity of $O(n_y^{N-m})$ and the equations ruling the coefficients would require a time about $O(J^{N-m}n_x^m)$. Again, the optimum strategy would be to use $m=N/2$, which would reduce the overal complexity in a square root even if still leaving it exponential. Perhaps the advantage of this algorithm would be that it might be simpler to generalize to $N$ than the other ones, because in the end we will roughly use the same function basis for each of the axes.
 
 % Gero generalization bixek baia en el caso en el que usas una base ortonormal genérica, de forma que no has de resolver eigenstate problem: Que te aporta de bueno?
 
