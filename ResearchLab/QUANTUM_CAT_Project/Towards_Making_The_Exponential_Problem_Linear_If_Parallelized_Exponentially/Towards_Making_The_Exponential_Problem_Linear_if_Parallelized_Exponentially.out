@@ -1,0 +1,24 @@
+\BOOKMARK [1][-]{section.1}{The Objective}{}% 1
+\BOOKMARK [1][-]{section.2}{Expanding the Full Wavefunction in energy eigenstates}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{General Time Dependent Potentials}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Adiabatically Time Dependent Potentials}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Time Independent Potentials}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Comments on this Method}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Expanding the Wavefunction in Transversal Section Eigenstates}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Adiabatic \(or constant\) coupling potential with y for x and t}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.2}{Comments on General Potentials}{section.3}% 9
+\BOOKMARK [1][-]{section.4}{Expanding the Wavefunction in Custom Section Eigenstates}{}% 10
+\BOOKMARK [2][-]{subsection.4.1}{Adiabatic \(or constant\) coupling potential with y for x and time}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.2}{Comments on General Potentials}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.3}{The Spectrum of possibilities of the algorithm}{section.4}% 13
+\BOOKMARK [1][-]{section.5}{Expanding the Wavefunction in 1D Eigenstates}{}% 14
+\BOOKMARK [2][-]{subsection.5.1}{Adiabatic \(or constant\) coupling potential with y for x and t}{section.5}% 15
+\BOOKMARK [1][-]{section.6}{Expanding the Wavefunction in 1D Section Eigenstates 2.0}{}% 16
+\BOOKMARK [2][-]{subsection.6.1}{Variant 1}{section.6}% 17
+\BOOKMARK [2][-]{subsection.6.2}{Variant 2}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.3}{Generalization}{section.6}% 19
+\BOOKMARK [1][-]{section.7}{What if we used any other \(known\) Orthonormal Basis for the Sections}{}% 20
+\BOOKMARK [2][-]{subsection.7.1}{If we knew an orthonormal basis for N}{section.7}% 21
+\BOOKMARK [2][-]{subsection.7.2}{If we knew an orthonormal basis for N-m}{section.7}% 22
+\BOOKMARK [2][-]{subsection.7.3}{If we only knew an orthonormal basis for each of the dimensions independently}{section.7}% 23
+\BOOKMARK [1][-]{section*.2}{References}{}% 24

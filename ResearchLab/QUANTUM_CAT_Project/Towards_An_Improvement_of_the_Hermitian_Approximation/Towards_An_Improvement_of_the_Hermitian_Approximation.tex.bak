@@ -544,7 +544,7 @@ $$
 $$
 \sum_{j=0}^J \U^j_a(x_a,t)\Phi^j_{x_a}(\vec{x}_b^\beta(t),t)\qty{ E^j(x_a,t)+i\hbar\dv{}{t}log\qty(\Phi_{x_a}^j(\vec{x}_b^\beta(t),t))}  \Bigg]\psi_a^\beta(x_a t)
 $$
-All these alternative shapes should give the method the possibility to be interpreted and provider us the ability to assert the correctness of the approximation for a given potential. As we will exemplify in Section 3.2, it is necessary for the TBH to work, to have a prior theoretical knowledge of the correlations we would like to approximate. Whether TBH will mimic them or not could be asserted {\em a priori} using these last equations.
+All these alternative shapes should give the approximated potentials the possibility to be interpreted and should provide us the ability to assert their suitability for a given potential. As we will exemplify in Section 3.2, it is necessary for the TBH to work, to have a prior theoretical knowledge of the correlations we would like to approximate. Whether TBH will mimic them or not could be asserted {\em a priori} using these last equations.
 % Introducir aqui la notacion adiabatica y mi desarrollo aquel de energixetan. Ta jarri kasu partikualr modure j=1. Baia esan zelan benetan trampa eitzie izengo zan 1.5h
 \newpage
 \subsubsection{Using \ref{CWF.SE.III}}
