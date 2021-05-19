@@ -71,7 +71,7 @@
 \usepackage{imakeidx} % make index
 \makeindex[columns=3, title=Alphabetical Index, intoc]
 
-\title{\vspace{-2.5cm} {\bf Can we make the Exponential scaling in Time\\ be Linear in Time if Parallelized Exponentially?} \vspace{-0.4cm}  }
+\title{\vspace{-2.5cm} {\bf Can we make the Exponential scaling in Time\\ be Linear in Time if Parallelized Exponentially? \\ {\em - Part 1 -}} \vspace{-0.4cm}  }
 \date{\vspace{-11ex}}
 \let\clipbox\relax
 \usepackage{adjustbox}
@@ -102,19 +102,27 @@
 \pagenumbering{arabic}
 \setcounter{page}{1}
 \vspace{-0.3 cm}
-\section{The Objective}
-It is well known that the time dependent Schrödinger Equation (TDSE) that predicts the dynamics of a quantum system is a problem that scales exponentially both in space and in time for increasing dimensionality of the problem. This becomes very obvious when interpreting the wave-funtion in terms of an ensemble of tangentially interacting trajectories of the system. That is, quantum mechanical systems (experiments) depend on all their possible realizations in a way that all the possible trajectories of the system interact repulsively among them due to the quantum potential first described by David Bohm. This means that it is equivalent to think on the wavefunction of the system as an ensemble of an infinitely dense set of exactly equivalent systems forming a fluid where each copy of the system cannot cross the trajectory of any other at the same time (they cannot occupy the same point in configuration space-time) and they still have a repelling force pushing the fluid towards the most homogenenous distribution possibel given the manifold described by the potential energy term. 
+%\section{The Objective}
+%It is well known that the time dependent Schrödinger Equation (TDSE) that predicts the dynamics of a quantum system is a problem that scales exponentially both in space and in time for increasing dimensionality of the problem. This becomes very obvious when interpreting the wave-funtion in terms of an ensemble of tangentially interacting trajectories of the system. That is, quantum mechanical systems (experiments) depend on all their possible realizations in a way that all the possible trajectories of the system interact repulsively among them due to the quantum potential first described by David Bohm. This means that it is equivalent to think on the wavefunction of the system as an ensemble of an infinitely dense set of exactly equivalent systems forming a fluid where each copy of the system cannot cross the trajectory of any other at the same time (they cannot occupy the same point in configuration space-time) and they still have a repelling force pushing the fluid towards the most homogenenous distribution possibel given the manifold described by the potential energy term. 
+%
+%This clearly shows that it is impossible to evolve a single one of these trajectories without knowing the whole ensemble. This is the so called Quanutm Wholeness. This means that if we increase the dimensionality of the system, it is not enough to increase the computational complexity linearly. A single dimension more implies that in order to know about one single trajectory we now need to know as many trajectories as we needed for the previous dimensionality multiplied by all the possible positions in a new axis. The number of trajectories we would need to simultaneously compute in order to be able to even compute them (and by the way reconstruct the wave-funtion in tyheir vecinity) increases exponentially. However, it is still not clear that there is no method that could allow us evolve self-consistently in parallel at each time step enough trajectories, such that their evolution is linear in time for increasing number of dimensions (even if it scales exponentially in parallel threads that communicate at each time step).
+%
+%That is, the question is, can we find a method that allows us to compute a single time step that has a fixed cost (perhaps with soem overheads for parallel communiocation) that transfers the expoenntial complexity to the parallelization? That is, it is clear, that if we try to sequentially compute the necessary number of trajectories to advance a central trajectory, we need exponentially more surrounding trajetcories, thus in the single thread's time we would require exponentially more time. Then, even if we are given as many parallel computation threads as we want, we are not able to compute all the trajectories, because they are not independent and they do influence each other. Still, if we allow a cross talk between them every time step, we could achieve an evolution for them that does not increase the complexity in sequential time (unless for the overhead). This cross talk would account for the qwuantum potential propagation. Osea esto es fundamentalemte posible si consiguiese encontrar cual es el pair-wise quantum potential discreto, que al hacer al infinito tiende a la funcion de onda continua. Si fuese asi con una integracion del sistema de edos infinito (pero cada eq simple) en paralelo actualizando los potenciales para cada uno podrias conseguir resolver cualquier problema quantum many body problem si tuvieses suficientes threads paralellos (uno por cada trayectoria evolucionada). HAbria claramente el problema del cross talk, que seria cada vez mas complicada pero bueno, en si seria eso.
+%
+%Alternativamente, en vez de intentar hacer que todas las trayectorias sean por igual ecuaciones d eNewton, queiza podrias intentar darle un empujon y evolucionar fks de onda condicionadas y una trayectoria por cada conjunto. Ya que cada CWF es 1D y eso es muy facil de resolver. Si fueses capaz de aproximar la full fk de onda con estas slices en cada dimension mejor que usando las trajs en si pues mejor. Ze en si cada CWF es un ensemble de trayectorias, pero de las cuales en principio solo uan (la central) es en cada tiempo la misma. Osea la pregunta es realmente el qtm wholeness necesita trayectorias que estan super lejos? Claro, la cuestion es que no seras capaz de obtener con un solo set de cwf-s en cdad dimension (una trayectoria) evolucionada al mismo timepo el self-impulso dado por las trayectorias que lo rodean. Aka una sola cwf evolucionada en paralelo no funkiona. En todo caso muchas cwf-s evolucionadas tangentemente si, como las trayectorias. Pero esto por supuesto acabaria siendo un ensemble method tipo quantum trajectory method. 
+%
+%
+%Osea la cuestion es que la velocidad e duna trayectoria de Bohm solo depende de la derivad de sus CWF-s en cada timepo! de las direcciones ortonormales (ze claro, el campo de velocidades es la derivada parcial (en las dirs cartesianas de la accion) y el qtm potential solo depende de la derivada parcial en las dirs cartesianas de la "densidad" local!). Entonces, dado un t, dada la fk onda completa, sacas condicioanndo las CWF. Ahora de las CWF tu puedes computar a donde se mueve la traj de Bohm en el sigueinte teimpo. Ahora la pregunta es, puedes si supieses toda la traj evolucionar un tiempo la CWF? Si pudieses ya estaria reuslto el problema many body. Pero la resuesta es que las ecuaciones que rigen las CWF dependen de la full wavefunction al parecer!
+%
+%Disclaimer, all the present work will be made for 3 dims but is clearly generalizable to N.
+\section*{About Part 1}
 
-This clearly shows that it is impossible to evolve a single one of these trajectories without knowing the whole ensemble. This is the so called Quanutm Wholeness. This means that if we increase the dimensionality of the system, it is not enough to increase the computational complexity linearly. A single dimension more implies that in order to know about one single trajectory we now need to know as many trajectories as we needed for the previous dimensionality multiplied by all the possible positions in a new axis. The number of trajectories we would need to simultaneously compute in order to be able to even compute them (and by the way reconstruct the wave-funtion in tyheir vecinity) increases exponentially. However, it is still not clear that there is no method that could allow us evolve self-consistently in parallel at each time step enough trajectories, such that their evolution is linear in time for increasing number of dimensions (even if it scales exponentially in parallel threads that communicate at each time step).
+This is the first part of an analysis towards an algorithm in terms of conditional wavefunctions (CWF) and their respective Bohmian trajectories that could suppose a clear advantage in front of Orthodox approaches.
 
-That is, the question is, can we find a method that allows us to compute a single time step that has a fixed cost (perhaps with soem overheads for parallel communiocation) that transfers the expoenntial complexity to the parallelization? That is, it is clear, that if we try to sequentially compute the necessary number of trajectories to advance a central trajectory, we need exponentially more surrounding trajetcories, thus in the single thread's time we would require exponentially more time. Then, even if we are given as many parallel computation threads as we want, we are not able to compute all the trajectories, because they are not independent and they do influence each other. Still, if we allow a cross talk between them every time step, we could achieve an evolution for them that does not increase the complexity in sequential time (unless for the overhead). This cross talk would account for the qwuantum potential propagation. Osea esto es fundamentalemte posible si consiguiese encontrar cual es el pair-wise quantum potential discreto, que al hacer al infinito tiende a la funcion de onda continua. Si fuese asi con una integracion del sistema de edos infinito (pero cada eq simple) en paralelo actualizando los potenciales para cada uno podrias conseguir resolver cualquier problema quantum many body problem si tuvieses suficientes threads paralellos (uno por cada trayectoria evolucionada). HAbria claramente el problema del cross talk, que seria cada vez mas complicada pero bueno, en si seria eso.
+In this first document I will review multiple full-wavefunction ways in which we can swing the problem of computing the Schrödinger Equation for $N$ degrees of freedom from differential equations to eigenstate problems and integral computations. In fact we will see that we can have almost arbitrary control over where among the three problems we place the exponential complexity of the many body problem (of course it will never disappear). This will be achieved by expanding the wavefunction in different bases referring to different axes and sections. The reason why we must first review all these options in the exact and full wavefunction scheme will become more evident in the second document where we will link them with CWF-s. The main idea though will be that a wavefunction expanded in transversal section can also be viewed as an agglomeration of conditional wave-functions. As such, this will be a natural path to find a convenient place where conditional wavefunctions might mitigate the exponential barrier.
 
-Alternativamente, en vez de intentar hacer que todas las trayectorias sean por igual ecuaciones d eNewton, queiza podrias intentar darle un empujon y evolucionar fks de onda condicionadas y una trayectoria por cada conjunto. Ya que cada CWF es 1D y eso es muy facil de resolver. Si fueses capaz de aproximar la full fk de onda con estas slices en cada dimension mejor que usando las trajs en si pues mejor. Ze en si cada CWF es un ensemble de trayectorias, pero de las cuales en principio solo uan (la central) es en cada tiempo la misma. Osea la pregunta es realmente el qtm wholeness necesita trayectorias que estan super lejos? Claro, la cuestion es que no seras capaz de obtener con un solo set de cwf-s en cdad dimension (una trayectoria) evolucionada al mismo timepo el self-impulso dado por las trayectorias que lo rodean. Aka una sola cwf evolucionada en paralelo no funkiona. En todo caso muchas cwf-s evolucionadas tangentemente si, como las trayectorias. Pero esto por supuesto acabaria siendo un ensemble method tipo quantum trajectory method. 
+All the constructions will be made in a sort of constructive way, where we will first envision some particular cases and then generalize them in a more interesting shape. At the end of each algorithm a comment on the complexity of the different tasks will be made, setting the emphasis on the dependence with the degrees of freedom $N$ (the "number of bodies").
 
-
-Osea la cuestion es que la velocidad e duna trayectoria de Bohm solo depende de la derivad de sus CWF-s en cada timepo! de las direcciones ortonormales (ze claro, el campo de velocidades es la derivada parcial (en las dirs cartesianas de la accion) y el qtm potential solo depende de la derivada parcial en las dirs cartesianas de la "densidad" local!). Entonces, dado un t, dada la fk onda completa, sacas condicioanndo las CWF. Ahora de las CWF tu puedes computar a donde se mueve la traj de Bohm en el sigueinte teimpo. Ahora la pregunta es, puedes si supieses toda la traj evolucionar un tiempo la CWF? Si pudieses ya estaria reuslto el problema many body. Pero la resuesta es que las ecuaciones que rigen las CWF dependen de la full wavefunction al parecer!
-
-Disclaimer, all the present work will be made for 3 dims but is clearly generalizable to N.
 \newpage
 \section{Expanding the Full Wavefunction in energy eigenstates}
 \subsection{General Time Dependent Potentials}
@@ -452,7 +460,7 @@ We would have that there exist some coefficients $\Lambda^{j2}(x^{(2)},t)$ such 
 \end{equation}
 which would follow the dynamical equation:
 \begin{equation}
-i\hbar \pdv{}{t}\Lambda^{k2}(x^{(2)},t)  = \qty( \varepsilon^{j2}(x^{(2)},t) + \sum_{s=1}^{N-2}\hat{T}_{x_s} +V^{(2)}(x^{(2)},t))\Lambda^{k2}(x^{(2)},t)
+i\hbar \pdv{}{t}\Lambda^{k2}(x^{(2)},t)  = \qty( \varepsilon^{j2}(x^{(2)},t) + \sum_{s=1}^{N-2}\hat{T}_{x_s} +V^{(2)}(x^{(2)},t))\Lambda^{k2}(x^{(2)},t)+
 \end{equation}
 $$
 +\sum_j \qty{ W^{kj2}(x^{(2)},t) + \sum_{s=1}^{N-1} S^{kj2}_s(x^{(2)},t)+F^{kj2}_s(x^{(2)},t)\pdv{}{x_s} } \Lambda^{j2}(x^{(2)},t) 
@@ -658,6 +666,16 @@ D^{j_1,...,j_N}_{k_1,...,k_N}(x,t)=\int f^{j_{m+1}\dagger}(x_{m+1},t)\cdots f^{j
 
 Where we would now balance the complexity the following way: the hardest coupling integrals, those for $D^{j_1,...,j_N}_{k_1,...,k_N}$ would have a complexity of $O(n_y^{N-m})$ and the equations ruling the coefficients would require a time about $O(J^{N-m}n_x^m)$. Again, the optimum strategy would be to use $m=N/2$, which would reduce the overal complexity in a square root even if still leaving it exponential. Perhaps the advantage of this algorithm would be that it might be simpler to generalize to $N$ than the other ones, because in the end we will roughly use the same function basis for each of the axes.
 
+
+\newpage
+
+\section*{To be Continued...}
+In the next document we will see that introducing CWF-s into these equations will free us from computing the coupling integrals, which might end up meaning that some of the approaches could lead to equations that do not scale exponentially if correctly parallelized...
+
+
+
+
+
 % Gero generalization bixek baia en el caso en el que usas una base ortonormal genérica, de forma que no has de resolver eigenstate problem: Que te aporta de bueno?
 
 % Hau eindde dekotenien bidali eta hasi bigarren partie, dala como podemos aprovechar para las cwf-s cualquiera de estos algoritmos? Nos permiten quizas solo usar las eigenstates en los puntos por donde va la trayectoria (mucho mejor, ze son n_t veces solo) y encima avoidea las integrales creo, asi que de pm. Si es verdad eso entonces quizas, y solo quizas con alguna de estas ultimas podemos hacer algo asombroso
@@ -679,35 +697,29 @@ Where we would now balance the complexity the following way: the hardest couplin
 
 % Imposatu adiab state baten conretuetan, gero entre ellos son ortonormales, asike koef bat jarri y mirar como evolucionarian.
 
-
-
-
-
-
-\newpage
 \begin{thebibliography}{1}
 \addcontentsline{toc}{section}{References}
 
-\bibitem{JordiXO}
-	Oriols X, Mompart J,{\em Applied Bohmian Mechanics: From Nanoscale Systems to Cosmology} Pan Stanford, Singapore (2012)
+%\bibitem{JordiXO}
+%	Oriols X, Mompart J,{\em Applied Bohmian Mechanics: From Nanoscale Systems to Cosmology} Pan Stanford, Singapore (2012)
 	
-\bibitem{XO}
-	Oriols X. 2007 {\em Quantum-trajectory approach to time-dependent transport in mesoscopic systems with electron-electron interactions} Phys. Rev. Lett. 98 066803
+%\bibitem{XO}
+%	Oriols X. 2007 {\em Quantum-trajectory approach to time-dependent transport in mesoscopic systems with electron-electron interactions} Phys. Rev. Lett. 98 066803
 
 \bibitem{Dev}
 	Devashish Pandey, Xavier Oriols, and Guillermo Albareda. {\em Effective 1D Time-Dependent Schrödinger Equations for 3D Geometrically Correlated Systems.} Materials 13.13 (2020): 3033.
 
-\bibitem{nireTFGie}
-	Oyanguren Xabier, {\em The Quantum Many Body Problem}, Bachelor's Thesis (2020) for the Nanoscience and Nanotechnology Degree (UAB).
+%\bibitem{nireTFGie}
+%	Oyanguren Xabier, {\em The Quantum Many Body Problem}, Bachelor's Thesis (2020) for the Nanoscience and Nanotechnology Degree (UAB).
 
-\href{https://github.com/Oiangu9/The\_Quantum\_Many\_Body\_Problem\_-Bachellors\_Thesis-/blob/master/TheQuantumManyBodyProblem\_\_BachelorsThesis\_XabierOyangurenAsua.pdf}{https://github.com/Oiangu9/The\_Quantum\_Many\_Body\_Problem\_-Bachellors\_Thesis-/blob/master/TheQuantumManyBodyProblem\_\_BachelorsThesis\_XabierOyangurenAsua.pdf}
+%\href{https://github.com/Oiangu9/The\_Quantum\_Many\_Body\_Problem\_-Bachellors\_Thesis-/blob/master/TheQuantumManyBodyProblem\_\_BachelorsThesis\_XabierOyangurenAsua.pdf}{https://github.com/Oiangu9/The\_Quantum\_Many\_Body\_Problem\_-Bachellors\_Thesis-/blob/master/TheQuantumManyBodyProblem\_\_BachelorsThesis\_XabierOyangurenAsua.pdf}
 
-\bibitem{Albareda}
-	Albareda G, Kelly A, Rubio A. {\em Nonadiabatic quantum dynamics without potential energy surfaces.} Phys Rev Materials. 2019; 3: 023803. 
+%\bibitem{Albareda}
+%	Albareda G, Kelly A, Rubio A. {\em Nonadiabatic quantum dynamics without potential energy surfaces.} Phys Rev Materials. 2019; 3: 023803. 
 
-\bibitem{DATA}
-	All the animations employed for the analysis of Section 3.2 can be found in the following link:\\
-	\href{https://drive.google.com/drive/folders/1vnNDZrIYDlAhd-kVmmnVJgXmcdE2gxAV?usp=sharing}{https://drive.google.com/drive/folders/1vnNDZrIYDlAhd-kVmmnVJgXmcdE2gxAV?usp=sharing}
+%\bibitem{DATA}
+%	All the animations employed for the analysis of Section 3.2 can be found in the following link:\\
+%	\href{https://drive.google.com/drive/folders/1vnNDZrIYDlAhd-kVmmnVJgXmcdE2gxAV?usp=sharing}{https://drive.google.com/drive/folders/1vnNDZrIYDlAhd-kVmmnVJgXmcdE2gxAV?usp=sharing}
 	
 \end{thebibliography}
 
