@@ -117,14 +117,16 @@
 %Disclaimer, all the present work will be made for 3 dims but is clearly generalizable to N.
 \section*{About Part 1}
 
-This is the first part of an analysis towards an algorithm in terms of conditional wavefunctions (CWF) and their respective Bohmian trajectories that could suppose a clear advantage in front of Orthodox approaches.
+This is the first part of an analysis towards an algorithm in terms of conditional wavefunctions (CWF) and their respective Bohmian trajectories that could suppose a clear advantage in front of Orthodox approaches. The many body problem with its exponential scaling in time for increasing number of dimensions cannot be surpassed without approximations. However, we might be able to swing this exponential complexity in sequential time to a parallel time. Leaving an algorithm that only scales linearly in sequential time at the cost of exponential parallelization. This would still be a success for humanity, as it would imply "exact" temporal dynamics for systems of arbitrary size if we have big enough computers (which is not the same as fast enough computers, that was the complication with the typical case). We, as humanity, can always stack more computers together, even if we cannot make them faster!
 
-In this first document I will review multiple full-wavefunction ways in which we can swing the problem of computing the Schrödinger Equation for $N$ degrees of freedom from differential equations to eigenstate problems and integral computations. In fact we will see that we can have almost arbitrary control over where among the three problems we place the exponential complexity of the many body problem (of course it will never disappear). This will be achieved by expanding the wavefunction in different bases referring to different axes and sections. The reason why we must first review all these options in the exact and full wavefunction scheme will become more evident in the second document where we will link them with CWF-s. The main idea though will be that a wavefunction expanded in transversal section can also be viewed as an agglomeration of conditional wave-functions. As such, this will be a natural path to find a convenient place where conditional wavefunctions might mitigate the exponential barrier.
+Why Bohmian mechanics could be the key to this? Well, we will start to explore this in the next document.
 
-All the constructions will be made in a sort of constructive way, where we will first envision some particular cases and then generalize them in a more interesting shape. At the end of each algorithm a comment on the complexity of the different tasks will be made, setting the emphasis on the dependence with the degrees of freedom $N$ (the "number of bodies").
+In this first document I will review multiple full-wavefunction ways in which we can swing the problem of computing the Schrödinger Equation for $N$ degrees of freedom from differential equations to eigenstate problems and integral computations. In fact we will see that we can have almost arbitrary control over where among the three problems we place the exponential complexity of the many body problem (of course it will never disappear). This will be achieved by expanding the wavefunction in different bases referring to different axes and sections. The reason why we must first review all these options in the exact and full wavefunction scheme will become more evident in the second document where we will link them with CWF-s. The main idea though will be that a wavefunction expanded in transversal section can also be viewed as an agglomeration of conditional wave-functions. As such, this will be a natural path to find a convenient place where conditional wavefunctions might mitigate the exponential barrier (at the cost of considering a bunch of them in parallel).
+
+All the algorithms will be built in a constructive way, where we will first envision some particular cases and then generalize them in a more interesting shape. At the end of each algorithm a comment on the complexity of the different tasks will be made, setting the emphasis on the dependence with the degrees of freedom $N$ (the "number of bodies") and where exactly in each case the many body problem hides herself.
 
 \newpage
-\section{Expanding the Full Wavefunction in energy eigenstates}
+\section{Expanding the Full Wavefunction in ND Energy Eigenstates}
 \subsection{General Time Dependent Potentials}
 Given the TDSE in N dimensions, with $x:=\vec{x}=(x_1,...,x_N)\in \R^N$:
 \begin{equation}
@@ -155,15 +157,15 @@ W^k(t):=\int_{-\infty}^\infty\phi^{k \dagger} \pdv{\phi^k(x,t)}{t} dx
 \end{equation}
 Leaving:
 \begin{equation}
-c_k(t)=c_k(t_0)\ e^{-\int_{-\infty}^\infty \qty(\frac{i}{\hbar}E^k(t) + W^k(t) )dt}
+c_k(t)=c_k(t_0)\ e^{-\int_{t_0}^t \qty(\frac{i}{\hbar}E^k(t) + W^k(t) )dt}
 \end{equation}
 Thus meaning that $\forall t>t_0$:
 $$
-\psi(x,t)=c_k(t_0)\ e^{-\int_{-\infty}^\infty \qty(\frac{i}{\hbar}E^k(t) + W^k(t) )dt} \phi^k(x,t)
+\psi(x,t)=c_k(t_0)\ e^{-\int_{t_0}^t \qty(\frac{i}{\hbar}E^k(t) + W^k(t) )dt} \phi^k(x,t)
 $$
 
 
-It can be proven that the eigenstates $\phi_k(x,t)$ form a complete orthonormal basis of the Hilbert space of the system for each of the considered times. As such, any wavefunction can be written as a linear combination of them:
+Let us now explore what we can do for a non-restricted wavefunction. It can be proven that the eigenstates $\phi_k(x,t)$ form a complete orthonormal basis of the Hilbert space of the system for each of the considered times. As such, any wavefunction can be written as a linear combination of them:
 \begin{equation}
 \Psi(x,t)=\sum_j c_j(t)\phi_j(x,t)
 \end{equation}
@@ -179,7 +181,7 @@ i\hbar \pdv{\Psi(x,t)}{t}=\hat{H}\psi(x,t)\Rightarrow \sum_k i\hbar \pdv{(c_k(t)
 $$
 \Rightarrow \sum_k i\hbar \phi^k(x,t)\pdv{c_k(t)}{t}= \sum_k c_k(t)E^k(t)\phi^k(x,t)-i\hbar  c_k(t)\pdv{\phi^k(x,t)}{t}
 $$
-Multiplying everything by $\phi^{j \dagger}(x,t)$ and integrating on $x$, using the orthonormality condition $\int\phi^{j \dagger} \phi^k dx=\delta_{jk}$ (note that hereafter all the integrals will be in all $\R^N$ so we will omit the upper and lower bounds):
+Multiplying everything by $\phi^{j \dagger}(x,t)$ and integrating on $x$, using the orthonormality condition $\int\phi^{j \dagger} \phi^k dx=\delta_{jk}$:
 
 \begin{equation} \label{CoeffsMagic}
 \dv{}{t}c_j(t)=-\frac{i}{\hbar}E^j(t) c_j(t) + \sum_k W^{jk}(t)c_k(t)
@@ -188,9 +190,9 @@ where we define the coupling terms between the eigenstates:
 \begin{equation}
 W^{jk}(t):=\int_{-\infty}^\infty\phi^{j \dagger} \pdv{\phi^k(x,t)}{t} dx
 \end{equation}
-Which is a system of as many linear and coupled ordinary differential equations as energy eigenstates we consider. In principle infinite for arbitrarity, but in practice we could truncate them at a certain maximum $J$ if we had ad hoc reasons for each given potential energy $U(x,t)$ and initial wavefunction $\psi(x,t_0)$ (the two degrees of freedom aside from the dimensionality of the system).
+Which is a system of as many linear and coupled ordinary differential equations as energy eigenstates we consider. In principle infinite for arbitrarity, but in practice we could truncate them at a certain maximum $J$ if we had {\em ad hoc} reasons for each given potential energy $U(x,t)$ and initial wavefunction $\psi(x,t_0)$ (the two degrees of freedom aside from the dimensionality of the system).
 
-These last equations tell us that the magnitude of the projection of the system in each eigenstate $c_j(t)$ will be transferred in time from state to state in a proportional fashion to the projection on each $c_k(t)$ and the coupling coefficient $W^{jk}$.
+These last equations tell us that the magnitude of the projection of the system in each $j-th$ eigenstate $c_j(t)$ will be transferred in time from state $j$ to state $k$ in a proportional fashion to each $c_k(t)$ and the coupling coefficient $W^{jk}$.
 
 \subsection{Adiabatically Time Dependent Potentials}
 
@@ -200,17 +202,17 @@ If we have that the potential energy is so slowly varying in time that the eigen
 \end{equation}
 Which can be solved in general to be:
 \begin{equation}
-c_j(t)=c_j(t_0)\ e^{-\frac{i}{\hbar}\int E^j(t) dt}
+c_j(t)=c_j(t_0)\ e^{-\frac{i}{\hbar}\int_{t_0}^{t}E^j(t) dt}
 \end{equation}
 This would leave us with a general solution of the wavefunction:
 \begin{equation}
-\psi(x,t)=\sum_j c_j(t_0) e^{-\frac{i}{\hbar}\int E^j(t) dt} \phi(x,t)
+\psi(x,t)=\sum_j c_j(t_0) e^{-\frac{i}{\hbar}\int_{t_0}^{t}E^j(t) dt} \phi(x,t)
 \end{equation}
-with $c_j(t_0)=\int \phi^{j\ \dagger}(x, t_0) \Psi(x,t_0)dx$.
+with $c_j(t_0)=\int_{-\infty}^{\infty}\phi^{j\ \dagger}(x, t_0) \Psi(x,t_0)dx$.
 
-This would imply that the magnitude of the projections in each of the eigenstates would remain constant at all times. This magnitude (its square) is called the population of that eigenstate:
+The present shape would imply that the magnitude of the projections in each of the eigenstates, $|c_j(t)|^2$, would remain constant at all times. This magnitude (its square) is called the population of that eigenstate:
 $$
-|c_j(t)|^2=|c_j(t_0)e^{-\frac{i}{\hbar}\int E^j(t) dt}|^2 = |c_j(t_0)|^2 \quad \forall t>t_0
+P^j(t):=|c_j(t)|^2=|c_j(t_0)e^{-\frac{i}{\hbar}\int_{t_0}^{t}E^j(t) dt}|^2 = |c_j(t_0)|^2=const. \quad \forall t>t_0
 $$
 
 \subsection{Time Independent Potentials}
@@ -219,7 +221,7 @@ If we have that the potential energy is time independent $\pdv{U(x,t)}{t}=0$ the
 \begin{equation}
 \hat{H}(x)\phi_k(x)=E^j\phi_k(x)
 \end{equation}
-As such, equation \eqref{EigenE} woould be reduced to:
+As such, equation \eqref{EigenE} would be reduced to:
 \begin{equation}
 \sum_k i\hbar \phi^k(x)\pdv{c_k(t)}{t}= \sum_k c_k(t)E^k\phi^k(x)
 \end{equation}
@@ -235,22 +237,22 @@ And thus leaving a general time evolution for the full wavefunction as:
 \begin{equation}
 \psi(x,t)=\sum_j c_j(t_0) e^{-\frac{i}{\hbar}E^j(t-t_0)} \phi(x)
 \end{equation}
-with $c_j(t_0)=\int \phi^{j\ \dagger}(x) \Psi(x,t_0)dx$.
+with $c_j(t_0)=\int_{-\infty}^{\infty}\phi^{j\ \dagger}(x) \Psi(x,t_0)dx$.
 
 Thus, given a certain initial wavefunction, and its projections into each eigenstate, the populations of each state are maintained constant at all times.
 
 \subsection{Comments on this Method}
-Clearly, if we knew the eigenstates of the full hamiltonian $\hat{H}$, we could for the time independent or adiabatic case of the potential compute the time evolution of any initial wavefunction at any future time by simply computing the initial projections on each eigenstate $c_j(t_0)=\int \phi^{j\ \dagger}(x,t) \Psi(x,t_0)dx$. This method would only require computing as many integrals as necessary (say $J$) to achieve a given norm tolerance $\sum_{j=1}^J |c_j(t_0)|^2\simeq 1$. Once these projections computed, in order to have the time evolution for any future time with very high precision we would only require a simple evaluation. 
+Clearly, if we knew the eigenstates of the full hamiltonian $\hat{H}$, we could, for the time independent or adiabatic case of the potential, obtain the time evolution of any initial wavefunction at any future time by simply computing the initial projections on each eigenstate $c_j(t_0)=\int_{-\infty}^{\infty}\phi^{j\ \dagger}(x,t) \Psi(x,t_0)dx$. This method would only require computing as many integrals as necessary (say $J$) to achieve a given norm tolerance $\sum_{j=1}^J |c_j(t_0)|^2\simeq 1$. Once these projections computed, in order to have the time evolution for any future time with very high precision we would only require a simple evaluation. 
 
-In fact, even in the case of a time dependent general potential, solving equations \eqref{CoeffsMagic} is simple and does not scale exponentially with growing number of dimensions $N$, as would have a complexity $O(Jn_t)$ with $n_t$ the number of time steps to compute. This would be true except if we consider that in order to compute the coupling integrals $w^{jk}$, we need to integrate at least over a whole $n_x^N$ division grid (where $n_x$ is the smallest number of divisions of an spatial axis). This has a complexity of $O(n_x^N)$, which is exponential in time for increasing number of dimensions $N$. But then, if we knew the eigenstates analytically, the integrals would not be required to be done numerically and the problem would really be linear in dimensions.
+In fact, even in the case of a time dependent general potential, solving equations \eqref{CoeffsMagic} is simple and does not scale exponentially with growing number of dimensions $N$, as would have a complexity $O(Jn_t)$ with $n_t$ the number of time steps to compute. This would be fantastic except for the fact that in order to compute the coupling integrals $w^{jk}$, we need to integrate at least over a whole $n_x^N$ division grid (where $n_x$ is the smallest number of divisions of an spatial axis). This has a complexity of $O(n_x^N)$, which is exponential in time for increasing number of dimensions $N$. However, if we knew the eigenstates analytically, the integrals would not be required to be done numerically and the problem would really be linear in dimensions.
 
-Clearly, the truly exponential problem in this algorithm would be the computation of the eigenstates of the full Hamiltonian. If we did not know them a priori, we would need to compute them, which requires at least an evaluation of the Hamiltonian, which is a sparse matrix of $O(n_x^N)$ rows and columns, with about $O(d^N)$ non-zero elements per column, where $d$ is the average non-zero elements in the $N=2$ case. Clearly, evaluating this would at least require $O(d^N)$ operations, which scale expoenntially with dimensions $N$.
+Clearly, the truly exponential problem in this algorithm would be the computation of the eigenstates of the full Hamiltonian. If we did not know them a priori, we would need to compute them, which requires at least an evaluation of the Hamiltonian, which is a sparse matrix of $O(n_x^N)$ rows and columns, with about $O(d^N)$ non-zero elements per column, where $d$ is the average non-zero elements in the $N=2$ case. Evaluating this would at least require $O(d^N)$ operations, which scales exponentially with dimensions $N$.
 
-A such, the whole many body problem has been injected into computing the eigenstates of the full hamiltonian, which if we do not know analytically, is exponentially growing with dimensions.
+As such, the whole many body problem would have been injected into computing the eigenstates of the full hamiltonian, for computing the numerical shapes of which, we need an exponentially growing time with dimensions. But, if we knew them analytically, the algorithm would solve the many body problem in linear time!
 
 \newpage
-\section{Expanding the Wavefunction in Transversal Section Eigenstates}
-If we now choose a certain spatial degree of freedom $x_a$ with $a\in\{1,...,N\}$ and rename it as $x$ while we name the vector composed by the rest of degrees of freedom as $y:=(y_1,...,y_{N-1})$, then we can write the full hamiltonian to be:
+\section{Expanding the Wavefunction in (N-1)D Section Eigenstates}
+If we now choose a certain spatial degree of freedom $x_a$ with $a\in\{1,...,N\}$ and rename it as $x$ while we name the vector composed by the rest of degrees of freedom as $y:=(y_1,...,y_{N-1})$, then we can write the full hamiltonian to be:\vspace{-0.1cm}
 \begin{equation}
 \hat{H}(x, y, t)= \sum_{j=1}^{N-1}\hat{T}_{y_j}+U(x, y, t)+\hat{T}_x+V(x,t) = \hat{H}^x(y,t)+\hat{T}_x+V(x,t)
 \end{equation}
@@ -262,7 +264,7 @@ As we know that the hermiticity of the operator $\hat{H}^x(y,t)$ implies its eig
 \begin{equation}
 \Psi(x,y,t)=\sum_j \chi^j(x,t) \Phi^j_x(y,t)
 \end{equation}
-with $\chi^j(x,t):= \int \Phi^{j\ \dagger}_x(y,t) \Psi(x,y,t)dy$ the projection coefficients.
+with $\chi^j(x,t):= \int_{-\infty}^{\infty}\Phi^{j\ \dagger}_x(y,t) \Psi(x,y,t)dy$ the projection coefficients.
 
 If we introduce this shape into the TDSE, we can obtain the differential equations ruling the shape of the coefficients $\chi j(x,t)$ much like we did in the previous section (just that now the resulting equation system will no longer be an ordinary differential equation).
 \begin{equation}\label{wip1}
@@ -271,7 +273,7 @@ i\hbar \pdv{\Psi(x,y,t)}{t}=\hat{H}\psi(x,y,t)\Rightarrow \sum_j i\hbar \pdv{(\c
 $$
 \Rightarrow \sum_j i\hbar\qty( \Phi^j_x(y,t)\pdv{\chi^j}{t} + \chi^j\pdv{\Phi^j_x(y,t)}{t}) = \sum_j\qty(\varepsilon^j_x(t)+\hat{T}_x+V(x,t))(\chi^j(x,t)\Phi^j_x(y,t))
 $$
-Defining the constant $C_x:=\frac{-\hbar^2}{2m_x}$ we can note that:
+Defining the constant $C_x:=\frac{-\hbar^2}{2m_x}$ we can note that:\vspace{-0.1cm}
 \begin{equation}
 \hat{T}_x (\chi^j(x,t)\Phi^j_x(y,t)) = C_x\pdv[2]{}{x}(\chi^j(x,t)\Phi^j_x(y,t))=
 \end{equation}
@@ -281,37 +283,37 @@ $$
 $$
 =\Phi^j_x(y,t)\ \hat{T}_x \chi^j(x,t) + \chi^j(x,t)\  \hat{T}_x  \Phi^j_x(y,t) +2C_x\ \pdv{}{x}\chi^j(x,t)\ \pdv{}{x}\Phi^j_x(y,t))
 $$
-Then we can multiply equation \eqref{wip1} by $\Phi^{k\ \dagger}(y,t)$ and integrate both sides over all the domain for $y$ to get applying the orthonormality condition $\int \Phi^{k\ \dagger}(y,t) \Phi^{j}(y,t) dy= \delta_{kj}$ :
+Then we can multiply equation \eqref{wip1} by $\Phi^{k\ \dagger}(y,t)$ and integrate both sides over all the domain for $y$ to get applying the orthonormality condition $\int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) \Phi^{j}(y,t) dy= \delta_{kj}$ :
 \begin{equation}\label{DevEq}
 i\hbar \pdv{}{t}\chi^k(x,t) = \qty( \varepsilon^k(x,t) + \hat{T}_x+V(x,t))\chi^k(x,t)+ \sum_j \qty{ W^{kj}(x,t) + S^{kj}(x,t)+F^{kj}(x,t)\pdv{}{x} } \chi^j(x,t) 
 \end{equation}
 where we have defined the coupling terms between the transversal section eigenstates:
 \begin{equation}
-W^{kj}(x,t) = -i\hbar\int \Phi^{k\ \dagger}(y,t) \pdv{\Phi^j_x(y,t)}{t} dy
+W^{kj}(x,t) = -i\hbar\int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) \pdv{\Phi^j_x(y,t)}{t} dy
 \end{equation}
 \begin{equation}
-S^{kj}(x,t) = \int \Phi^{k\ \dagger}(y,t) \hat{T}_x [\Phi^j_x(y,t)] dy
+S^{kj}(x,t) = \int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) \hat{T}_x [\Phi^j_x(y,t)] dy
 \end{equation}
 \begin{equation}
-F^{kj}(x,t) = \int \Phi^{k\ \dagger}(y,t) 2C_x \pdv{}{x}\Phi^j_x(y,t) dy
+F^{kj}(x,t) = \int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) 2C_x \pdv{}{x}\Phi^j_x(y,t) dy
 \end{equation}
 
-Equation \eqref{DevEq} is the system of linear and coupled partial differential equation system ruling the behaviour of the coefficients $\chi^k(x,t)$. This is a generalization of the equations found and used in Ref.\cite{Dev}.
+Equation \eqref{DevEq} is the system of linear and coupled partial differential equations ruling the behaviour of the coefficients $\chi^k(x,t)$. This is a generalization of the equations found and used in Ref.\cite{Dev}.
 
 \subsection{Adiabatic (or constant) coupling potential with y for x and t}
 If we have that the potential energy term entangling the degrees of freedom $x$ and $y$, which we called $U(x,y,t)$, is very slowly time dependent (or constant in time) and very slowly x dependent, then the eigenstates of the transversal sections to $x$ fulfil $\pdv{}{x}\Phi^j_x(y,t)\simeq 0$ and $\pdv{}{t}\Phi^j_x(y,t)\simeq 0$. This would yield $W^{kj}(x,t),S^{kj}(x,t),F^{kj}(x,t)\simeq 0$, which would leave equations \eqref{DevEq} uncoupled as:
 \begin{equation}
 i\hbar \pdv{}{t}\chi^k(x,t) = \qty( \varepsilon^k(x,t) + \hat{T}_x+V(x,t))\chi^k(x,t)
 \end{equation}
-Which is a single spatial dimension (1D) Schrödinger Equation (SE) for each of the eigenstates. This would mean that each coefficient $\chi(x,t)$ would preserve its norm $\int \chi(x,t)^{k\dagger}\chi^k(x,t) dx =: P^j(t)$ at all times due to the unitary time evolution of the Schrödinger Equation. This is exactly analogous to what happened when we expanded the wave-function in the energy eigenstates of the full hamiltonian.
+Which is a single spatial dimension (1D) Schrödinger Equation (SE) for each of the eigenstates. This would mean that each coefficient $\chi(x,t)$ would preserve its norm $\int_{-\infty}^{\infty}\chi(x,t)^{k\dagger}\chi^k(x,t) dx =: P^j(t)$ at all times due to the unitary time evolution of the Schrödinger Equation. This is exactly analogous to what happened when we expanded the wave-function in the energy eigenstates of the full hamiltonian.
 
-We could now simply compute the initial coefficients $\chi^k(x,t_0)$ for a desired initial wavefunction by $\chi^k(x,t_0)=\int \chi(x,t)^{k\dagger} \psi(x,y,t_0)dy$ and then compute 1D SE-s for as many coefficients $\chi^k$ ad necessary to achieve a certain norm tolerance $\sum_{j=0}^J P^j(t) \simeq 1$ and then simply ensemble them to have the $N$ dimensional full wavefunction as $\psi(x,y,t)=\sum_j\chi^j(x,t)\Phi^j(y,t)$.
+We could now simply compute the initial coefficients $\chi^k(x,t_0)$ for a desired initial wavefunction by $\chi^k(x,t_0)=\int_{-\infty}^{\infty}\Phi(y,t_0)_x^{k\dagger} \psi(x,y,t_0)dy$ and then compute 1D SE-s for as many coefficients $\chi^k$ as necessary to achieve a certain norm tolerance $\sum_{j=0}^J P^j(t) \simeq 1$. Finally, we could simply assemble them to have the $N$ dimensional full wavefunction as $\psi(x,y,t)=\sum_j\chi^j(x,t)\Phi^j(y,t)$.
 
-In fact, in a sort of inception we could now compute the evolution of each of the coefficients $\chi^j$ of the transversal sections by computing the eigenstates $\phi^g(x,t)$ of their effective hamiltonian:
+In fact, in a sort of "inception", we could now compute the evolution of each of the coefficients $\chi^j$ of the transversal sections by computing the eigenstates $\phi^g(x,t)$ of their effective Hamiltonian:
 \begin{equation}
-\hat{H}_{eff}(x,t)= \varepsilon^k(x,t) + \hat{T}_x+V(x,t) \Rightarrow \{\phi^g(x,t);\ \eta_g(t)\}
+\hat{H}_{eff}(x,t)= \varepsilon^k(x,t) + \hat{T}_x+V(x,t) \Rightarrow \{\phi^g(x,t);\ \eta_g(t)\}_g
 \end{equation}
-Then by the completeness of this basis in $x$ there must exist some coefficients $c_{gj}(t)$ such that $\chi^j(x,t)=\sum_g c_{gj}(t) \phi^g(x,t)$. These coefficients will be uniquely defined by the equations we got in the first section:
+By the completeness of this basis in $x$ there must exist some coefficients $c_{gj}(t)$ such that $\chi^j(x,t)=\sum_g c_{gj}(t) \phi^g(x,t)$. These coefficients will be uniquely defined by the equations we got in the first section:
 \begin{equation} 
 \dv{}{t}c_{gj}(t)=-\frac{i}{\hbar}\eta^g(t) c_{gj}(t) + \sum_k M^{gk}(t)c_k(t)
 \end{equation}
@@ -323,20 +325,26 @@ If the part of the potential that was independent from $y$, $V(x,t)$, is also ad
 \begin{equation}
 \chi^j(x,t)=c_{gj}(t_0)e^{\int_{t_0}^t \eta_g(t) dt} \phi^g(x,t)
 \end{equation}
-Thus, by only knowing the projections $\chi^j(x,t_0)=\int \chi(x,t)^{j\dagger} \psi(x,y,t_0)dy$ and $c_{gj}(t_0)=\int \phi^g(x,t)^\dagger \chi^j(x,t)dx$, the solution of the full wavefunction would be uniquely defined at all future times.
+Thus, by only knowing the projections $\chi^j(x,t_0)=\int_{-\infty}^{\infty}\Phi_x(y,t_0)^{j\dagger} \psi(x,y,t_0)dy$ and the coefficients $c_{gj}(t_0)=\int_{-\infty}^{\infty}\phi^g(x,t_0)^\dagger \chi^j(x,t_0)dx$, the solution of the full wavefunction would be uniquely defined at all future times.
 
-\subsection{Comments on General Potentials}
-In general in order to compute the coefficients of the expansion $\chi^j(x,t)$ we would first need to compute the coupling terms $W^{kj}(x,t),S^{kj}(x,t),F^{kj}(x,t)$. As we assume we know the eigenstates $\Phi^j_x(y,t)$, these can be trivially done even before we start to compute the time evolution for the coefficients $\chi^j(x,t)$. Then, we would need to solve the linear coupled system of partial differential equations for $\chi^j(x,t)$ given in equation \eqref{DevEq}. This system, truncated a t a certain maximum $J$ could be stably evolved using a Crank Nicolson scheme which would only require to LU decompose a matrix of size $SxS$ with $S=Jn_{x}$ with $n_x$ the number of considered spatial divisions in $x$ and $J$ the number of terms in the expansion we considered to be relevant. At most this has a complexity of $O(Jn_xn_t)$ which is linear with the terms $J$ and the divisions considered in time $n_t$ and $x$ $n_x$. So the question here would be, where has the many body problem gone? Well, on the one hand, the integrals $W^{kj}(x,t),S^{kj}(x,t),F^{kj}(x,t)$ are in the whole domain for all the spatial variables except for one $N-1$, so they each have a complexity of at least $O(n_y^{N-1})$ (where we assume $n_y$ to be the smallest of the grids we consider for the non-$x$ axes $y$). Clearly this is exponentially growing in time with the number of dimensions $N$. Still, if we knew analytically the eigenstates $\Phi^j_x(y,t)$ then the coupling terms would be resolved analytically and there would be no need for numerical integration. In fact, it would be enough that we got the eigenstates expressed as a combination of other analytical basis functions so that we could integrate symbolically and there would be no need for exponential complexity. So again, where is then the many body problem? Solved? No. The computation of the eigenstates $\Phi^j_x$ of the transversal hamiltonian $\hat{H}_x(y,t)$ requires at least one evaluation of the hamiltonian on a sequentialized vector $\Phi^j_x\in\C^{n_y^(N-1)}$, which will be the discretization of $\Phi^j_x(y,t)$. Thus the hamiltonian matrix will have a sparse number of rows and columns $O(n_y^{N-1})$, with a number of non-zero elements $O(d^{N-1})$ with $d$ the average number of non-zero elements per row for the $N=2$ case. Therefore, the evaluation will at least have a complexity of $O(d^{N-1})$, which scales exponentially in time. Only if we knew the eigenstates a priori would this step be avoidable.
+\subsection{On General Potentials}
+In general, in order to compute the coefficients of the expansion $\chi^j(x,t)$ we would first need to compute the coupling terms $W^{kj}(x,t),S^{kj}(x,t),F^{kj}(x,t)$. As we assume we know the eigenstates $\Phi^j_x(y,t)$, these can be trivially done even before we start to compute the time evolution for the coefficients $\chi^j(x,t)$. Then, we would need to solve the linear coupled system of partial differential equations for $\chi^j(x,t)$ given in equation \eqref{DevEq}. This system, truncated at a certain maximum $J$ could be stably evolved using a Crank Nicolson scheme which would only require to LU decompose a square matrix of $O(Jn_{x})$ rows, with $n_x$ the number of considered spatial divisions in $x$ and $J$ the number of terms in the expansion we considered to be relevant. At most this time evolution has a complexity of $O(Jn_xn_t)$ which is linear with the terms $J$ and the divisions considered in time $n_t$ and $x$ $n_x$.
 
-In a nutshell, only if these eigenstates are known analytically will this method scale linearly in dimensions $N$.\footnote{If we only knew them numerically, then the problem would still be exponential due to the coupling integrals.} But this was already true for the even simpler case of Section 1. There, if we knew the eigenstates of the full hamiltonian, then the time evolution of the full wave-function was reduced into a yet simpler system of equations. In fact, with the hamiltonian being time adiabatic there was already no need to compute overlap integrals, unlike here, where overlap integrals are required while the transversal hamiltonian has non-adiabatic dependence on time or $x$. So it does not seem like we have gained so much. Just that before we needed at least $O(d^N)$ operations to get the eigenstates of the full hamiltonian and now we just need $O(d^{N-1})$. Instead, we now require a harder equation for the time evolution of the coefficients where a partial differential equation system (with a complexity around $O(Jn_xn_t)$) must be solved instead of an ordinary differential equation system (with a complexity of $O(Jn_t)$). Of course, overall the complexity has been reduced in one $N$, yet it is exponential $O(d^N)$.
+So the question here would be, where has the many body problem gone? On the one hand, the integrals $W^{kj}(x,t),S^{kj}(x,t),F^{kj}(x,t)$ are in the whole domain for all the spatial variables except for one, that is, in an $N-1$ dimensional space. Thus, each integral has a complexity of at least $O(n_y^{N-1})$ (where we assume $n_y$ to be the smallest of the grids we consider for the non-$x$ axes, $y$). Clearly this is exponentially growing in time with the number of dimensions $N$. Still, if we knew the eigenstates $\Phi^j_x(y,t)$ analytically, or as a linear combination of analytic functions, then the coupling terms could be resolved analytically and we would safe the numerical integration.
 
-The natural question would then be: can we find an scheme where we can choose conveniently how many of the exponential complexity $N$ is migrated from the Schrödinger Equation to an eigenstate problem? Clearly, it is pure fantasy to believe there is an scheme where we just have a linear complexity in the SE (the coefficients) and in the eigenvalue problem. Perhaps trying to iteratively solve higher and higher dimensional coefficient problems like we did here in the last step, but solving 1D coefficient problems in each iteration could achieve so. It is not entirely clear. Still, what we have done in the first section is to migrate all the $n_x^N$ from the Schrödinger Equation to the eigenstate problem. Then here we have migrated one of those $n_x$ from the eigenvalue problem to the Schrödinger Equation, leaving a joint complexity $O(n_y^{N-1})+O(n_x)=O(n_y^{N-1})$. It seems possible that we will be able to migrate any number of $n_y$ from the Schrödinger Equation to the eigenvalue problem and viceversa. If this was so, we could minimize the overall complexity if we set half of the multiplicative $n_y$ in one side and the other half in the other side. This would leave a complexity $O(n_y^{N/2})+O(n_x^{N/2})=O(n_x^{N/2})$ which is still exponential, but it is the square-root of the exponential increase that the full Schrödinger Equation supposes! And this is precisely what we can achieve with the approach of the next section.
+So again, where is then the many body problem? Solved? Yes, if we know the eigenstates analytically, just like in the previous section. However, the computation of the eigenstates $\Phi^j_x$ of the transversal Hamiltonian $\hat{H}_x(y,t)$ requires at least one evaluation of the Hamiltonian on a sequentialized vector $v\in\C^{n_y^{(N-1)}}$, which will be the discretization of $\Phi^j_x(y,t)$. The Hamiltonian has a sparse number of rows and columns $O(n_y^{N-1})$, with a number of non-zero elements $O(d^{N-1})$ with $d$ the average number of non-zero elements per row for the $N=2$ case. Therefore, the evaluation will at least have a complexity of $O(d^{N-1})$, which scales exponentially in time. So note that only if we knew the eigenstates a priori would this step be avoidable.
+
+In a nutshell, knowing the eigenstates analytically makes the problem linear, knowing them numerically or not knowing them leaves it with an exponential complexity (due to the eigenstate resolution and the coupling integrals). But again, this was already true for the even simpler case of Section 1. There, if we knew the eigenstates of the full hamiltonian, the time evolution of the full wave-function was reduced into a yet simpler system of equations. In fact, with the hamiltonian being time adiabatic, in the case of Section 1, there was not even a need to compute overlap integrals, unlike here, where overlap integrals are required while the transversal hamiltonian has non-adiabatic dependence on time or $x$. Therefore, what we have won with this method is nothing if we assume pre-knowledge of the eigenstates. There was already a general method that worked better in that case\footnote{Of course, if we do not know the $N$ dimensional eigenstates for a given system but we know them for $N-1$ dimensional sections, then we have won a lot! But we refer here to the general {\em modus operandi}.}.
+
+There is still one general thing we have won even for the case in which we do not know the eigenstates. In Section 1 we needed at least $O(d^N)$ operations to get the eigenstates of the full hamiltonian and now we just need $O(d^{N-1})$ for each considered $x$ (which can be all computed in parallel). In its place, we now require a harder equation for the time evolution of the coefficients, with a complexity around $O(Jn_xn_t)$, instead of $O(Jn_t)$. However, the overall complexity in this case would be $O(d^{N-1})+O(Jn_xn_t)=O(d^{N-1})$ and not $O(d^N)$! Especially if the eigenstates for each $x$ can be computed in parallel (and they can!). The overall complexity has been reduced in one $N$, even if it is still exponential!
+
+The natural question would then be: can we find a scheme where we can choose conveniently how many of the exponential complexity $N$ is migrated from the Schrödinger Equation to an eigenstate problem? Clearly, it is pure fantasy to believe there is a way to have a linear complexity both in the SE (the coefficients) and in the eigenvalue problem. Perhaps trying to iteratively solve higher and higher dimensional coefficient problems like we did here in the last step, but solving 1D coefficient problems in each iteration could achieve so. It is not entirely clear. We will explore this towards the end of the document. Still, what we have done in the first section is to migrate all the $n_x^N$ from the Schrödinger Equation to the eigenstate problem. Then here we have migrated one of those $n_x$ from the eigenvalue problem to the Schrödinger Equation, leaving a joint complexity $O(n_y^{N-1})+O(n_x)=O(n_y^{N-1})$. It seems possible that we will be able to migrate any number of $n_y$ from the Schrödinger Equation to the eigenvalue problem and viceversa. If this was so, we could minimize the overall complexity if we set half of the multiplicative $n_y$ in one side and the other half in the other side. This would leave a complexity $O(n_y^{N/2})+O(n_x^{N/2})=O(n_x^{N/2})$ which is still exponential, but it is the square-root of the exponential increase that the full Schrödinger Equation supposes! And this is precisely what we can achieve with the approach of the next section.
 \newpage
 
-\section{Expanding the Wavefunction in Custom Section Eigenstates}
-We will now divide the spatial degrees of freedom as follows: we will have some main degrees of freedom $x=(x_1,..,x_m)$ in each of which we will slice the whole set of degrees of freedom $(x_1,...,x_N)$. Then we will have the set of non-main degrees of freedom $y=(x_{m+1},...x_N)$ for which we will need to know the eigenstates. As such, we will have a general decomposition of the Hamiltonian:
+\section{Expanding the Wavefunction in Custom mD Section Eigenstates}
+We will now divide the spatial degrees of freedom as follows: we will have some main degrees of freedom $x=(x_1,..,x_m)$ in each of which we will slice the whole set of degrees of freedom $(x_1,...,x_N)$. As such, we will have a set of transverse degrees of freedom $y=(x_{m+1},...x_N)$ for which we will need to know the eigenstates. For that, we can decompose the Hamiltonian in general as:
 \begin{equation}
-\hat{H}(x, y, t)= \sum_{j=1}^{N}\hat{T}_{x_j}+G(x, y, t)=\sum_{j=m}^{N}\hat{T}_{x_j}+U(x, y, t)+\sum_{j=1}^{m}\hat{T}_{x_j}+V(x,t) = \hat{H}_x(y,t)+\sum_{j=1}^{m}\hat{T}_{x_j}+V(x,t)
+\hat{H}(x, y, t)= \sum_{j=1}^{N}\hat{T}_{x_j}+G(x, y, t)=\sum_{j=m+1}^{N}\hat{T}_{x_j}+U(x, y, t)+\sum_{j=1}^{m}\hat{T}_{x_j}+V(x,t) = \hat{H}_x(y,t)+\sum_{j=1}^{m}\hat{T}_{x_j}+V(x,t)
 \end{equation}
 We then define the set of eigenstates $\{\Phi^j_x(y,t)\}_j$ with eigenvalues $\{\varepsilon_x(t)\}_j$ to be the solution to:
 \begin{equation}
@@ -346,9 +354,9 @@ As we know that the hermiticity of the operator $\hat{H}_x(y,t)$ implies its eig
 \begin{equation}
 \Psi(x,y,t)=\sum_j \Lambda^j(x,t) \Phi^j_x(y,t)
 \end{equation}
-with $\Lambda^j(x,t):= \int \Phi^{j\ \dagger}_x(y,t) \Psi(x,y,t)dy$ the projection coefficients.
+with $\Lambda^j(x,t):= \int_{-\infty}^{\infty}\Phi^{j\ \dagger}_x(y,t) \Psi(x,y,t)dy$ the projection coefficients.
 
-If we introduce this shape into the TDSE, we can obtain the differential equations ruling the shape of the coefficients $\Lambda j(x,t)$ much like we did in the previous section (just that now the resulting equation system will no longer be a 1D coupled system of Schrödinger like equations).
+If we introduce this shape into the TDSE, we can obtain the differential equations ruling the shape of the coefficients $\Lambda j(x,t)$ much like we did in the previous section (just that now the resulting equation system will no longer be a 1D coupled system of Schrödinger like equations, but mD).
 \begin{equation}\label{wip2}
 i\hbar \pdv{\Psi(x,y,t)}{t}=\hat{H}\psi(x,y,t)\Rightarrow \sum_j i\hbar \pdv{(\Lambda^j(x,t)\Phi^j_x(y,t))}{t}=\sum_j\qty(\hat{H}_x(y,t)+\sum_{s=1}^m\hat{T}_{x_s}+V(x,t))(\Lambda^j(x,t)\Phi^j_x(y,t))
 \end{equation}
@@ -365,19 +373,19 @@ $$
 $$
 =\Phi^j_x(y,t)\ \hat{T}_{x_j} \Lambda^j(x,t) + \Lambda^j(x,t)\  \hat{T}_{x_j}  \Phi^j_x(y,t) +2C_j\ \pdv{}{x_j}\chi^j(x,t)\ \pdv{}{x_j}\Phi^j_x(y,t))
 $$
-Then we can multiply equation \eqref{wip2} by $\Phi^{k\ \dagger}(y,t)$ and integrate both sides over all the domain for $y$ to get applying the orthonormality condition $\int \Phi^{k\ \dagger}(y,t) \Phi^{j}(y,t) dy= \delta_{kj}$ :
+Then we can multiply equation \eqref{wip2} by $\Phi^{k\ \dagger}(y,t)$ and integrate both sides over all the domain for $y$ to get applying the orthonormality condition $\int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) \Phi^{j}(y,t) dy= \delta_{kj}$ :
 \begin{equation}\label{XabEq}
 i\hbar \pdv{}{t}\Lambda^k(x,t) = \qty( \varepsilon^k(x,t) + \sum_{s=1}^m\hat{T}_{x_s}+V(x,t))\Lambda^k(x,t)+ \sum_j \qty{ W^{kj}(x,t) + \sum_{s=1}^m S^{kj}_s(x,t)+F^{kj}_s(x,t)\pdv{}{x_s} } \Lambda^j(x,t) 
 \end{equation}
 where we have defined the coupling terms between the transversal section eigenstates:
 \begin{equation}
-W^{kj}(x,t) = -i\hbar\int \Phi^{k\ \dagger}(y,t) \pdv{\Phi^j_x(y,t)}{t} dy
+W^{kj}(x,t) = -i\hbar\int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) \pdv{\Phi^j_x(y,t)}{t} dy
 \end{equation}
 \begin{equation}
-S^{kj}_s(x,t) = \int \Phi^{k\ \dagger}(y,t) \hat{T}_{x_s} [\Phi^j_x(y,t)] dy
+S^{kj}_s(x,t) = \int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) \hat{T}_{x_s} [\Phi^j_x(y,t)] dy
 \end{equation}
 \begin{equation}
-F^{kj}_s(x,t) = \int \Phi^{k\ \dagger}(y,t) 2C_s \pdv{}{x_s}\Phi^j_x(y,t) dy
+F^{kj}_s(x,t) = \int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) 2C_s \pdv{}{x_s}\Phi^j_x(y,t) dy
 \end{equation}
 
 \subsection{Adiabatic (or constant) coupling potential with y for x and time}
@@ -385,33 +393,33 @@ If we have that the potential energy term entangling the degrees of freedom $x$ 
 \begin{equation}\label{startInception}
 i\hbar \pdv{}{t}\Lambda^k(x,t) = \qty( \varepsilon^k(x,t) + \sum_{s=1}^m\hat{T}_{x_s} +V(x,t))\Lambda^k(x,t)
 \end{equation}
-Which is an $m$ spatial dimension (mD) Schrödinger Equation for each of the eigenstates. This would mean that each coefficient $\Lambda^j(x,t)$ would preserve its norm $\int \chi(x,t)^{j\dagger}\chi^j(x,t) dx =: P^j(t)$ at all times due to the unitary time evolution of the Schrödinger Equation. This is exactly analogous to what happened when we expanded the wave-function in the time stationary energy eigenstates of the full hamiltonian.
+Which is an $m$ spatial dimension (mD) Schrödinger Equation for each of the eigenstates. This would mean that each coefficient $\Lambda^j(x,t)$ would preserve its norm $\int_{-\infty}^{\infty}\chi(x,t)^{j\dagger}\chi^j(x,t) dx =: P^j(t)$ at all times due to the unitary time evolution of the Schrödinger Equation. This is exactly analogous to what happened when we expanded the wave-function in the time stationary energy eigenstates of the full hamiltonian.
 
-We could now simply compute the initial coefficients $\Lambda^k(x,t_0)$ for a desired initial wavefunction by $\Lambda^k(x,t_0)=\int \Phi(x,t)^{k\dagger} \psi(x,y,t_0)dy$ and then compute mD SE-s for as many coefficients $\Lambda^k$, say $J$ as necessary to achieve a certain norm tolerance $\sum_{j=0}^J P^j(t) \simeq 1$ and then simply ensemble them to have the $N$ dimensional full wavefunction as $\psi(x,y,t)=\sum_j\Lambda^j(x,t)\Phi^j(y,t)$.
+We could now simply compute the initial coefficients $\Lambda^k(x,t_0)$ for a desired initial wavefunction by $\Lambda^k(x,t_0)=\int_{-\infty}^{\infty}\Phi(x,t)^{k\dagger} \psi(x,y,t_0)dy$ and then compute mD SE-s for as many coefficients $\Lambda^k$ as necessary, say $J$, to achieve a certain norm tolerance $\sum_{j=0}^J P^j(t) \simeq 1$. Finally simply assembling them we can have the $N$ dimensional full wavefunction as $\psi(x,y,t)=\sum_j\Lambda^j(x,t)\Phi^j(y,t)$.
 
-The fun point now is that we could now solve each of the mD SE-s \eqref{startInception} using precisely the same method described in this section! We could now choose a new subset $z=(x_1,...,x_r)$ as main degrees of freedom and $w=(x_{r+1},...,x_m)$ as the transverse degrees, for which we will now compute the eigenstates using the decomposition of the effective Hamiltonian for the $m$ degrees of freedom:
+The fun point is that we could now solve each of the mD SE-s \eqref{startInception} using precisely the same method described in this section! We could now choose a new subset $z=(x_1,...,x_r)$ as main degrees of freedom and $w=(x_{r+1},...,x_m)$ as the transverse degrees, for which we will now compute the eigenstates using the decomposition of the effective Hamiltonian for the $m$ degrees of freedom:
 $$
 \hat{H}_{eff}(x,t)=\varepsilon^k(x,t) + \sum_{s=1}^m\hat{T}_{x_s} +V(x,t) = \sum_{s=r+1}^m\hat{T}_{x_s}+\tilde{U}(z,w,t) +\sum_{s=1}^r\hat{T}_{x_s} +\tilde{V(z,t)}
 $$
-And proceeding as explained.
+And proceeding as explained. We can repeat the procedure whenever we arrive at a Schrödinger Equation.
 
-\subsection{Comments on General Potentials}
+\subsection{On General Potentials}
 For a general potential, the set of coupled linear partial differential equations \eqref{XabEq} can be solved if we first compute the coupling integrals $W^{kj}(x,t),S^{kj}_s(x,t),F^{kj}_s(x,t)$ which have a complexity $O(n_y^{N-m})$\footnote{$n_y$ is the smallest number of spatial divisions we consider for the spatial axes in $y$. $n_x$ is the same for $x$, while $n_t$ is the number of time steps we consider.}. Then the equations may be solved using a Cranck Nicolson scheme by LU decomposing sparse matrices of $O(Jn_x^m)$ rows and columns $n_t$ times, where $J$ is the number of coefficients in the expansion we consider to be important. Then the time evolution of the system, once we know the coupling terms and the eigenstates would require $O(Jn_tn_x^m)$.
 
 If we did not know the eigenstates, we would need to compute them, which requires at least $O(Jd^{N-m})$ operations as we said in the previous section (with $d$ the average number of non-zero elements per column in the Hamiltonian for the $m=N-1$ case).
 
-This means that even without knowing the eigenstates a priori, we could achieve the solution of the full TDSE for a fixed $n_t$ in a time $O(n_y^{N-m})+O(n_x^{m})=O(n_x^{max(m, N-m)})$ (where we consider $n_x=n_y$). This is minimized clearly if we chose $m=N/2$. In that case, as we argued in the conclusions of the previous section, we would square root the computation time for the TDSE from $O(n_x^{N})$ to $O(n_x^{N/2}$, which is already a good thing, even if the many body problem is not surpassed\footnote{In fact, we can not expect to get rid of the exponential complexity if we do not make any approximation to the approach, so perhaps it is as good as we could get for an exact solution!}!
+This means that even without knowing the eigenstates a priori, we could achieve the solution of the full TDSE for a fixed $n_t$ in a time $O(n_y^{N-m})+O(n_x^{m})=O(n_x^{max(m, N-m)})$ (where we consider $n_x=n_y$). This is minimized clearly if we chose $m=N/2$. In that case, as we argued in the conclusions of the previous section, we would square root the computation time for the TDSE from $O(n_x^{N})$ to $O(n_x^{N/2})$, which is already a good thing, even if the many body problem is not surpassed\footnote{We can not expect to get rid of the exponential complexity if we do not make any approximation to the approach, so perhaps it is as good as we could get for an exact solution!}!
 
 \subsection{The Spectrum of possibilities of the algorithm}
 It is at this point clear that the present algorithm is a generalization of the examples given in the first two sections. In particular, if we choose $m=0$, we recover the expansion of the wavefunction in the eigenstates of the full hamiltonian, if $m=1$, we get the expansion of the full wavefunction in the transversal eigenstates and if $m=N$ we recover the full Schrödinger Equation. In the last case we have $O(n_x^N)$ on the equation system side while in the first we have $O(n_x^N)$ on the eigenstate obtention side. For intermediate $m$, we transfer workload from computing the system of differential equations to computing the eigenstate problem. The balance is optimal when we set $m=N/2$, where the complexity is square-rooted.
 
-Therefore, this algorithm might be specially useful to reduce the complexity of the time evolution if we know the eigenstates of the sections analytically for any of the $m<N$, as this would immediately erase the eigenstate and overlap integral numerical obtention from the scheme and we would be left with the resolution of the coupled Schrödinger like equation system of $O(n_x^{m})$.
+Therefore, this algorithm might be specially useful to reduce the complexity of the time evolution if we know the eigenstates of the sections analytically for any of the $m<N$, as this would immediately erase the eigenstate and overlap integral numerical obtention from the scheme and we would be left with the resolution of the coupled Schrödinger like equation system of $O(n_x^{m})$. So the answer is, which $m$ is better?: The smallest $m$ such that we know the analytical shape of the eigenstates of $N-m$ dimensional sections. If there is no such $m$, then we choose $m=N/2$ because the complexity will be square-rooted relative to the full TDSE.
 
-Now, in the eyes of the "inception" like approach we suggested two subsections ago, it is a natural question whether we can iteratively apply the algorithm for the simplest case in order to solve it everything with rather a series of 1D Schrödinger like Equations and one 1D eigenvalue problem or a series of 1D eigenvalue problems and a 1D Schrödinger like Equation. If yes, any of those two approaches would have a linear complexity in $N$. Of course it is not possible to do it for the general non-adiabatic case. But it turns out it is indeed possible for the adiabatic case! Let us try the $m=N-1$ case!
+Now, once seen the "inception" like approach suggested in 3.1, where we iteratively applied the same algorithm to get each time a simpler problem, it is a natural question whether we can apply the algorithm for the simplest 1D eigenstate problem or the simplest 1D coefficient equation and iteratively go "marginalising" 1D axes in a series of 1D eigenvalue problems or 1D Schrödinger like Equations (in one or the other direction). If yes, any of those two approaches would have a linear complexity in $N$. Of course it is not possible to do it for the general non-adiabatic case. But it turns out it is indeed possible for the adiabatic case! Let us try the $m=N-1$ case for this iterative building!
 
 \newpage
 
-\section{Expanding the Wavefunction in 1D Eigenstates}
+\section{Expanding the Wavefunction in 1D Section Eigenstates}
 If we apply the generalized algorithm \eqref{XabEq} for the case in which $x=(x_1,...,x_{N-1})$ and $y=x_N$, we will have that :
 \begin{equation}
 \hat{H}(x, y, t)= \sum_{j=1}^{N}\hat{T}_{x_j}+G(x, y, t)=\hat{T}_{x_N}+U(x, y, t)+\sum_{j=1}^{N-1}\hat{T}_{x_j}+V(x,t) = \hat{H}_x(y,t)+\sum_{j=1}^{N-1}\hat{T}_{x_j}+V(x,t)
@@ -424,7 +432,7 @@ As we know that the hermiticity of the operator $\hat{H}_x(y,t)$ implies its eig
 \begin{equation}
 \Psi(x,y,t)=\sum_j \Lambda^j(x,t) \Phi^j_x(y,t)
 \end{equation}
-with $\Lambda^j(x,t):= \int \Phi^{j\ \dagger}_x(y,t) \Psi(x,y,t)dy$ the projection coefficients.
+with $\Lambda^j(x,t):= \int_{-\infty}^{\infty}\Phi^{j\ \dagger}_x(y,t) \Psi(x,y,t)dy$ the projection coefficients.
 
 This would leave the equation for the coefficients \eqref{XabEq} as:
 \begin{equation}\label{XabEq}
@@ -432,13 +440,13 @@ i\hbar \pdv{}{t}\Lambda^k(x,t) = \qty( \varepsilon^k(x,t) + \sum_{s=1}^{N-1}\hat
 \end{equation}
 where we have defined the coupling terms between the transversal section eigenstates:
 \begin{equation}
-W^{kj}(x,t) = -i\hbar\int \Phi^{k\ \dagger}(y,t) \pdv{\Phi^j_x(y,t)}{t} dy
+W^{kj}(x,t) = -i\hbar\int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) \pdv{\Phi^j_x(y,t)}{t} dy
 \end{equation}
 \begin{equation}
-S^{kj}_s(x,t) = \int \Phi^{k\ \dagger}(y,t) \hat{T}_{x_s} [\Phi^j_x(y,t)] dy
+S^{kj}_s(x,t) = \int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) \hat{T}_{x_s} [\Phi^j_x(y,t)] dy
 \end{equation}
 \begin{equation}
-F^{kj}_s(x,t) = \int \Phi^{k\ \dagger}(y,t) 2C_s \pdv{}{x_s}\Phi^j_x(y,t) dy
+F^{kj}_s(x,t) = \int_{-\infty}^{\infty}\Phi^{k\ \dagger}(y,t) 2C_s \pdv{}{x_s}\Phi^j_x(y,t) dy
 \end{equation}
 
 \subsection{Adiabatic (or constant) coupling potential with y for x and t}
@@ -471,11 +479,11 @@ i\hbar \pdv{}{t}\Lambda^{k2}(x^{(2)},t)  = \qty( \varepsilon^{j2}(x^{(2)},t) + \
 \end{equation}
 Where we could repeat the process of "marginalising" one spatial variable iteratively $N$ times, until we would arrive to a 1D Schrödinger equation set for the coefficients $\Lambda^{kN}(x^{(N)},t)$. With them and each set of 1D parametrized eigenstate we would then be able to rebuild the whole Schrödinger Equation.
 
-The fun point of such a procedure would be that computing the eigenstates of 1D Hamiltonians has a complexity $O(Jd)$ so doing the process for each of the $N$ stages of inception would require $O(NJd)$ operations, together with the overlap integrals to get the initial coefficients, which would now be 1D integrals of complexity $O(n_y)$ and the resolution of the last $J$ 1d Schrödinger like equations (where we could compute the coupling terms without neglecting them), that would take $O(Jn_x)$ operations: overall the complexity would be $O(NJn_x)$, which scales linearly with dimensions! Well, that is not completely honest... It will be true as long as parametrically computing the eigenstates can be done in one step. That is, if in order to compute the eigenstates of the section for $(x_1,x_2,...x_m)$ requires computing the eigenstates for each possible value of $(x_1,...,x_m)$ in a given grid of size $n_x^m$, then computing the eigenstates at the first inception step would require $O(Jdn_x^{N-1})$ operations, which still scales exponentially in space! But we were pretty close this time!
+The fun point of such a procedure would be that computing the eigenstates of 1D Hamiltonians has a complexity $O(Jd)$ so doing the process for each of the $N$ stages of inception would require $O(NJd)$ operations. We would then have the overlap integrals to get the initial coefficients, which would now be 1D integrals of complexity $O(n_y)$ and the resolution of the last $J$ 1d Schrödinger like equations that would take $O(Jn_x)$ operations (where we could avoid neglecting the coupling terms). Overall, the complexity would be $O(NJn_x)$, which scales linearly with dimensions (at the cost of assuming adiabaticity iteratively)!
 
-If this iterative approach to obtain the 1D eigenstates of each time 
+Note that computing the eigenstates of the sections for all $(x_1,x_2,...x_m)$ requires computing the 1D eigenstates for each possible value of $(x_1,...,x_m)$. In a given grid of size $n_x^m$, this means $O(Jdn_x^{N-1})$ operations technically, but as we assumed in the previous sections, the computation of these eigenstates is embarrassingly parallelizable, so we could achieve sequential $O(Jd)$.
 
-In fact, if it really was as simple to compute the section eigenstates with a parametric dependence, at least as simple as (or lienarly more complex than) computing them for a single section, then we could achieve a linear algorithm inspired by this inception as shown in the following section. The good point about the one shown in the following section is that we will not require to approximate the adiabaticity and still we will convert the Schrödinger Equation into a set of 1D eigenstate problems and 1D Schrödinger Equations or ordinary differential equations.
+Let us try to find a version of the algorithm that allows to do this for the general potential case and not only assuming adiabaticity.
 \newpage
 
 \section{Expanding the Wavefunction in 1D Section Eigenstates 2.0}
@@ -545,24 +553,29 @@ $$
 \sum_{j_N,...,j_2} \qty(W^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)+S^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)+F^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)\pdv{}{x_1} ) \chi^{j_N,...,j_2}(x_1,t)
 $$
 \begin{equation}
-W^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)=\int \Phi^{k_2}_{x_1}(x_2) \cdots \Phi^{k_N}_{x_1,... ,x_{N-1}}(x_N) \pdv{}{t}\qty[\Phi^{j_2}_{x_1}(x_2) \cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N)]dx
+W^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)=\int_{-\infty}^{\infty}\Phi^{k_2}_{x_1}(x_2) \cdots \Phi^{k_N}_{x_1,... ,x_{N-1}}(x_N) \pdv{}{t}\qty[\Phi^{j_2}_{x_1}(x_2) \cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N)]dx
 \end{equation}
 \begin{equation}
-S^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)=\int \Phi^{k_2}_{x_1}(x_2) \cdots \Phi^{k_N}_{x_1,... ,x_{N-1}}(x_N) \hat{T_{x_1}}\qty[\Phi^{j_2}_{x_1}(x_2) \cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N)]dx
+S^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)=\int_{-\infty}^{\infty}\Phi^{k_2}_{x_1}(x_2) \cdots \Phi^{k_N}_{x_1,... ,x_{N-1}}(x_N) \hat{T_{x_1}}\qty[\Phi^{j_2}_{x_1}(x_2) \cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N)]dx
 \end{equation}
 \begin{equation}
-F^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)=2C_1\int \Phi^{k_2}_{x_1}(x_2) \cdots \Phi^{k_N}_{x_1,... ,x_{N-1}}(x_N) \pdv{}{x_1}\qty[\Phi^{j_2}_{x_1}(x_2) \cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N)]dx
+F^{k_N,...,k_2}_{j_N,...,j_2}(x_1,t)=2C_1\int_{-\infty}^{\infty}\Phi^{k_2}_{x_1}(x_2) \cdots \Phi^{k_N}_{x_1,... ,x_{N-1}}(x_N) \pdv{}{x_1}\qty[\Phi^{j_2}_{x_1}(x_2) \cdots \Phi^{j_N}_{x_1,... ,x_{N-1}}(x_N)]dx
 \end{equation}
-Which clearly was a very bad idea. It turns out that the fact that every eigenstate depends on the "outer" degrees of freedom impedes us to further develop correctly the coupling integrals, and thus they are left to be $O(n_x^{N-1})$.
+Unfortunately, it seems to be a very bad idea. It turns out that the fact that every eigenstate depends on the "outer" degrees of freedom parametrically, impedes us to cancel out terms using orthogonality, and thus they we are inevitably left with $O(n_x^{N-1})$ integrals!
 
-I was then going to suggest using also the eigenstates of $x_1$ and then generalize it to using $m$ free degrees of freedom...but the problem will persist. 
+If it worked as thought and yielded 1D integrals, we could now suggest using also the eigenstates for $x_1$ to have it everything in 1D eigenstate problems and 1D integrals (lots of them, yes, but independent). Alternatively we could generalize it to using $m$ free degrees of freedom as 1D integrals. However, the parametrical dependence ruins it all...
 
-However, the present idea has suggested the last algorithm of the document, which might be one of the most interesting ones here.
+Nonetheless, the present idea suggested the last algorithm of the document (Section 6.3.1), which might be one of the most interesting ones we have presented.
 
 
 \newpage
 \section{Expanding the Wavefunction in any arbitrary Orthonormal Basis}
-We have clearly seen that there were three bottlenecks with which we could play and swing from side to side were: the obtention of more or less complicated eigenstate problems, the resolution of more or less complicated systems of partial differential equations and the computations of more or less complicated integrals of variations of the eigenstates. We found a method to transfer all the complexity we wanted into the eigenstate problem from the differential equations. Then the obvious idea here is, how can we avoid needing to compute the eigenstates, where all the exponential problem may be placed? Would we have enough with using a general orthonormal basis of functions? If yes, then we could have solved the millenia problem. The answer most likely will be not, else it would have already been found. Still, lets see what we can get.
+We have seen that there are three bottlenecks which we can swing from side to side: eigenstate problems, partial differential equations and integrals, each of which of varying complexity. 
+
+In particular, we found a method to transfer all the complexity we wanted into the eigenstate problem from the differential equations. Then the obvious question is: can we avoid needing to compute the eigenstates, once all the exponential problem is placed there? 
+
+A possible idea could be to use a general orthonormal basis. Let us review the shape the equations would take if we do not require the functions to be eigenstates, just that they are orthonormal and complete.
+
 \subsection{If we knew an orthonormal basis for $N$}
 This is the analogous case of using the full hamiltonian eigenstates. Representing by $x=(x_1,...,x_N)$, if we knew a set of orthonormal functions $\{f^j(x,t)\}_j$ spanning the whole Hilbert space of the system, then by the completeness of the basis we know that there should exist some coefficients $c_j(t)\in \C$ such that any arbitrary wavefunction should be expansible as a linear combination at any time (note that the basis functions need not be time dependent, but for the sake of generality we will consider so):
 \begin{equation}
@@ -572,19 +585,19 @@ Introducing it into the TDSE, we would obtain the dynamical equations for the co
 \begin{equation}
 i\hbar \pdv{\Psi(x,t)}{t}=\hat{H}\psi(x,t)\Rightarrow i\hbar \sum_k\pdv{(c_k(t)f^k(x,t))}{t}=\sum_k\qty(\sum_{j=1}^N \hat{T}_{x_j} + U(x, t))(c_k(t)f^k(x,t))
 \end{equation}
-Using the orthonormality condition $\int f^{j\dagger}(x,t)f^k(x,t)dx=\delta_{j,k}$ and wrapping stuff up:
+Using the orthonormality condition $\int_{-\infty}^{\infty}f^{j\dagger}(x,t)f^k(x,t)dx=\delta_{j,k}$ and wrapping stuff up:
 \begin{equation}
 i\hbar\dv{}{t}c_j(t)=\sum_k\qty(W^{j,k}(t)+S^{j,k}_s(t)+D^{j,k}(t))c_k(t)
 \end{equation}
 with:
 \begin{equation}
-W^{j,k}(t):=\int f^{j\dagger}(x,t) \pdv{f^k(x,t)}{t} dx
+W^{j,k}(t):=\int_{-\infty}^{\infty}f^{j\dagger}(x,t) \pdv{f^k(x,t)}{t} dx
 \end{equation}
 \begin{equation}
-S^{j,k}_s(t):=\int f^{j\dagger}(x,t) T_{x_j}[f^k(x,t)] dx
+S^{j,k}_s(t):=\int_{-\infty}^{\infty}f^{j\dagger}(x,t) T_{x_j}[f^k(x,t)] dx
 \end{equation}
 \begin{equation}
-D^{j,k}(t):=\int f^{j\dagger}(x,t) U(x,t)f^k(x,t) dx
+D^{j,k}(t):=\int_{-\infty}^{\infty}f^{j\dagger}(x,t) U(x,t)f^k(x,t) dx
 \end{equation}
 Where as we already knew the basis functions, presumably in their analytic shape, we would be left with a computation of the coupling integrals (which could perhaps be evaluated symbolically), together with the resolution of the linear coupled ordinary differential equation system for the coefficients $c_j(t)$.
 
@@ -599,19 +612,19 @@ We will build here the analogue of the generalized method \eqref{XabEq}. Using t
 \end{equation}
 Note that unlike the transversal section eigenstates, these do not depend on $x$! (SHOULD THEY?)
 
-Then introducing this ansatz into the full TDSE, we can get the dynamic equations for the coefficients $\Lambda^j(x,t)$. By using again the orthonormality condition $\int f^{k\dagger}(y,t)f^k(y,t)dy=1$ we can get:
+Then introducing this ansatz into the full TDSE, we can get the dynamic equations for the coefficients $\Lambda^j(x,t)$. By using again the orthonormality condition $\int_{-\infty}^{\infty}f^{k\dagger}(y,t)f^k(y,t)dy=1$ we can get:
 \begin{equation}
 i\hbar \pdv{}{t}\Lambda^j(x,t)= \sum_{s=1}^m \hat{T}_m \Lambda^j(x,t) + \sum_k \qty( W^{jk}(t)+\sum_{r=m}^NS^{jk}_r(t)+D^{jk}(x,t) )\Lambda^k(x,t)
 \end{equation}
 with:
 \begin{equation}
-W^{jk}(t):=\int f^{j\dagger}(y,t) \pdv{f^k(y,t)}{t} dy
+W^{jk}(t):=\int_{-\infty}^{\infty}f^{j\dagger}(y,t) \pdv{f^k(y,t)}{t} dy
 \end{equation}
 \begin{equation}
-S^{jk}_r(t):=\int f^{j\dagger}(y,t) \hat{T}_{x_s}[f^k(y,t)] dy
+S^{jk}_r(t):=\int_{-\infty}^{\infty}f^{j\dagger}(y,t) \hat{T}_{x_s}[f^k(y,t)] dy
 \end{equation}
 \begin{equation}
-W^{jk}(x,t):=\int f^{j\dagger}(y,t)U(x,y,t) f^k(y,t) dy
+W^{jk}(x,t):=\int_{-\infty}^{\infty}f^{j\dagger}(y,t)U(x,y,t) f^k(y,t) dy
 \end{equation}
 Again, we achieve a similar equation, where the only task we would need would be to compute the coupling integrals and then evolving the coupled linear system of equations for the coefficients $\Lambda^j(x,t)$. The integrals would require a time $O(n_y^{N-m})$, while the coupled system would require $O(Jn_x^m)$, resulting in a complexity $O(n_x^{max(m, N-m)})$. The fun point is that if we knew analytically the orthonormal functions, we might be able to compute the integrals symbolically, which would allow us to safe the numerical integration and the complexity would be left $O(n_x^m)$, where if we fix $m$, the problem will at most be linearly increasing in complexity with dimensions $N$!
 
@@ -628,13 +641,13 @@ i\hbar \dv{}{t} c_{j_1,...,j_N}(t) = \sum_{k1,...,k_N} \qty(W^{j_1,...,j_N}_{k_1
 \end{equation}
 with:
 \begin{equation}
-W^{j_1,...,j_N}_{k_1,...,k_N}(t)=-i\hbar \sum_{s=1}^N \int f^{j_s\dagger}(x_s,t)\pdv{}{t}[f^{j_s}(x_s,t)]dx_s
+W^{j_1,...,j_N}_{k_1,...,k_N}(t)=-i\hbar \sum_{s=1}^N \int_{-\infty}^{\infty}f^{j_s\dagger}(x_s,t)\pdv{}{t}[f^{j_s}(x_s,t)]dx_s
 \end{equation}
 \begin{equation}
-S^{j_1,...,j_N}_{k_1,...,k_N}(t)=\sum_{s=1}^N \int f^{j_s\dagger}(x_s,t)\hat{T}_{x_s}[f^{j_s}(x_s,t)]dx_s
+S^{j_1,...,j_N}_{k_1,...,k_N}(t)=\sum_{s=1}^N \int_{-\infty}^{\infty}f^{j_s\dagger}(x_s,t)\hat{T}_{x_s}[f^{j_s}(x_s,t)]dx_s
 \end{equation}
 \begin{equation}
-D^{j_1,...,j_N}_{k_1,...,k_N}(t)=\int f^{j_1\dagger}(x_1,t)\cdots f^{j_N\dagger}(x_N,t)\ U(x,t)\ f^{k_1}(x_1,t)\cdots f^{k_N}(x_N,t) dx
+D^{j_1,...,j_N}_{k_1,...,k_N}(t)=\int_{-\infty}^{\infty}f^{j_1\dagger}(x_1,t)\cdots f^{j_N\dagger}(x_N,t)\ U(x,t)\ f^{k_1}(x_1,t)\cdots f^{k_N}(x_N,t) dx
 \end{equation}
 
 Note again that if the orthonormal vectors were chosen to be time independent then $W^{j_1,...,j_N}_{k_1,...,k_N}(t)=0$ and $S^{j_1,...,j_N}_{k_1,...,k_N}(t)$ would be time independent. 
@@ -655,13 +668,13 @@ $$
 $$
 with:
 \begin{equation}
-W^{j_1,...,j_N}_{k_1,...,k_N}(t)=-i\hbar \sum_{s=m+1}^N \int f^{j_s\dagger}(x_s,t)\pdv{}{t}[f^{j_s}(x_s,t)]dx_s
+W^{j_1,...,j_N}_{k_1,...,k_N}(t)=-i\hbar \sum_{s=m+1}^N \int_{-\infty}^{\infty}f^{j_s\dagger}(x_s,t)\pdv{}{t}[f^{j_s}(x_s,t)]dx_s
 \end{equation}
 \begin{equation}
-S^{j_1,...,j_N}_{k_1,...,k_N}(t)=\sum_{s=m+1}^N \int f^{j_s\dagger}(x_s,t)\hat{T}_{x_s}[f^{j_s}(x_s,t)]dx_s
+S^{j_1,...,j_N}_{k_1,...,k_N}(t)=\sum_{s=m+1}^N \int_{-\infty}^{\infty}f^{j_s\dagger}(x_s,t)\hat{T}_{x_s}[f^{j_s}(x_s,t)]dx_s
 \end{equation}
 \begin{equation}
-D^{j_1,...,j_N}_{k_1,...,k_N}(x,t)=\int f^{j_{m+1}\dagger}(x_{m+1},t)\cdots f^{j_N\dagger}(x_N,t)\ U(x,t,t)\ f^{k_{m+1}}(x_{m+1},t)\cdots f^{k_N}(x_N,t) dx
+D^{j_1,...,j_N}_{k_1,...,k_N}(x,t)=\int_{-\infty}^{\infty}f^{j_{m+1}\dagger}(x_{m+1},t)\cdots f^{j_N\dagger}(x_N,t)\ U(x,t,t)\ f^{k_{m+1}}(x_{m+1},t)\cdots f^{k_N}(x_N,t) dx
 \end{equation}
 
 Where we would now balance the complexity the following way: the hardest coupling integrals, those for $D^{j_1,...,j_N}_{k_1,...,k_N}$ would have a complexity of $O(n_y^{N-m})$ and the equations ruling the coefficients would require a time about $O(J^{N-m}n_x^m)$. Again, the optimum strategy would be to use $m=N/2$, which would reduce the overal complexity in a square root even if still leaving it exponential. Perhaps the advantage of this algorithm would be that it might be simpler to generalize to $N$ than the other ones, because in the end we will roughly use the same function basis for each of the axes.
